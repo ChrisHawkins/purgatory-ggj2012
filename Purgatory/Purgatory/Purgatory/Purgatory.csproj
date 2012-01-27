@@ -116,6 +116,10 @@
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Purgatory.Game\Purgatory.Game.csproj">
+      <Project>{E6779547-6F8F-4636-B8FB-52642C5D8233}</Project>
+      <Name>Purgatory.Game</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PurgatoryContent\PurgatoryContent.contentproj">
       <Name>PurgatoryContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>

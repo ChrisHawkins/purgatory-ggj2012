@@ -2,6 +2,7 @@
 namespace Purgatory.Game
 {
     using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
     public struct Bounds
     {
@@ -15,5 +16,17 @@ namespace Purgatory.Game
         }
 
         public static Bounds Screen = new Bounds() { EntireScreen = true, Rectangle = Rectangle.Empty };
+
+        public Rectangle ToRectangle(GraphicsDevice device)
+        {
+            if (EntireScreen)
+            {
+                return device.Viewport.Bounds;
+            }
+            else
+            {
+                return this.Rectangle;
+            }
+        }
     }
 }
