@@ -55,7 +55,7 @@ namespace Purgatory.Game
 
         public override void Update(GameTime time)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }
