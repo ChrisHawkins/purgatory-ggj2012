@@ -2,7 +2,9 @@
 namespace Purgatory.Game
 {
     using Microsoft.Xna.Framework;
-using Purgatory.Game.Controls;
+    using Microsoft.Xna.Framework.Graphics;
+    using Purgatory.Game.Controls;
+    using Purgatory.Game.Graphics;
     using Purgatory.Game.Physics;
 
     public class Player : IMoveable
@@ -10,21 +12,29 @@ using Purgatory.Game.Controls;
         private float speed;
         private KeyboardManager controls;
         private Vector2 direction;
+        private Sprite sprite;
 
         private Rectangle collisionRectangle;
 
-        public Player(KeyboardManager controlScheme)
+        public Player(Sprite sprite, KeyboardManager controlScheme)
         {
+            this.sprite = sprite;
             this.controls = controlScheme;
             this.collisionRectangle = new Rectangle(0, 0, Level.TileWidth, Level.TileWidth);
         }
 
         public Vector2 Position { get; set; }
-        
 
-        public void Update()
+        public void Update(GameTime time)
         {
+            this.sprite.UpdateAnimation(time);
+
             this.UpdateMovement();
+        }
+
+        public void Draw(SpriteBatch batch, Bounds bounds)
+        {
+            this.sprite.Draw(batch, bounds.AdjustPoint(this.Position));
         }
 
         private void UpdateMovement()
