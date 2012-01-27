@@ -12,6 +12,8 @@ namespace Purgatory.Game
         private SpriteBatch batch;
         private Sprite background;
         private float timer;
+        private KeyboardState kb;
+        
 
         public WinScreen(GraphicsDevice device)
             : base(device)
@@ -23,8 +25,7 @@ namespace Purgatory.Game
         {
             this.background = sprite;
             this.timer = 0.0f;
-            //this.LoadScreen(this);
-            this.CloseUntil(typeof(MainMenu));
+            //this.CloseUntil(typeof(MainMenu));
         }
 
         public override void Draw(Bounds bounds)
@@ -38,9 +39,13 @@ namespace Purgatory.Game
         {
             timer += (float)time.ElapsedGameTime.TotalSeconds;
 
-            if (this.timer > 3.0f)
+            if (this.timer > 1.0f)
             {
-                this.CloseUntil(typeof(MainMenu));
+                kb = Keyboard.GetState();
+                if (kb.GetPressedKeys().Length > 0)
+                {
+                    this.CloseUntil(typeof(MainMenu));
+                }
             }
         }
     }

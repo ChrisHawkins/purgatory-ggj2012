@@ -17,9 +17,12 @@ namespace Purgatory.Game
         public abstract void Draw(Bounds bounds);
         public abstract void Update(GameTime time);
 
-        protected void LoadScreen(Screen screen)
+        public void LoadScreen(Screen screen)
         {
-            this.LoadingScreen(this, new ScreenEventArgs(screen));
+            if (LoadingScreen != null)
+            {
+                this.LoadingScreen(this, new ScreenEventArgs(screen));
+            }
         }
 
         protected void CloseScreen()

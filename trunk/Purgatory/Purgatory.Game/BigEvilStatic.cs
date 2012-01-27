@@ -9,12 +9,15 @@ using Purgatory.Game.Graphics;
 
     public static class BigEvilStatic
     {
+        public static ScreenManager ScreenManager { get; private set; }
+
         public static ContentManager Content { get; private set; }
 
         public static Viewport Viewport { get; private set; }
 
-        public static void Init(ContentManager manager, Viewport viewport)
+        public static void Init(ScreenManager screenManager, ContentManager manager, Viewport viewport)
         {
+            ScreenManager = screenManager;
             Content = manager;
             Viewport = viewport;
         }

@@ -29,7 +29,6 @@ using Purgatory.Game.Graphics;
 
         public override void Update(GameTime time)
         {
-           
             KeyboardState kb = Keyboard.GetState();
 
             if (kb.GetPressedKeys().Length > 0)

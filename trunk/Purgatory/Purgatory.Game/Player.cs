@@ -34,7 +34,7 @@ namespace Purgatory.Game
         {
             this.playerNumber = playerNumber;
             this.speed = 300;
-            this.Health = 100;
+            this.Health = 20;
             this.BulletList = new List<Bullet>();
             this.direction = new Vector2(0, 1);
             this.shootCooldown = 0.2f;

@@ -39,7 +39,7 @@ namespace Purgatory.Game
 
         void CloseScreensUntil(object sender, ScreenTypeEventArgs e)
         {
-            while (this.screenStack.First().GetType() == e.ScreenType)
+            while (this.screenStack.First().GetType() != e.ScreenType)
             {
                 this.ScreenClosing(sender, e);
             }
