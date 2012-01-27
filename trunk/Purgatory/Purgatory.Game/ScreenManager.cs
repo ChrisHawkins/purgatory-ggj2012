@@ -25,7 +25,15 @@ namespace Purgatory.Game
         void ScreenClosing(object sender, EventArgs e)
         {
             this.screenStack.Pop();
-            this.screenStack.First().OnControlReturned();
+
+            if (this.screenStack.Count == 0)
+            {
+                this.ScreensEmpty(this, EventArgs.Empty);
+            }
+            else
+            {
+                this.screenStack.First().OnControlReturned();
+            }
         }
 
         public void Draw()
@@ -37,5 +45,7 @@ namespace Purgatory.Game
         {
             this.screenStack.First().Update(time);
         }
+
+        public event EventHandler ScreensEmpty;
     }
 }
