@@ -60,13 +60,24 @@ namespace Purgatory.Game.Graphics
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch, Vector2 point)
+        public void Draw(SpriteBatch spriteBatch, Vector2 point, bool fromTopLeft = false)
         {
-            spriteBatch.Draw(
-                this.Texture2D,
-                this.GetDestinationRectangle(point),
-                this.GetSourceRectangle(),
-                Color.White);
+            if (fromTopLeft)
+            {
+                spriteBatch.Draw(
+                    this.Texture2D,
+                    point,
+                    this.GetSourceRectangle(),
+                    Color.White);
+            }
+            else
+            {
+                spriteBatch.Draw(
+                    this.Texture2D,
+                    this.GetDestinationRectangle(point),
+                    this.GetSourceRectangle(),
+                    Color.White);
+            }
         }
 
         private Rectangle GetDestinationRectangle(Vector2 point)
