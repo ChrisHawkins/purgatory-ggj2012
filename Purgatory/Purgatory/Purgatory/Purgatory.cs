@@ -52,10 +52,10 @@ namespace Purgatory
             this.graphics.PreferredBackBufferHeight = 768;
             this.graphics.ApplyChanges();
 
+            BigEvilStatic.Init(this.Content, this.GraphicsDevice.Viewport);
+
             GameContext context = new GameContext();
             context.InitializePlayer(BigEvilStatic.CreateControlSchemeWASD(), BigEvilStatic.CreateControlSchemeArrows(), Content);
-
-            BigEvilStatic.Init(this.Content, this.GraphicsDevice.Viewport);
 
             this.screenManager = new ScreenManager();
             this.screenManager.ScreensEmpty += new EventHandler(ScreenManagerEmpty);
