@@ -16,6 +16,8 @@ namespace Purgatory.Game
         private Vector2 direction;
         private Vector2 movementDirection;
         private Sprite sprite;
+        private PlayerNumber playerNumber;
+        private Vector2 bulletDirection;
 
         private HealthBar healthBar;
 
@@ -30,8 +32,9 @@ namespace Purgatory.Game
         private Rectangle collisionRectangle;
 
 
-        public Player()
+        public Player(PlayerNumber playerNumber)
         {
+            this.playerNumber = playerNumber;
             this.speed = 300;
             this.Health = 100;
             this.BulletList = new List<Bullet>();
@@ -81,7 +84,7 @@ namespace Purgatory.Game
             if (this.controls.ShootControlPressed() && this.shootTimer > this.shootCooldown)
             {
                 Vector2 bulletPos = this.Position + new Vector2(this.sprite.Width / 2.0f, this.sprite.Height / 2.0f) * direction;
-                Bullet b = new Bullet(bulletPos, this.direction, this.speed * 7f, bulletSprite, this.Level);
+                Bullet b = new Bullet(bulletPos, this.bulletDirection, this.speed * 7f, bulletSprite, this.Level);
                 this.BulletList.Add(b);
                 this.shootTimer = 0.0f;
             }
@@ -173,6 +176,12 @@ namespace Purgatory.Game
                     this.Health -= 1;
                 }
             }
+        }
+
+        internal void SetBulletDirection(Vector2 targetPosition)
+        {
+            this.bulletDirection = targetPosition - this.Position;
+            this.bulletDirection.Normalize();
         }
     }
 }

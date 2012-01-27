@@ -12,14 +12,16 @@ namespace Purgatory.Game
     {
         private Player player1;
         private Player player2;
-
+        private ScreenManager screenManager;
+        private WinScreen winScreen;
         private Level player1Level;
         private Level Player2Level;
 
-        public GameContext()
+        public GameContext(WinScreen winScreen)
         {
-            player1 = new Player();
-            player2 = new Player();
+            this.winScreen = winScreen;
+            player1 = new Player(PlayerNumber.PlayerOne);
+            player2 = new Player(PlayerNumber.PlayerTwo);
 
             this.player1Level = new Level("LifeMaze00");
             this.Player2Level = new Level("DeathMaze00");
@@ -31,13 +33,9 @@ namespace Purgatory.Game
             {
                 return this.player1;
             }
-            else if (playerNumber == PlayerNumber.PlayerTwo)
-            {
-                return this.player2;
-            }
             else
             {
-                return new Player();
+                return this.player2;
             }
         }
 
@@ -73,6 +71,8 @@ namespace Purgatory.Game
 
         public void UpdateGameLogic(GameTime time)
         {
+            this.player1.SetBulletDirection(player2.Position);
+            this.player2.SetBulletDirection(player1.Position);
             this.player1.Update(time);
             this.player2.Update(time);
 
@@ -81,13 +81,16 @@ namespace Purgatory.Game
 
             if (this.player1.Health < 1)
             {
-                //payer2 wins code here maybe
+                winScreen.SetBackground(BigEvilStatic.CreateDeathWinBackground());
             }
             
-            if (this.player2.Health < 0)
+            if (this.player2.Health < 1)
             {
                 //player1 win code goes here
+                winScreen.SetBackground(BigEvilStatic.CreateLifeWinBackground());
             }
         }
+
+        
     }
 }
