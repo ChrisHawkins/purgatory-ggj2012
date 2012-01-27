@@ -3,7 +3,6 @@ namespace Purgatory.Game
 {
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Purgatory.Game.Physics;
     using Purgatory.Game.Graphics;
 
     public class GameScreen : Screen
