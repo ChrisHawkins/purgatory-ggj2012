@@ -43,6 +43,7 @@ namespace Purgatory.Game
             };
 
             this.Device.ScissorRectangle = bounds.ToRectangle(this.Device);
+            bounds.Camera = -this.player.Position;
 
             this.batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, state);
 
