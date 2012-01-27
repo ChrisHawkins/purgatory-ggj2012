@@ -21,7 +21,6 @@ namespace Purgatory.Game
 
         private Vector2 DashVelocity;
 
-        private HealthBar healthBar;
         private const float dashCooldownTime = 1.5f;
         private float timeSinceLastDash = 0;
 
