@@ -11,14 +11,16 @@ namespace Purgatory.Game
     public class Player : IMoveable
     {
         private float speed;
-        private int health;
+       
         private KeyboardManager controls;
         private Vector2 direction;
         private Vector2 movementDirection;
         private Sprite sprite;
 
         private Sprite bulletSprite;
-        private List<Bullet> bulletList;
+
+        public int Health { get; private set; }
+        public List<Bullet> BulletList { get; private set; }
 
         private float shootCooldown;
         private float shootTimer;
@@ -31,7 +33,7 @@ namespace Purgatory.Game
             this.Level = new Level("LifeMaze00");
             this.collisionRectangle = new Rectangle(0, 0, Level.TileWidth * 2, Level.TileWidth * 2);
             this.speed = 200;
-            this.bulletList = new List<Bullet>();
+            this.BulletList = new List<Bullet>();
             this.direction = new Vector2(0, 1);
             this.shootCooldown = 0.2f;
         }
@@ -65,6 +67,13 @@ namespace Purgatory.Game
 
             this.UpdateShoot(time);
             this.sprite.UpdateAnimation(time);
+
+            this.CheckForBulletCollisions();
+
+        }
+
+        private void CheckForBulletCollisions()
+        {
         }
 
         private void UpdateShoot(GameTime time)
@@ -74,20 +83,28 @@ namespace Purgatory.Game
             {
                 Vector2 bulletPos = this.Position + new Vector2(this.sprite.Width / 2.0f, this.sprite.Height / 2.0f) * direction;
                 Bullet b = new Bullet(bulletPos, this.direction, this.speed * 7f, bulletSprite);
-                this.bulletList.Add(b);
+                this.BulletList.Add(b);
                 this.shootTimer = 0.0f;
             }
 
-            foreach (var bullet in bulletList)
+            List<Bullet> tmpBulletList = new List<Bullet>();
+            foreach (var bullet in BulletList)
             {
                 bullet.Update(time);
+                if (!bullet.RemoveFromList)
+                {
+                    tmpBulletList.Add(bullet);
+                }
+
             }
+
+            BulletList = tmpBulletList;
         }
 
         public void Draw(SpriteBatch batch, Bounds bounds)
         {
             this.sprite.Draw(batch, bounds.AdjustPoint(this.Position));
-            foreach(var bullet in bulletList)
+            foreach(var bullet in BulletList)
             {
                 bullet.Draw(batch, bounds);
             }
@@ -123,13 +140,6 @@ namespace Purgatory.Game
 
             this.LastPosition = this.Position;
             this.Position += movementDirection * speed * (float)time.ElapsedGameTime.TotalSeconds;
-
-            this.CheckForCollisions();
-        }
-
-        private void CheckForCollisions()
-        {
-            //List<Rectangle> possibleRectangles = Level.GetPossibleRectangles(
         }
 
         public Level Level { get; private set; }
@@ -137,6 +147,18 @@ namespace Purgatory.Game
         public Rectangle CollisionRectangle
         {
             get { return this.collisionRectangle; }
+        }
+
+        public void CheckBulletCollisions(List<Bullet> list)
+        {
+            foreach (var bullet in list)
+            {
+                if (this.CollisionRectangle.Intersects(bullet.CollisionRectangle))
+                {
+                    bullet.RemoveFromList = true;
+                    this.Health -= 1;
+                }
+            }
         }
     }
 }
