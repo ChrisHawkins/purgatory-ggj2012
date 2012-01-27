@@ -48,6 +48,19 @@ namespace Purgatory.Game
         {
             this.player1.Update(time);
             this.player2.Update(time);
+
+            this.player1.CheckBulletCollisions(player2.BulletList);
+            this.player2.CheckBulletCollisions(player1.BulletList);
+
+            if (this.player1.Health < 1)
+            {
+                //payer2 wins code here maybe
+            }
+            
+            if (this.player2.Health < 0)
+            {
+                //player1 win code goes here
+            }
         }
     }
 }

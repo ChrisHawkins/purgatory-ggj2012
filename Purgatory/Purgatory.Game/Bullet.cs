@@ -41,7 +41,9 @@ using Purgatory.Game.Graphics;
 
         public Rectangle CollisionRectangle
         {
-            get { return new Rectangle((int)this.Position.X, (int)this.Position.Y, 1, 1); }
+            get { return new Rectangle((int)(this.Position.X - (this.sprite.Width / 2.0f)), (int)(this.Position.Y - (this.sprite.Height / 2.0f)), this.sprite.Width, this.sprite.Height); }
         }
+
+        public bool RemoveFromList { get; set; }
     }
 }
