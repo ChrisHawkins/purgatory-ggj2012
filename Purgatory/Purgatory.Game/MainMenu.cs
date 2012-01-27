@@ -21,7 +21,7 @@ using Purgatory.Game.Graphics;
         {
             batch.Begin();
             this.Device.Clear(Color.Fuchsia);
-            background.Draw(batch, new Vector2(background.Height, background.Width) / 2.0f);
+            background.Draw(batch, new Vector2(background.Width, background.Height) / 2.0f);
             batch.End();
         }
 
