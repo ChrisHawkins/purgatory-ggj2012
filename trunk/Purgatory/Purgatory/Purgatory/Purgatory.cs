@@ -53,6 +53,7 @@ namespace Purgatory
             this.graphics.ApplyChanges();
 
             GameContext context = new GameContext();
+            context.InitializePlayer(BigEvilStatic.CreateControlSchemeWASD(), BigEvilStatic.CreateControlSchemeArrows(), Content);
 
             BigEvilStatic.Init(this.Content, this.GraphicsDevice.Viewport);
 
@@ -60,8 +61,8 @@ namespace Purgatory
             this.screenManager.ScreensEmpty += new EventHandler(ScreenManagerEmpty);
 
             DualScreen ds = new DualScreen(this.graphics.GraphicsDevice);
-            ds.AddScreen(new GameScreen(this.graphics.GraphicsDevice, context));
-            ds.AddScreen(new GameScreen(this.graphics.GraphicsDevice, context));
+            ds.AddScreen(new GameScreen(this.graphics.GraphicsDevice, context, PlayerNumber.PlayerOne));
+            ds.AddScreen(new GameScreen(this.graphics.GraphicsDevice, context, PlayerNumber.PlayerTwo));
             this.screenManager.OpenScreen(ds);
         }
 
