@@ -16,21 +16,28 @@ namespace Purgatory.Game
 
         private Rectangle collisionRectangle;
 
-        public Player(Sprite sprite, KeyboardManager controlScheme)
+
+        public Player()
         {
             this.Level = new Level("LifeMaze00");
-            this.sprite = sprite;
-            this.controls = controlScheme;
             this.collisionRectangle = new Rectangle(0, 0, Level.TileWidth, Level.TileWidth);
+            this.speed = 250;
+        }
+
+        public void Initialize(KeyboardManager controlScheme, Sprite sprite)
+        {
+            this.controls = controlScheme;
+            this.sprite = sprite;
         }
 
         public Vector2 Position { get; set; }
 
+
         public void Update(GameTime time)
         {
+            this.controls.Update();
+            this.UpdateMovement(time);
             this.sprite.UpdateAnimation(time);
-
-            this.UpdateMovement();
         }
 
         public void Draw(SpriteBatch batch, Bounds bounds)
@@ -39,17 +46,17 @@ namespace Purgatory.Game
             this.Level.Draw(batch, bounds, this.Position);
         }
 
-        private void UpdateMovement()
+        private void UpdateMovement(GameTime time)
         {
             direction = new Vector2();
             if (controls.UpControlPressed())
             {
-                direction.Y += 1;
+                direction.Y -= 1;
             }
 
             if (controls.DownControlPressed())
             {
-                direction.Y -=1;
+                direction.Y +=1;
             }
 
             if (controls.LeftControlPressed())
@@ -62,7 +69,7 @@ namespace Purgatory.Game
                 direction.X += 1;
             }
 
-            this.Position += direction * speed;
+            this.Position += direction * speed * (float)time.ElapsedGameTime.TotalSeconds;
         }
 
         public Level Level { get; private set; }
