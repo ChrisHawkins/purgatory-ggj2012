@@ -98,6 +98,9 @@
     <Compile Include="GameContext.cs" />
     <Compile Include="GameScreen.cs" />
     <Compile Include="Level.cs" />
+    <Compile Include="Physics\CollisionSolver.cs" />
+    <Compile Include="Physics\IMoveable.cs" />
+    <Compile Include="Physics\IStatic.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Screen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

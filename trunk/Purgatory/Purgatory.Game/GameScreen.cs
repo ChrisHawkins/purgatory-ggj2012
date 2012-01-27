@@ -4,6 +4,7 @@ namespace Purgatory.Game
     using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using Purgatory.Game.Physics;
 
     public class GameScreen : Screen
     {
@@ -45,7 +46,11 @@ namespace Purgatory.Game
             this.batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, state);
 
             this.batch.Draw(texture, this.Device.Viewport.Bounds, Color.White);
-            this.batch.Draw(playerSprite, bounds.AdjustPoint(this.player.Position), Color.White);
+
+            this.batch.Draw(
+                playerSprite,
+                bounds.AdjustRectangle(CollisionSolver.GetAdjustedRectangle(this.player.Position, this.player.CollisionRectangle)),
+                Color.White);
 
             this.batch.End();
         }

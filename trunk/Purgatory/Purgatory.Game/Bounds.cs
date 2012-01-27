@@ -29,7 +29,7 @@ using Microsoft.Xna.Framework.Graphics;
             }
         }
 
-        public Vector2 AdjustPoint(Vector2 point)
+        public Point AdjustPoint(Point point)
         {
             if (this.EntireScreen)
             {
@@ -39,11 +39,17 @@ using Microsoft.Xna.Framework.Graphics;
             {
                 // centre of bounds is 0,0
 
-                point.X += Rectangle.X + Rectangle.Width / 2f;
-                point.Y += Rectangle.Y + Rectangle.Height / 2f;
+                point.X += Rectangle.X + Rectangle.Width / 2;
+                point.Y += Rectangle.Y + Rectangle.Height / 2;
             }
 
             return point;
+        }
+
+        public Rectangle AdjustRectangle(Rectangle rectangle)
+        {
+            rectangle.Location = AdjustPoint(rectangle.Location);
+            return rectangle;
         }
     }
 }
