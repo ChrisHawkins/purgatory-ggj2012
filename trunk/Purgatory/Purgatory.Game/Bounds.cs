@@ -29,6 +29,23 @@ using Microsoft.Xna.Framework.Graphics;
             }
         }
 
+        public Vector2 AdjustPoint(Vector2 point)
+        {
+            if (this.EntireScreen)
+            {
+                return point;
+            }
+            else
+            {
+                // centre of bounds is 0,0
+
+                point.X += Rectangle.X + Rectangle.Width / 2;
+                point.Y += Rectangle.Y + Rectangle.Height / 2;
+            }
+
+            return point;
+        }
+
         public Point AdjustPoint(Point point)
         {
             if (this.EntireScreen)
