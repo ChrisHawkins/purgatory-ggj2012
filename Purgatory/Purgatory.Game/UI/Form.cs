@@ -14,6 +14,7 @@ namespace Purgatory.Game.UI
         {
             this.Controls = new List<Control>();
             this.batch = new SpriteBatch(device);
+            this.Visible = true;
         }
 
         public List<Control> Controls { get; private set; }

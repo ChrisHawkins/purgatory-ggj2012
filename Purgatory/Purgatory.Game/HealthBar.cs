@@ -1,39 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Purgatory.Game.Graphics;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-
+﻿
 namespace Purgatory.Game
 {
-    public class HealthBar
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+    using Purgatory.Game.Graphics;
+    using Purgatory.Game.UI;
+
+    public class HealthBar : Control
     {
-        public Sprite Sprite;
-        public float MaxHealth;
-        public float Health;
-        public Vector2 Position;
+        private Sprite sprite;
         private int originalWidth;
+
+        public float MaxHealth { get;set;}
+        public float Health { get; set; }
+        public Vector2 Position { get; set; }
+        public int Left { get; set; }
 
         public HealthBar(Vector2 position, float maxHealth)
         {
             this.Position = position;
             this.MaxHealth = maxHealth;
             Texture2D healthTexture = BigEvilStatic.Content.Load<Texture2D>("HealthBar");
-            this.Sprite = new Sprite(healthTexture, healthTexture.Width, healthTexture.Height);
+            this.sprite = new Sprite(healthTexture, healthTexture.Width, healthTexture.Height);
             this.originalWidth = healthTexture.Width;
         }
 
-        public void Update(float playerHealth)
+        public override void Update(GameTime time)
         {
-            this.Health = playerHealth;
-            Sprite.Width = (int)(originalWidth * this.Health / this.MaxHealth);
+            sprite.Width = (int)(originalWidth * this.Health / this.MaxHealth);
         }
 
-        public void Draw(SpriteBatch batch, Bounds bounds)
+        public override void Draw(SpriteBatch batch)
         {
-            this.Sprite.Draw(batch, Position);
+            this.sprite.Draw(batch, new Vector2(Left, this.sprite.Texture2D.GraphicsDevice.Viewport.Height - 40f) + Position, true);
         }
     }
 }

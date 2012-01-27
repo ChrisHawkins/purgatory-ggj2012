@@ -3,6 +3,7 @@ namespace Purgatory.Game
 {
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using Purgatory.Game.UI;
 
     public class GameScreen : Screen
     {
@@ -10,6 +11,8 @@ namespace Purgatory.Game
         private GameContext context;
         private Texture2D texture;
         private PlayerNumber playerNumber;
+        private Form hud;
+        private HealthBar healthBar;
 
         public GameScreen(GraphicsDevice device, GameContext context, PlayerNumber playerNumber) : base(device)
         {
@@ -26,6 +29,10 @@ namespace Purgatory.Game
             }
 
             this.batch = new SpriteBatch(device);
+
+            this.hud = new Form(this.Device);
+            this.healthBar = new HealthBar(new Vector2(10f, 10f), this.context.GetPlayer(this.playerNumber).Health);
+            this.hud.Controls.Add(healthBar);
         }
 
         public override void Draw(Bounds bounds)
@@ -48,10 +55,16 @@ namespace Purgatory.Game
             this.context.GetPlayer(PlayerNumber.PlayerTwo).Draw(batch, bounds);
 
             this.batch.End();
+
+            this.healthBar.Left = bounds.Rectangle.Left;
+            this.hud.Draw();
+
         }
 
         public override void Update(GameTime time)
         {
+            this.healthBar.Health = this.context.GetPlayer(this.playerNumber).Health;
+            this.hud.Update(time);
         }
     }
 }
