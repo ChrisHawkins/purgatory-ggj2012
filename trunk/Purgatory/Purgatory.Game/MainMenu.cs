@@ -20,7 +20,7 @@ namespace Purgatory.Game
         {
             KeyboardState kb = Keyboard.GetState();
 
-            if (kb.IsKeyDown(Keys.Enter))
+            if (kb.IsKeyDown(Keys.Enter) || kb.IsKeyDown(Keys.Space))
             {
                 GameContext context = new GameContext();
                 context.InitializePlayer(BigEvilStatic.CreateControlSchemeWASD(), BigEvilStatic.CreateControlSchemeArrows(), BigEvilStatic.Content);

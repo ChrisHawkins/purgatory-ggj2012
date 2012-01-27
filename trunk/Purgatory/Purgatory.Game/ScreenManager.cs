@@ -14,6 +14,7 @@ namespace Purgatory.Game
         {
             screen.ClosingScreen += new EventHandler(ScreenClosing);
             screen.LoadingScreen += new EventHandler<ScreenEventArgs>(LoadingScreen);
+            screen.ClosingAllScreensUntil += new EventHandler<ScreenTypeEventArgs>(CloseScreensUntil);
             this.screenStack.Push(screen);
         }
 
@@ -33,6 +34,14 @@ namespace Purgatory.Game
             else
             {
                 this.screenStack.First().OnControlReturned();
+            }
+        }
+
+        void CloseScreensUntil(object sender, ScreenTypeEventArgs e)
+        {
+            while (this.screenStack.First().GetType() == e.ScreenType)
+            {
+                this.ScreenClosing(sender, e);
             }
         }
 
