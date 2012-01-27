@@ -12,23 +12,21 @@ namespace Purgatory.Game
         private Texture2D texture;
         private Player player;
 
-        public GameScreen(GraphicsDevice device, GameContext context)
+        public GameScreen(GraphicsDevice device, GameContext context, PlayerNumber playerNumber)
             : base(device)
         {
             this.context = context;
 
-            if (!FIRST_ASSIGNED_DELETE_THIS)
+            if (playerNumber == PlayerNumber.PlayerOne)
             {
                 texture = BigEvilStatic.Content.Load<Texture2D>("TotalBlue");
-                FIRST_ASSIGNED_DELETE_THIS = true;
             }
             else
             {
                 texture = BigEvilStatic.Content.Load<Texture2D>("TotalRed");
             }
 
-            Sprite playerSprite = new Sprite(BigEvilStatic.Content.Load<Texture2D>("death"), 32, 32);
-            this.player = new Player(playerSprite, BigEvilStatic.CreateControlSchemeArrows());
+            this.player = context.GetPlayer(playerNumber);
             this.batch = new SpriteBatch(device);
         }
 
@@ -53,7 +51,5 @@ namespace Purgatory.Game
 
             this.batch.End();
         }
-
-        public static bool FIRST_ASSIGNED_DELETE_THIS;
     }
 }
