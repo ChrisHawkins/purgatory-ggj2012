@@ -54,6 +54,31 @@ namespace Purgatory.Game
         {
             rectangles.Clear();
 
+            Vector2 newPosition = playerPosition + velocity;
+
+            Vector2 min = Vector2.Min(newPosition, playerPosition);
+            Vector2 max = Vector2.Max(newPosition, playerPosition);
+
+            int minX = (int)min.X;
+            int minY = (int)min.Y;
+
+            int maxX = (int)Math.Ceiling(max.X);
+            int maxY = (int)Math.Ceiling(max.Y);
+
+            for (int i = minX; i <= maxX; ++i )
+            {
+                for (int j = minY; j <= maxY; ++j)
+                {
+                    if (i >= 0 && i < WalkableTile.Length && j >= 0 && j < WalkableTile[i].Length)
+                    {
+                        if (!WalkableTile[i][j])
+                        {
+                            rectangles.Add(new Rectangle(i * TileWidth, j * TileWidth, TileWidth, TileWidth));
+                        }
+                    }
+                }
+            }
+
             return rectangles;
         }
 
