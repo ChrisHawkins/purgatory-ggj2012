@@ -22,5 +22,6 @@ namespace Purgatory.Game
         public GraphicsDevice Device { get; private set; }
 
         public abstract void Draw(Bounds bounds);
+        public abstract void Update(GameTime time);
     }
 }

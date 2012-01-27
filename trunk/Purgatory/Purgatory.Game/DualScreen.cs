@@ -67,6 +67,14 @@ namespace Purgatory.Game
             return new Bounds(new Rectangle(i * widthAlloc, 0, widthAlloc, this.Device.Viewport.Height));
         }
 
+        public override void Update(GameTime time)
+        {
+            foreach (var screen in this.screens)
+            {
+                screen.Screen.Update(time);
+            }
+        }
+
         private class ScreenToDraw
         {
             public Screen Screen;
