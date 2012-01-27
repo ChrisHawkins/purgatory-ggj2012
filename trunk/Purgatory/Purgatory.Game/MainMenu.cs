@@ -26,6 +26,7 @@ namespace Purgatory.Game
                 context.InitializePlayer(BigEvilStatic.CreateControlSchemeWASD(), BigEvilStatic.CreateControlSchemeArrows(), BigEvilStatic.Content);
 
                 DualScreen ds = new DualScreen(this.Device);
+                ds.ContextUpdater = gt => context.UpdateGameLogic(gt);
                 ds.AddScreen(new GameScreen(this.Device, context, PlayerNumber.PlayerOne));
                 ds.AddScreen(new GameScreen(this.Device, context, PlayerNumber.PlayerTwo));
 
