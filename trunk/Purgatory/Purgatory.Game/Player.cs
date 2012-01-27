@@ -28,6 +28,8 @@ namespace Purgatory.Game
         private Sprite bulletSprite;
 
         public int Health { get; private set; }
+        public int Energy { get; private set; }
+
         public List<Bullet> BulletList { get; private set; }
 
         private float shootCooldown;
@@ -42,6 +44,7 @@ namespace Purgatory.Game
             this.speed = 350;
             this.playerNumber = playerNumber;
             this.Health = 20;
+            this.Energy = 100;
             this.BulletList = new List<Bullet>();
             this.direction = new Vector2(0, 1);
             this.shootCooldown = 0.2f;

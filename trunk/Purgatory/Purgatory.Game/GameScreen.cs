@@ -11,8 +11,10 @@ namespace Purgatory.Game
         private GameContext context;
         private Texture2D texture;
         private PlayerNumber playerNumber;
+
         private Form hud;
-        private HealthBar healthBar;
+        private StatusBar healthBar;
+        private StatusBar energyBar;
 
         public GameScreen(GraphicsDevice device, GameContext context, PlayerNumber playerNumber) : base(device)
         {
@@ -31,8 +33,19 @@ namespace Purgatory.Game
             this.batch = new SpriteBatch(device);
 
             this.hud = new Form(this.Device);
-            this.healthBar = new HealthBar(new Vector2(10f, 10f), this.context.GetPlayer(this.playerNumber).Health);
-            this.hud.Controls.Add(healthBar);
+
+            this.healthBar = new StatusBar(
+                new Vector2(10f, this.Device.Viewport.Height - 40f),
+                this.context.GetPlayer(this.playerNumber).Health,
+                BigEvilStatic.Content.Load<Texture2D>("HealthBar"));
+
+            this.energyBar = new StatusBar(
+                new Vector2(10f, this.Device.Viewport.Height - 60f),
+                this.context.GetPlayer(this.playerNumber).Energy,
+                BigEvilStatic.Content.Load<Texture2D>("EnergyBar"));
+
+            this.hud.Controls.Add(this.healthBar);
+            this.hud.Controls.Add(this.energyBar);
         }
 
         public override void Draw(Bounds bounds)
@@ -57,13 +70,14 @@ namespace Purgatory.Game
             this.batch.End();
 
             this.healthBar.Left = bounds.Rectangle.Left;
+            this.energyBar.Left = bounds.Rectangle.Left;
             this.hud.Draw();
-
         }
 
         public override void Update(GameTime time)
         {
-            this.healthBar.Health = this.context.GetPlayer(this.playerNumber).Health;
+            this.healthBar.Value = this.context.GetPlayer(this.playerNumber).Health;
+            this.energyBar.Value = this.context.GetPlayer(this.playerNumber).Energy;
             this.hud.Update(time);
         }
     }
