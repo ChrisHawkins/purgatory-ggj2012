@@ -11,6 +11,7 @@ namespace Purgatory.Game
     public class Player : IMoveable
     {
         private float speed;
+        private int health;
         private KeyboardManager controls;
         private Vector2 direction;
         private Vector2 movementDirection;
