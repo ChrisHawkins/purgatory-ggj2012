@@ -13,10 +13,16 @@ namespace Purgatory.Game
         private Player player1;
         private Player player2;
 
+        private Level player1Level;
+        private Level Player2Level;
+
         public GameContext()
         {
             player1 = new Player();
             player2 = new Player();
+
+            this.player1Level = new Level("LifeMaze00");
+            this.Player2Level = new Level("DeathMaze00");
         }
 
         public Player GetPlayer(PlayerNumber playerNumber)
@@ -35,6 +41,22 @@ namespace Purgatory.Game
             }
         }
 
+        public Level GetLevel(PlayerNumber playerNumber)
+        {
+            if (playerNumber == PlayerNumber.PlayerOne)
+            {
+                return this.player1Level;
+            }
+            else if (playerNumber == PlayerNumber.PlayerTwo)
+            {
+                return this.Player2Level;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public void InitializePlayer(KeyboardManager playerOneControlScheme, KeyboardManager playerTwoControlScheme, ContentManager Content)
         {
             Texture2D lifeTexture = Content.Load<Texture2D>("Player");
@@ -44,6 +66,9 @@ namespace Purgatory.Game
 
             this.player1.Initialize(playerOneControlScheme, new Graphics.Sprite(lifeTexture, lifeTexture.Height, lifeTexture.Height), new Graphics.Sprite(lifeBulletTexture, lifeBulletTexture.Height, lifeBulletTexture.Height));
             this.player2.Initialize(playerTwoControlScheme, new Graphics.Sprite(deathTexture, deathTexture.Height, deathTexture.Height), new Graphics.Sprite(deathBulletTexture, deathBulletTexture.Height, deathBulletTexture.Height));
+
+            player1.Level = player1Level;
+            player2.Level = Player2Level;
         }
 
         public void UpdateGameLogic(GameTime time)

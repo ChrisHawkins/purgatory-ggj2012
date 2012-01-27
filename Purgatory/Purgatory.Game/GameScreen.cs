@@ -10,13 +10,11 @@ namespace Purgatory.Game
         private GameContext context;
         private Texture2D texture;
         private PlayerNumber playerNumber;
-        private Level level;
 
         public GameScreen(GraphicsDevice device, GameContext context, PlayerNumber playerNumber) : base(device)
         {
             this.playerNumber = playerNumber;
             this.context = context;
-            this.level = this.context.GetPlayer(playerNumber).Level;
 
             if (playerNumber == PlayerNumber.PlayerOne)
             {
@@ -43,7 +41,8 @@ namespace Purgatory.Game
             this.batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, state);
 
             this.batch.Draw(texture, this.Device.Viewport.Bounds, Color.White);
-            this.level.Draw(batch, bounds);
+
+            this.context.GetLevel(playerNumber).Draw(batch, bounds);
 
             this.context.GetPlayer(PlayerNumber.PlayerOne).Draw(batch, bounds);
             this.context.GetPlayer(PlayerNumber.PlayerTwo).Draw(batch, bounds);

@@ -32,7 +32,6 @@ namespace Purgatory.Game
 
         public Player()
         {
-            this.Level = new Level("LifeMaze00");
             this.speed = 200;
             this.Health = 100;
             this.BulletList = new List<Bullet>();
@@ -157,7 +156,7 @@ namespace Purgatory.Game
             }
         }
 
-        public Level Level { get; private set; }
+        public Level Level { get; set; }
 
         public Rectangle CollisionRectangle
         {
