@@ -2,15 +2,8 @@
 namespace Purgatory.Game
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Audio;
-    using Microsoft.Xna.Framework.Content;
-    using Microsoft.Xna.Framework.GamerServices;
     using Microsoft.Xna.Framework.Graphics;
-    using Microsoft.Xna.Framework.Input;
-    using Microsoft.Xna.Framework.Media;
 
     public abstract class Screen
     {
@@ -34,8 +27,14 @@ namespace Purgatory.Game
             this.ClosingScreen(this, EventArgs.Empty);
         }
 
+        protected void CloseUntil(Type screenType)
+        {
+            this.ClosingAllScreensUntil(this, new ScreenTypeEventArgs(screenType));
+        }
+
         public event EventHandler<ScreenEventArgs> LoadingScreen;
         public event EventHandler ClosingScreen;
+        public event EventHandler<ScreenTypeEventArgs> ClosingAllScreensUntil;
 
         public virtual void OnControlReturned()
         {
