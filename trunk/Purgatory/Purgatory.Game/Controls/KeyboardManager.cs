@@ -15,14 +15,16 @@ namespace Purgatory.Game.Controls
         private Keys left;
         private Keys right;
         private Keys shoot;
+        private Keys dash;
 
-        public KeyboardManager(Keys up, Keys down, Keys left, Keys right, Keys shoot)
+        public KeyboardManager(Keys up, Keys down, Keys left, Keys right, Keys shoot, Keys dash)
         {
             this.up = up;
             this.down = down;
             this.left = left;
             this.right = right;
             this.shoot = shoot;
+            this.dash = dash;
             this.keyboard = Keyboard.GetState();
         }
 
@@ -54,6 +56,11 @@ namespace Purgatory.Game.Controls
         public bool ShootControlPressed()
         {
             return this.keyboard.IsKeyDown(this.shoot);
+        }
+
+        public bool DashControlPressed()
+        {
+            return this.keyboard.IsKeyDown(this.dash);
         }
 
     }

@@ -24,22 +24,22 @@ using Purgatory.Game.Graphics;
 
         public static KeyboardManager CreateControlSchemeWASD()
         {
-            return new KeyboardManager(Keys.W, Keys.S, Keys.A, Keys.D, Keys.Space);
+            return new KeyboardManager(Keys.W, Keys.S, Keys.A, Keys.D, Keys.Space, Keys.LeftShift);
         }
 
         public static KeyboardManager CreateControlSchemeArrows()
         {
-            return new KeyboardManager(Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Enter);
+            return new KeyboardManager(Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Enter, Keys.RightShift);
         }
 
         public static KeyboardManager CreateControlWinatronPlayerOne()
         {
-            return new KeyboardManager(Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Z); // use X aswell
+            return new KeyboardManager(Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Z, Keys.X); // use X aswell
         }
 
         public static KeyboardManager CreateControlWinatronPlayerTwo()
         {
-            return new KeyboardManager(Keys.I, Keys.K, Keys.J, Keys.L, Keys.M); // can use n aswell
+            return new KeyboardManager(Keys.I, Keys.K, Keys.J, Keys.L, Keys.M, Keys.M); // can use n aswell
         }
 
         public static Sprite CreateDeathWinBackground()

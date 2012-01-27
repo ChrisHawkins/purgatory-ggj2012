@@ -19,6 +19,12 @@ namespace Purgatory.Game
         private PlayerNumber playerNumber;
         private Vector2 bulletDirection;
 
+        private Vector2 DashVelocity;
+
+        private HealthBar healthBar;
+        private const float dashCooldownTime = 1.5f;
+        private float timeSinceLastDash = 0;
+
         private Sprite bulletSprite;
 
         public int Health { get; private set; }
@@ -32,8 +38,9 @@ namespace Purgatory.Game
 
         public Player(PlayerNumber playerNumber)
         {
+            this.timeSinceLastDash = 100;
+            this.speed = 350;
             this.playerNumber = playerNumber;
-            this.speed = 300;
             this.Health = 20;
             this.BulletList = new List<Bullet>();
             this.direction = new Vector2(0, 1);
@@ -52,10 +59,11 @@ namespace Purgatory.Game
 
         public Vector2 LastPosition { get; set; }
 
-        public void Update(GameTime time)
+        public void Update(GameTime gameTime)
         {
+            timeSinceLastDash += (float)gameTime.ElapsedGameTime.TotalSeconds;
             this.controls.Update();
-            this.UpdateMovement(time);
+            this.UpdateMovement(gameTime);
 
             // Update player direction. Dont change if movement direction has no length
             if (movementDirection.LengthSquared() != 0)
@@ -68,8 +76,8 @@ namespace Purgatory.Game
                 this.sprite.PlayAnimation = false;
             }
 
-            this.UpdateShoot(time);
-            this.sprite.UpdateAnimation(time);
+            this.UpdateShoot(gameTime);
+            this.sprite.UpdateAnimation(gameTime);
 
         }
 
@@ -110,34 +118,58 @@ namespace Purgatory.Game
 
         private void UpdateMovement(GameTime time)
         {
-            movementDirection = new Vector2();
-            if (controls.UpControlPressed())
+            if (this.DashVelocity == Vector2.Zero)
             {
-                movementDirection.Y -= 1;
+                movementDirection = new Vector2();
+
+                if (controls.UpControlPressed())
+                {
+                    movementDirection.Y -= 1;
+                }
+
+                if (controls.DownControlPressed())
+                {
+                    movementDirection.Y += 1;
+                }
+
+                if (controls.LeftControlPressed())
+                {
+                    movementDirection.X -= 1;
+                }
+
+                if (controls.RightControlPressed())
+                {
+                    movementDirection.X += 1;
+                }
+
+                if (movementDirection.LengthSquared() != 0)
+                {
+                    movementDirection.Normalize();
+
+                    if (controls.DashControlPressed() && this.timeSinceLastDash > dashCooldownTime)
+                    {
+                        this.DashVelocity = speed * 5 * movementDirection;
+                        this.timeSinceLastDash = 0;
+                    }
+                }
             }
 
-            if (controls.DownControlPressed())
+            if (this.DashVelocity != Vector2.Zero)
             {
-                movementDirection.Y += 1;
-            }
+                this.LastPosition = this.Position;
+                this.Position += DashVelocity * (float)time.ElapsedGameTime.TotalSeconds;
+                this.DashVelocity -= 10 * this.DashVelocity * (float)time.ElapsedGameTime.TotalSeconds;
 
-            if (controls.LeftControlPressed())
+                if (DashVelocity.LengthSquared() <= speed * speed)
+                {
+                    this.DashVelocity = Vector2.Zero;
+                }
+            }
+            else
             {
-                movementDirection.X -= 1;
+                this.LastPosition = this.Position;
+                this.Position += movementDirection * speed * (float)time.ElapsedGameTime.TotalSeconds;
             }
-
-            if (controls.RightControlPressed())
-            {
-                movementDirection.X += 1;
-            }
-
-            if (movementDirection.LengthSquared() != 0)
-            {
-                movementDirection.Normalize();
-            }
-
-            this.LastPosition = this.Position;
-            this.Position += movementDirection * speed * (float)time.ElapsedGameTime.TotalSeconds;
 
             this.CheckForCollisions();
         }
