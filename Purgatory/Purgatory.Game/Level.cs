@@ -15,7 +15,7 @@ namespace Purgatory.Game
         private int TilesWideOnScreen;
         private int TilesLongOnScreen;
 
-        private const int TileWidth = 32;
+        public const int TileWidth = 32;
 
         public Level(string levelTextureString)
         {
