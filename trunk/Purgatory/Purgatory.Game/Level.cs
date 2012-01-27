@@ -20,6 +20,7 @@ namespace Purgatory.Game
 
         private List<Rectangle> rectangles;
         private Sprite whiteWall, blackWall;
+        private Sprite backgroundWall;
 
         public Level(string levelTextureString)
         {
@@ -39,6 +40,9 @@ namespace Purgatory.Game
 
             whiteWall = new Sprite(whiteWallTex, TileWidth, TileWidth);
             blackWall = new Sprite(blackWallTex, TileWidth, TileWidth);
+
+            Texture2D backgroundTex = BigEvilStatic.Content.Load<Texture2D>("DeathWalls");
+            backgroundWall = new Sprite(backgroundTex, backgroundTex.Width, backgroundTex.Height);
 
             //Get pixel data as array
             Color[] pixelData = new Color[levelTexture.Width * levelTexture.Height];
@@ -124,6 +128,8 @@ namespace Purgatory.Game
             //    }
             //}
 
+            backgroundWall.Draw(batch, bounds.AdjustPoint(new Vector2(0, 0)));
+
             for (int i = 0; i < WalkableTile.Length; ++i)
             {
                 for (int j = 0; j < WalkableTile[i].Length; ++j)
@@ -134,7 +140,7 @@ namespace Purgatory.Game
                     }
                     else
                     {
-                        this.blackWall.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
+                        //this.blackWall.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                     }
                 }
             }
