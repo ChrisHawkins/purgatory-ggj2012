@@ -6,6 +6,7 @@ namespace Purgatory.Game
     using Purgatory.Game.Controls;
     using Purgatory.Game.Graphics;
     using Purgatory.Game.Physics;
+    using System.Collections.Generic;
 
     public class Player : IMoveable
     {
@@ -20,8 +21,8 @@ namespace Purgatory.Game
         public Player()
         {
             this.Level = new Level("LifeMaze00");
-            this.collisionRectangle = new Rectangle(0, 0, Level.TileWidth, Level.TileWidth);
-            this.speed = 50;
+            this.collisionRectangle = new Rectangle(0, 0, Level.TileWidth * 2, Level.TileWidth * 2);
+            this.speed = 200;
         }
 
         public void Initialize(KeyboardManager controlScheme, Sprite sprite)
@@ -32,6 +33,7 @@ namespace Purgatory.Game
 
         public Vector2 Position { get; set; }
 
+        public Vector2 LastPosition { get; set; }
 
         public void Update(GameTime time)
         {
@@ -69,7 +71,15 @@ namespace Purgatory.Game
                 direction.X += 1;
             }
 
+            this.LastPosition = this.Position;
             this.Position += direction * speed * (float)time.ElapsedGameTime.TotalSeconds;
+
+            this.CheckForCollisions();
+        }
+
+        private void CheckForCollisions()
+        {
+            //List<Rectangle> possibleRectangles = Level.GetPossibleRectangles(
         }
 
         public Level Level { get; private set; }

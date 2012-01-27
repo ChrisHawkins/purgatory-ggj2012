@@ -44,5 +44,38 @@ namespace Purgatory.Game.Physics
                     moveableObject.Position.Y + differenceY);
             }
         }
+
+        public void SolveCollision(IMoveable moveableObject, Rectangle staticObject)
+        {
+            Rectangle rect1 = GeometryUtility.GetAdjustedRectangle(moveableObject.Position, moveableObject.CollisionRectangle);
+
+            if (rect1.Intersects(staticObject))
+            {
+                int differenceX = 0;
+                int differenceY = 0;
+
+                if (staticObject.Top < rect1.Bottom)
+                {
+                    differenceY = staticObject.Top + (rect1.Bottom - staticObject.Top);
+                }
+                if (rect1.Top < staticObject.Bottom)
+                {
+                    differenceY = rect1.Top + (staticObject.Bottom - rect1.Top);
+                }
+
+                if (staticObject.Left < rect1.Right)
+                {
+                    differenceX = staticObject.Left + (rect1.Right - staticObject.Left);
+                }
+                if (rect1.Left < staticObject.Right)
+                {
+                    differenceX = rect1.Left + (staticObject.Right - rect1.Left);
+                }
+
+                moveableObject.Position = new Vector2(
+                    moveableObject.Position.X + differenceX,
+                    moveableObject.Position.Y + differenceY);
+            }
+        }
     }
 }
