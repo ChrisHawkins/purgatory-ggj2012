@@ -5,7 +5,7 @@ namespace Purgatory.Game.Physics
 
     public interface IStatic
     {
-        Point Position { get; }
+        Vector2 Position { get; }
         Rectangle CollisionRectangle { get; }
     }
 }

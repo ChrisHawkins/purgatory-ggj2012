@@ -94,6 +94,7 @@
   <ItemGroup>
     <Compile Include="BigEvilStatic.cs" />
     <Compile Include="Bounds.cs" />
+    <Compile Include="Controls\KeyboardManager.cs" />
     <Compile Include="DualScreen.cs" />
     <Compile Include="GameContext.cs" />
     <Compile Include="GameScreen.cs" />

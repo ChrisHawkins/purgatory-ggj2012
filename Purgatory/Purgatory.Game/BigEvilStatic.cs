@@ -3,6 +3,8 @@ namespace Purgatory.Game
 {
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
+using Purgatory.Game.Controls;
+    using Microsoft.Xna.Framework.Input;
 
     public static class BigEvilStatic
     {
@@ -14,6 +16,16 @@ namespace Purgatory.Game
         {
             Content = manager;
             Viewport = viewport;
+        }
+
+        public static KeyboardManager CreateControlSchemeWASD()
+        {
+            return new KeyboardManager(Keys.W, Keys.S, Keys.A, Keys.D, Keys.Space);
+        }
+
+        public static KeyboardManager CreateControlSchemeArrows()
+        {
+            return new KeyboardManager(Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Enter);
         }
     }
 }
