@@ -7,6 +7,7 @@ namespace Purgatory.Game.Graphics
 
     public class Sprite
     {
+        public bool PlayAnimation { get; set; }
         public int CurrentFrame { get; set; }
         public TimeSpan FrameTime { get; set; }
         public int FrameCount { get; private set; }
@@ -19,6 +20,7 @@ namespace Purgatory.Game.Graphics
 
         public Sprite(Texture2D texture, int width, int height)
         {
+            this.PlayAnimation = true;
             this.Texture2D = texture;
             this.Width = width;
             this.Height = height;
@@ -34,20 +36,27 @@ namespace Purgatory.Game.Graphics
 
         public void UpdateAnimation(GameTime time)
         {
-            this.sinceLastFrame += time.ElapsedGameTime;
-
-            if (this.sinceLastFrame > this.FrameTime)
+            if (this.PlayAnimation)
             {
-                if (this.CurrentFrame < this.FrameCount - 1)
-                {
-                    this.CurrentFrame++;
-                }
-                else
-                {
-                    this.CurrentFrame = 0;
-                }
+                this.sinceLastFrame += time.ElapsedGameTime;
 
-                this.sinceLastFrame = TimeSpan.Zero;
+                if (this.sinceLastFrame > this.FrameTime)
+                {
+                    if (this.CurrentFrame < this.FrameCount - 1)
+                    {
+                        this.CurrentFrame++;
+                    }
+                    else
+                    {
+                        this.CurrentFrame = 0;
+                    }
+
+                    this.sinceLastFrame = TimeSpan.Zero;
+                }
+            }
+            else
+            {
+                this.CurrentFrame = 0;
             }
         }
 
