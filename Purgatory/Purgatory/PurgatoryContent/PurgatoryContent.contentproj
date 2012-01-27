@@ -136,6 +136,30 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="deathDown.png">
+      <Name>deathDown</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="deathLeft.png">
+      <Name>deathLeft</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="deathRight.png">
+      <Name>deathRight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="deathUp.png">
+      <Name>deathUp</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="deathWalls.png">
       <Name>deathWalls</Name>
       <Importer>TextureImporter</Importer>
