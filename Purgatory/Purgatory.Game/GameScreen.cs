@@ -4,6 +4,7 @@ namespace Purgatory.Game
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Purgatory.Game.Physics;
+    using Purgatory.Game.Graphics;
 
     public class GameScreen : Screen
     {
@@ -11,7 +12,7 @@ namespace Purgatory.Game
         private GameContext context;
         private Texture2D texture;
         private Player player;
-        private Texture2D playerSprite;
+        private Sprite playerSprite;
 
         public GameScreen(GraphicsDevice device, GameContext context)
             : base(device)
@@ -28,8 +29,8 @@ namespace Purgatory.Game
                 texture = BigEvilStatic.Content.Load<Texture2D>("TotalRed");
             }
 
-            this.player = new Player();
-            this.playerSprite = BigEvilStatic.Content.Load<Texture2D>("Player");
+            this.player = new Player(BigEvilStatic.CreateControlSchemeArrows());
+            this.playerSprite = new Sprite(BigEvilStatic.Content.Load<Texture2D>("Player"), 32, 32);
             this.batch = new SpriteBatch(device);
         }
 
@@ -45,11 +46,7 @@ namespace Purgatory.Game
             this.batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, state);
 
             this.batch.Draw(texture, this.Device.Viewport.Bounds, Color.White);
-
-            this.batch.Draw(
-                playerSprite,
-                bounds.AdjustRectangle(CollisionSolver.GetAdjustedRectangle(this.player.Position, this.player.CollisionRectangle)),
-                Color.White);
+            this.playerSprite.Draw(this.batch, bounds.AdjustPoint(this.player.Position));
 
             this.batch.End();
         }
@@ -59,7 +56,7 @@ namespace Purgatory.Game
 
         public override void Update(GameTime time)
         {
-            //throw new NotImplementedException();
+            this.playerSprite.UpdateAnimation(time);
         }
     }
 }
