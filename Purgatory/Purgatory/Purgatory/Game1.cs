@@ -50,7 +50,6 @@ namespace Purgatory
 
             this.graphics.PreferredBackBufferWidth = 1024;
             this.graphics.PreferredBackBufferHeight = 768;
-            this.graphics.IsFullScreen = true;
             this.graphics.ApplyChanges();
 
             GameContext context = new GameContext();
