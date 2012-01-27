@@ -15,19 +15,36 @@ using Purgatory.Game.Graphics;
         private Vector2 direction;
         private float speed;
         private Sprite sprite;
+        private Level level;
 
-        public Bullet(Vector2 position, Vector2 direction, float speed, Sprite sprite)
+        public Bullet(Vector2 position, Vector2 direction, float speed, Sprite sprite, Level level)
         {
             this.Position = position;
             this.direction = direction;
             this.speed = speed;
             this.sprite = sprite;
+            this.level = level;
         }
 
         public void Update(GameTime time)
         {
             this.LastPosition = this.Position;
             this.Position += direction * speed * (float)time.ElapsedGameTime.TotalSeconds;
+            this.CheckForCollisions();
+        }
+
+        private void CheckForCollisions()
+        {
+            List<Rectangle> possibleRectangles = level.GetPossibleRectangles(Position, LastPosition);
+
+            foreach (Rectangle r in possibleRectangles)
+            {
+                if (this.CollisionRectangle.Intersects(r))
+                {
+                    this.RemoveFromList = true;
+                    return;
+                }
+            }
         }
 
         public void Draw(SpriteBatch batch, Bounds bounds)

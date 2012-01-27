@@ -17,6 +17,8 @@ namespace Purgatory.Game
         private Vector2 movementDirection;
         private Sprite sprite;
 
+        private HealthBar healthBar;
+
         private Sprite bulletSprite;
 
         public int Health { get; private set; }
@@ -31,11 +33,12 @@ namespace Purgatory.Game
         public Player()
         {
             this.Level = new Level("LifeMaze00");
-            this.collisionRectangle = new Rectangle(0, 0, Level.TileWidth, Level.TileWidth);
             this.speed = 200;
+            this.Health = 100;
             this.BulletList = new List<Bullet>();
             this.direction = new Vector2(0, 1);
             this.shootCooldown = 0.2f;
+            this.healthBar = new HealthBar(new Vector2(256, 768 - 40), this.Health);
         }
 
         public void Initialize(KeyboardManager controlScheme, Sprite sprite, Sprite bulletSprite)
@@ -43,6 +46,7 @@ namespace Purgatory.Game
             this.controls = controlScheme;
             this.sprite = sprite;
             this.bulletSprite = bulletSprite;
+            this.collisionRectangle = new Rectangle(0, 0, sprite.Width, sprite.Height);
         }
 
         public Vector2 Position { get; set; }
@@ -68,12 +72,8 @@ namespace Purgatory.Game
             this.UpdateShoot(time);
             this.sprite.UpdateAnimation(time);
 
-            this.CheckForBulletCollisions();
+            this.healthBar.Update(this.Health);
 
-        }
-
-        private void CheckForBulletCollisions()
-        {
         }
 
         private void UpdateShoot(GameTime time)
@@ -82,7 +82,7 @@ namespace Purgatory.Game
             if (this.controls.ShootControlPressed() && this.shootTimer > this.shootCooldown)
             {
                 Vector2 bulletPos = this.Position + new Vector2(this.sprite.Width / 2.0f, this.sprite.Height / 2.0f) * direction;
-                Bullet b = new Bullet(bulletPos, this.direction, this.speed * 7f, bulletSprite);
+                Bullet b = new Bullet(bulletPos, this.direction, this.speed * 7f, bulletSprite, this.Level);
                 this.BulletList.Add(b);
                 this.shootTimer = 0.0f;
             }
@@ -104,10 +104,13 @@ namespace Purgatory.Game
         public void Draw(SpriteBatch batch, Bounds bounds)
         {
             this.sprite.Draw(batch, bounds.AdjustPoint(this.Position));
+
             foreach(var bullet in BulletList)
             {
                 bullet.Draw(batch, bounds);
             }
+
+            this.healthBar.Draw(batch, bounds);
         }
 
         private void UpdateMovement(GameTime time)
@@ -153,11 +156,12 @@ namespace Purgatory.Game
                 CollisionSolver.SolveCollision(this, r);
             }
         }
+
         public Level Level { get; private set; }
 
         public Rectangle CollisionRectangle
         {
-            get { return this.collisionRectangle; }
+            get { return GeometryUtility.GetAdjustedRectangle(this.Position, this.collisionRectangle); }
         }
 
         public void CheckBulletCollisions(List<Bullet> list)
