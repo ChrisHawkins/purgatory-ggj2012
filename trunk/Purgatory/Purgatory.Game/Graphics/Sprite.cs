@@ -11,6 +11,8 @@ namespace Purgatory.Game.Graphics
         public int CurrentFrame { get; set; }
         public TimeSpan FrameTime { get; set; }
         public int FrameCount { get; private set; }
+        public Color Tint { get; set; }
+        public float Alpha { get; set; }
 
         public Texture2D Texture2D { get; private set; }
         public int Width { get; set; }
@@ -24,6 +26,9 @@ namespace Purgatory.Game.Graphics
             this.Texture2D = texture;
             this.Width = width;
             this.Height = height;
+            this.Tint = Color.White;
+
+            this.Alpha = 1f;
 
             this.LoadAnimation();
         }
@@ -62,13 +67,15 @@ namespace Purgatory.Game.Graphics
 
         public void Draw(SpriteBatch spriteBatch, Vector2 point, bool fromTopLeft = false)
         {
+            Color multipliedTint = this.Tint * this.Alpha;
+
             if (fromTopLeft)
             {
                 spriteBatch.Draw(
                     this.Texture2D,
                     point,
                     this.GetSourceRectangle(),
-                    Color.White);
+                    multipliedTint);
             }
             else
             {
@@ -76,7 +83,7 @@ namespace Purgatory.Game.Graphics
                     this.Texture2D,
                     this.GetDestinationRectangle(point),
                     this.GetSourceRectangle(),
-                    Color.White);
+                    multipliedTint);
             }
         }
 
