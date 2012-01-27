@@ -2,17 +2,19 @@
 namespace Purgatory.Game
 {
     using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+    using Microsoft.Xna.Framework.Graphics;
 
     public struct Bounds
     {
         public bool EntireScreen;
         public Rectangle Rectangle;
+        public Vector2 Camera;
 
         public Bounds(Rectangle rectangle)
         {
             this.EntireScreen = false;
             this.Rectangle = rectangle;
+            this.Camera = Vector2.Zero;
         }
 
         public static Bounds Screen = new Bounds() { EntireScreen = true, Rectangle = Rectangle.Empty };
@@ -38,6 +40,7 @@ using Microsoft.Xna.Framework.Graphics;
             else
             {
                 // centre of bounds is 0,0
+                point += Camera;
 
                 point.X += Rectangle.X + Rectangle.Width / 2;
                 point.Y += Rectangle.Y + Rectangle.Height / 2;
@@ -55,6 +58,8 @@ using Microsoft.Xna.Framework.Graphics;
             else
             {
                 // centre of bounds is 0,0
+                point.X += (int)Camera.X;
+                point.Y += (int)Camera.Y;
 
                 point.X += Rectangle.X + Rectangle.Width / 2;
                 point.Y += Rectangle.Y + Rectangle.Height / 2;

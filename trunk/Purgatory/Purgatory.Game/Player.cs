@@ -42,8 +42,8 @@ namespace Purgatory.Game
 
         public void Draw(SpriteBatch batch, Bounds bounds)
         {
-            this.Level.Draw(batch, bounds, this.Position);
-            this.sprite.Draw(batch, bounds.AdjustPoint(new Vector2(0, 0)));
+            this.Level.Draw(batch, bounds);
+            this.sprite.Draw(batch, bounds.AdjustPoint(this.Position));
         }
 
         private void UpdateMovement(GameTime time)

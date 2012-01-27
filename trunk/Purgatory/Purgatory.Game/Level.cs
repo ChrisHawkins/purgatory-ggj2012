@@ -95,14 +95,14 @@ namespace Purgatory.Game
             return rectangles;
         }
 
-        public void Draw(SpriteBatch batch, Bounds bounds, Vector2 playerPosition)
+        public void Draw(SpriteBatch batch, Bounds bounds)
         {
             for (int i = -HalfTilesWideOnScreen; i < HalfTilesWideOnScreen + 1; ++i)
             {
                 for (int j = -HalfTilesLongOnScreen; j < HalfTilesLongOnScreen + 1; ++j)
                 {
-                    int xTileIndex = (int)playerPosition.X + i;
-                    int yTileIndex = (int)playerPosition.Y + j;
+                    int xTileIndex = -(int)bounds.Camera.X + i;
+                    int yTileIndex = -(int)bounds.Camera.Y + j;
 
                     if (xTileIndex >= 0 && xTileIndex < WalkableTile.Length && yTileIndex >= 0 && yTileIndex < WalkableTile[xTileIndex].Length)
                     {
