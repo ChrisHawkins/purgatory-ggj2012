@@ -18,6 +18,7 @@ namespace Purgatory.Game
 
         public Player(Sprite sprite, KeyboardManager controlScheme)
         {
+            this.Level = new Level("LifeMaze00");
             this.sprite = sprite;
             this.controls = controlScheme;
             this.collisionRectangle = new Rectangle(0, 0, Level.TileWidth, Level.TileWidth);
