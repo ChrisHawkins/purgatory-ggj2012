@@ -82,12 +82,14 @@ namespace Purgatory.Game
             if (this.player1.Health < 1)
             {
                 winScreen.SetBackground(BigEvilStatic.CreateDeathWinBackground());
+                BigEvilStatic.ScreenManager.OpenScreen(winScreen);
             }
             
             if (this.player2.Health < 1)
             {
                 //player1 win code goes here
                 winScreen.SetBackground(BigEvilStatic.CreateLifeWinBackground());
+                BigEvilStatic.ScreenManager.OpenScreen(winScreen);
             }
         }
 

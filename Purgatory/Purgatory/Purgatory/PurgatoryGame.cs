@@ -47,9 +47,10 @@ namespace Purgatory
             this.graphics.PreferredBackBufferHeight = 768;
             this.graphics.ApplyChanges();
 
-            BigEvilStatic.Init(this.Content, this.GraphicsDevice.Viewport);
-
             this.screenManager = new ScreenManager();
+
+            BigEvilStatic.Init(this.screenManager, this.Content, this.GraphicsDevice.Viewport);
+
             this.screenManager.ScreensEmpty += new EventHandler(ScreenManagerEmpty);
             this.screenManager.OpenScreen(new MainMenu(this.GraphicsDevice));
         }
