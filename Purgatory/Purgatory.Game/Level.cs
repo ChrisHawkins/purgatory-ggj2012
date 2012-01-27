@@ -100,9 +100,9 @@ namespace Purgatory.Game
                     int xTileIndex = (int)playerPosition.X + i;
                     int yTileIndex = (int)playerPosition.Y + j;
 
-                    if (xTileIndex >= 0 && xTileIndex < WalkableTile.Length && yTileIndex >= 0 && yTileIndex < WalkableTile[i].Length)
+                    if (xTileIndex >= 0 && xTileIndex < WalkableTile.Length && yTileIndex >= 0 && yTileIndex < WalkableTile[xTileIndex].Length)
                     {
-                        if (WalkableTile[i][j])
+                        if (WalkableTile[xTileIndex][yTileIndex])
                         {
                             this.whiteWall.Draw(batch, new Vector2(xTileIndex * TileWidth + TileWidth / 2, yTileIndex * TileWidth + TileWidth / 2));
                         }
