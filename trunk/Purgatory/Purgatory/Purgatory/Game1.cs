@@ -50,11 +50,12 @@ namespace Purgatory
 
             this.graphics.PreferredBackBufferWidth = 1024;
             this.graphics.PreferredBackBufferHeight = 768;
+            this.graphics.IsFullScreen = true;
             this.graphics.ApplyChanges();
 
             GameContext context = new GameContext();
 
-            BigEvilStatic.Init(Content);
+            BigEvilStatic.Init(this.Content, this.GraphicsDevice.Viewport);
 
             this.ds = new DualScreen(this.graphics.GraphicsDevice);
             this.ds.AddScreen(new GameScreen(this.graphics.GraphicsDevice, context));
