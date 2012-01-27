@@ -5,6 +5,7 @@ namespace Purgatory.Game
     using Microsoft.Xna.Framework.Graphics;
 using Purgatory.Game.Controls;
     using Microsoft.Xna.Framework.Input;
+using Purgatory.Game.Graphics;
 
     public static class BigEvilStatic
     {
@@ -36,6 +37,16 @@ using Purgatory.Game.Controls;
         public static KeyboardManager CreateControlWinatronPlayerTwo()
         {
             return new KeyboardManager(Keys.I, Keys.K, Keys.J, Keys.L, Keys.M); // can use n aswell
+        }
+
+        public static Sprite CreateDeathWinBackground()
+        {
+            return new Sprite(Content.Load<Texture2D>("deathwins"), 1024, 768);
+        }
+
+        public static Sprite CreateLifeWinBackground()
+        {
+            return new Sprite(Content.Load<Texture2D>("lifewins"), 1024, 768);
         }
     }
 }

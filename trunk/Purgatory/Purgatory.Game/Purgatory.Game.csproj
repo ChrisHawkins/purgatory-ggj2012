@@ -119,6 +119,7 @@
     <Compile Include="UI\Button.cs" />
     <Compile Include="UI\Control.cs" />
     <Compile Include="UI\Form.cs" />
+    <Compile Include="WinScreen.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
