@@ -59,8 +59,8 @@ namespace Purgatory.Game
         {
             Texture2D lifeTexture = Content.Load<Texture2D>("lifeDown");
             Texture2D lifeBulletTexture = Content.Load<Texture2D>("lifeDown");
-            Texture2D deathTexture = Content.Load<Texture2D>("Death");
-            Texture2D deathBulletTexture = Content.Load<Texture2D>("Death");
+            Texture2D deathTexture = Content.Load<Texture2D>("deathDown");
+            Texture2D deathBulletTexture = Content.Load<Texture2D>("deathDown");
 
             this.player1.Initialize(playerOneControlScheme, new Graphics.Sprite(lifeTexture, lifeTexture.Height, lifeTexture.Height), new Graphics.Sprite(lifeBulletTexture, lifeBulletTexture.Height, lifeBulletTexture.Height));
             this.player2.Initialize(playerTwoControlScheme, new Graphics.Sprite(deathTexture, deathTexture.Height, deathTexture.Height), new Graphics.Sprite(deathBulletTexture, deathBulletTexture.Height, deathBulletTexture.Height));

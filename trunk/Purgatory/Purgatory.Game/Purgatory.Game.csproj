@@ -100,6 +100,7 @@
     <Compile Include="GameContext.cs" />
     <Compile Include="GameScreen.cs" />
     <Compile Include="GeometryUtility.cs" />
+    <Compile Include="Graphics\DirectionalSprite.cs" />
     <Compile Include="Graphics\Sprite.cs" />
     <Compile Include="StatusBar.cs" />
     <Compile Include="Level.cs" />
