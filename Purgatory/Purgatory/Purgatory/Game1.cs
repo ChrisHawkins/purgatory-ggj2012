@@ -20,7 +20,7 @@ namespace Purgatory
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        DualScreen ds;
+        private ScreenManager screenManager;
 
         public Game1()
         {
@@ -56,9 +56,12 @@ namespace Purgatory
 
             BigEvilStatic.Init(this.Content, this.GraphicsDevice.Viewport);
 
-            this.ds = new DualScreen(this.graphics.GraphicsDevice);
-            this.ds.AddScreen(new GameScreen(this.graphics.GraphicsDevice, context));
-            this.ds.AddScreen(new GameScreen(this.graphics.GraphicsDevice, context));
+            this.screenManager = new ScreenManager();
+
+            DualScreen ds = new DualScreen(this.graphics.GraphicsDevice);
+            ds.AddScreen(new GameScreen(this.graphics.GraphicsDevice, context));
+            ds.AddScreen(new GameScreen(this.graphics.GraphicsDevice, context));
+            this.screenManager.OpenScreen(ds);
         }
 
         /// <summary>
@@ -81,7 +84,7 @@ namespace Purgatory
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            this.ds.Update(gameTime);
+            this.screenManager.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -94,7 +97,7 @@ namespace Purgatory
         {
             GraphicsDevice.Clear(Color.Fuchsia);
 
-            this.ds.Draw(Bounds.Screen);
+            this.screenManager.Draw();
 
             base.Draw(gameTime);
         }
