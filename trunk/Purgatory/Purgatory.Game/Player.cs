@@ -56,6 +56,11 @@ namespace Purgatory.Game
             if (movementDirection.LengthSquared() != 0)
             {
                 this.direction = movementDirection;
+                this.sprite.PlayAnimation = true;
+            }
+            else
+            {
+                this.sprite.PlayAnimation = false;
             }
 
             this.UpdateShoot(time);
