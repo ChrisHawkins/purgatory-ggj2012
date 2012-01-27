@@ -10,11 +10,13 @@ using Purgatory.Game.Graphics;
     {
         SpriteBatch batch;
         Sprite background;
+        WinScreen winscreen;
 
         public MainMenu(GraphicsDevice device) : base(device)
         {
             background = new Sprite(BigEvilStatic.Content.Load<Texture2D>("title"), 1024, 768);
             batch = new SpriteBatch(device);
+            this.winscreen = new WinScreen(device);
         }
 
         public override void Draw(Bounds bounds)
@@ -32,7 +34,7 @@ using Purgatory.Game.Graphics;
 
             if (kb.GetPressedKeys().Length > 0)
             {
-                GameContext context = new GameContext();
+                GameContext context = new GameContext(winscreen);
                 context.InitializePlayer(BigEvilStatic.CreateControlSchemeWASD(), BigEvilStatic.CreateControlSchemeArrows(), BigEvilStatic.Content);
 
                 DualScreen ds = new DualScreen(this.Device);

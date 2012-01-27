@@ -103,6 +103,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="deathwins.png">
+      <Name>deathwins</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="lifewins.png">
+      <Name>lifewins</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="DeathMaze00.png">
       <Name>DeathMaze00</Name>
       <Importer>TextureImporter</Importer>
