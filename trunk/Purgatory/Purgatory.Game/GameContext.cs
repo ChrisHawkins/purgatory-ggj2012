@@ -32,7 +32,7 @@ using Purgatory.Game.Controls;
 
         public void InitializePlayer(KeyboardManager playerOneControlScheme, KeyboardManager playerTwoControlScheme, ContentManager Content)
         {
-            this.player1.Initialize(playerOneControlScheme, new Graphics.Sprite(Content.Load<Texture2D>("Player"), 32, 32));
+            this.player1.Initialize(playerOneControlScheme, new Graphics.Sprite(Content.Load<Texture2D>("death"), 64, 64));
             this.player2.Initialize(playerTwoControlScheme, new Graphics.Sprite(Content.Load<Texture2D>("Player"), 32, 32));
         }
     }
