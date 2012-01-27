@@ -54,16 +54,9 @@ namespace Purgatory
 
             BigEvilStatic.Init(this.Content, this.GraphicsDevice.Viewport);
 
-            GameContext context = new GameContext();
-            context.InitializePlayer(BigEvilStatic.CreateControlSchemeWASD(), BigEvilStatic.CreateControlSchemeArrows(), Content);
-
             this.screenManager = new ScreenManager();
             this.screenManager.ScreensEmpty += new EventHandler(ScreenManagerEmpty);
-
-            DualScreen ds = new DualScreen(this.graphics.GraphicsDevice);
-            ds.AddScreen(new GameScreen(this.graphics.GraphicsDevice, context, PlayerNumber.PlayerOne));
-            ds.AddScreen(new GameScreen(this.graphics.GraphicsDevice, context, PlayerNumber.PlayerTwo));
-            this.screenManager.OpenScreen(ds);
+            this.screenManager.OpenScreen(new MainMenu(this.GraphicsDevice));
         }
 
         private void ScreenManagerEmpty(object sender, EventArgs e)

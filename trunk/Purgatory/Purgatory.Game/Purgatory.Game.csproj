@@ -102,6 +102,7 @@
     <Compile Include="GeometryUtility.cs" />
     <Compile Include="Graphics\Sprite.cs" />
     <Compile Include="Level.cs" />
+    <Compile Include="MainMenu.cs" />
     <Compile Include="Physics\CollisionSolver.cs" />
     <Compile Include="Physics\IMoveable.cs" />
     <Compile Include="Physics\IStatic.cs" />
