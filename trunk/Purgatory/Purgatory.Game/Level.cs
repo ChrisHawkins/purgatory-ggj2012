@@ -28,7 +28,7 @@ namespace Purgatory.Game
 
             // Set Tiles Wide
             HalfTilesWideOnScreen = (int)Math.Ceiling((double)BigEvilStatic.Viewport.Width / 4 / TileWidth);
-            HalfTilesLongOnScreen = (int)Math.Ceiling((double)BigEvilStatic.Viewport.Height / 4 / TileWidth);
+            HalfTilesLongOnScreen = (int)Math.Ceiling((double)BigEvilStatic.Viewport.Height / 2 / TileWidth);
 
             // Load level texture;
             Texture2D levelTexture = BigEvilStatic.Content.Load<Texture2D>(levelTextureString);
@@ -46,14 +46,18 @@ namespace Purgatory.Game
 
             //Fill tile array from pixel data
             WalkableTile = new bool[levelTexture.Width][];
-            for (int i = 0; i < levelTexture.Width; ++i)
+            for (int i = 0; i < levelTexture.Height; ++i)
             {
                 WalkableTile[i] = new bool[levelTexture.Height];
-                for (int j = 0; j < levelTexture.Height; ++j)
+            }
+
+            for (int i = 0; i < levelTexture.Height; ++i)
+            {
+                for (int j = 0; j < levelTexture.Width; ++j)
                 {
                     if (pixelData[i * levelTexture.Width + j] != Color.Black)
                     {
-                        WalkableTile[i][j] = true;
+                        WalkableTile[j][i] = true;
                     }
                 }
             }
@@ -93,9 +97,9 @@ namespace Purgatory.Game
 
         public void Draw(SpriteBatch batch, Bounds bounds, Vector2 playerPosition)
         {
-            for (int i = -HalfTilesWideOnScreen; i < HalfTilesWideOnScreen; ++i)
+            for (int i = -HalfTilesWideOnScreen; i < HalfTilesWideOnScreen + 1; ++i)
             {
-                for (int j = -HalfTilesLongOnScreen; j < HalfTilesLongOnScreen; ++j)
+                for (int j = -HalfTilesLongOnScreen; j < HalfTilesLongOnScreen + 1; ++j)
                 {
                     int xTileIndex = (int)playerPosition.X + i;
                     int yTileIndex = (int)playerPosition.Y + j;
@@ -104,12 +108,16 @@ namespace Purgatory.Game
                     {
                         if (WalkableTile[xTileIndex][yTileIndex])
                         {
-                            this.whiteWall.Draw(batch, new Vector2(i * TileWidth, j * TileWidth));
+                            this.whiteWall.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                         }
                         else
                         {
-                            this.blackWall.Draw(batch, new Vector2(i * TileWidth, j * TileWidth));
+                            this.blackWall.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                         }
+                    }
+                    else
+                    {
+                        this.blackWall.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                     }
                 }
             }
