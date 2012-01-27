@@ -42,14 +42,20 @@ namespace Purgatory.Game
 
             this.Device.ScissorRectangle = bounds.ToRectangle(this.Device);
 
-            this.batch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null, null, state);
+            this.batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, state);
 
             this.batch.Draw(texture, this.Device.Viewport.Bounds, Color.White);
-            this.batch.Draw(playerSprite, this.player.Position, Color.White);
+            this.batch.Draw(playerSprite, bounds.AdjustPoint(this.player.Position), Color.White);
 
             this.batch.End();
         }
 
+
         public static bool FIRST_ASSIGNED_DELETE_THIS;
+
+        public override void Update(GameTime time)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

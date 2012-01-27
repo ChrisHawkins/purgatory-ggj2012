@@ -81,7 +81,7 @@ namespace Purgatory
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: Add your update logic here
+            this.ds.Update(gameTime);
 
             base.Update(gameTime);
         }
