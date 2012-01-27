@@ -57,8 +57,8 @@ namespace Purgatory.Game
 
         public void InitializePlayer(KeyboardManager playerOneControlScheme, KeyboardManager playerTwoControlScheme, ContentManager Content)
         {
-            Texture2D lifeTexture = Content.Load<Texture2D>("Player");
-            Texture2D lifeBulletTexture = Content.Load<Texture2D>("Player");
+            Texture2D lifeTexture = Content.Load<Texture2D>("lifeDown");
+            Texture2D lifeBulletTexture = Content.Load<Texture2D>("lifeDown");
             Texture2D deathTexture = Content.Load<Texture2D>("Death");
             Texture2D deathBulletTexture = Content.Load<Texture2D>("Death");
 
