@@ -5,14 +5,20 @@ namespace Purgatory.Game
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using Microsoft.Xna.Framework.Input;
+    using Purgatory.Game.UI;
 
     public class DualScreen : Screen
     {
         private List<ScreenToDraw> screens;
+        private bool escapeWasPressed;
+        private Form menu;
 
-        public DualScreen(GraphicsDevice device) : base(device)
+        public DualScreen(GraphicsDevice device)
+            : base(device)
         {
             this.screens = new List<ScreenToDraw>();
+            this.menu = new Form(device);
         }
 
         public override void Draw(Bounds bounds)
@@ -69,6 +75,27 @@ namespace Purgatory.Game
 
         public override void Update(GameTime time)
         {
+            KeyboardState kb = Keyboard.GetState();
+
+            if (this.escapeWasPressed && !kb.IsKeyDown(Keys.Escape))
+            {
+                if (this.menu.Visible)
+                {
+                    this.menu.Visible = false;
+                }
+                else
+                {
+                    this.menu.Visible = true;
+                }
+            }
+
+            this.escapeWasPressed = kb.IsKeyDown(Keys.Escape);
+
+            if (this.menu.Visible)
+            {
+                return;
+            }
+
             this.ContextUpdater(time);
 
             foreach (var screen in this.screens)

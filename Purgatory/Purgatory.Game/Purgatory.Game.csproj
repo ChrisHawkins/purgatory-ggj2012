@@ -113,6 +113,9 @@
     <Compile Include="ScreenEventArgs.cs" />
     <Compile Include="ScreenManager.cs" />
     <Compile Include="ScreenTypeEventArgs.cs" />
+    <Compile Include="UI\Button.cs" />
+    <Compile Include="UI\Control.cs" />
+    <Compile Include="UI\Form.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
