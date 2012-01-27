@@ -27,5 +27,15 @@ using Purgatory.Game.Controls;
         {
             return new KeyboardManager(Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Enter);
         }
+
+        public static KeyboardManager CreateControlWinatronPlayerOne()
+        {
+            return new KeyboardManager(Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Z); // use X aswell
+        }
+
+        public static KeyboardManager CreateControlWinatronPlayerTwo()
+        {
+            return new KeyboardManager(Keys.I, Keys.K, Keys.J, Keys.L, Keys.M); // can use n aswell
+        }
     }
 }
