@@ -87,6 +87,10 @@ namespace Purgatory.Game
                             rectangles.Add(new Rectangle(i * TileWidth - TileWidth / 2, j * TileWidth - TileWidth / 2, TileWidth, TileWidth));
                         }
                     }
+                    else
+                    {
+                        rectangles.Add(new Rectangle(i * TileWidth - TileWidth / 2, j * TileWidth - TileWidth / 2, TileWidth, TileWidth));
+                    }
                 }
             }
 

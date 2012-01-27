@@ -32,7 +32,7 @@ namespace Purgatory.Game
 
         public Player()
         {
-            this.speed = 200;
+            this.speed = 300;
             this.Health = 100;
             this.BulletList = new List<Bullet>();
             this.direction = new Vector2(0, 1);
