@@ -19,8 +19,6 @@ namespace Purgatory.Game
         private PlayerNumber playerNumber;
         private Vector2 bulletDirection;
 
-        private HealthBar healthBar;
-
         private Sprite bulletSprite;
 
         public int Health { get; private set; }
@@ -40,7 +38,6 @@ namespace Purgatory.Game
             this.BulletList = new List<Bullet>();
             this.direction = new Vector2(0, 1);
             this.shootCooldown = 0.2f;
-            this.healthBar = new HealthBar(new Vector2(256, 768 - 40), this.Health);
         }
 
         public void Initialize(KeyboardManager controlScheme, Sprite sprite, Sprite bulletSprite)
@@ -73,8 +70,6 @@ namespace Purgatory.Game
 
             this.UpdateShoot(time);
             this.sprite.UpdateAnimation(time);
-
-            this.healthBar.Update(this.Health);
 
         }
 
@@ -111,8 +106,6 @@ namespace Purgatory.Game
             {
                 bullet.Draw(batch, bounds);
             }
-
-            this.healthBar.Draw(batch, bounds);
         }
 
         private void UpdateMovement(GameTime time)

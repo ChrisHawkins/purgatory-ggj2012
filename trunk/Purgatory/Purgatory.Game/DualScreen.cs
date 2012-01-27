@@ -19,6 +19,7 @@ namespace Purgatory.Game
         {
             this.screens = new List<ScreenToDraw>();
             this.menu = new Form(device);
+            this.menu.Visible = false;
         }
 
         public override void Draw(Bounds bounds)
