@@ -5,6 +5,8 @@ namespace Purgatory.Game
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
     using Purgatory.Game.Controls;
+    using System.Collections.Generic;
+    using Purgatory.Game.Physics;
 
     public class GameContext
     {

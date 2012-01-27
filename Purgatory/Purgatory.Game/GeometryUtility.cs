@@ -12,8 +12,8 @@ namespace Purgatory.Game
         public static Rectangle GetAdjustedRectangle(Vector2 position, Rectangle rectangle)
         {
             return new Rectangle(
-                (int)position.X + rectangle.X - rectangle.Width / 2,
-                (int)position.Y + rectangle.Y - rectangle.Height / 2,
+                (int)position.X - rectangle.Width / 2,
+                (int)position.Y - rectangle.Height / 2,
                 rectangle.Width,
                 rectangle.Height);
         }

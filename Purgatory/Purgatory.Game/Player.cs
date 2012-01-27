@@ -31,7 +31,7 @@ namespace Purgatory.Game
         public Player()
         {
             this.Level = new Level("LifeMaze00");
-            this.collisionRectangle = new Rectangle(0, 0, Level.TileWidth * 2, Level.TileWidth * 2);
+            this.collisionRectangle = new Rectangle(0, 0, Level.TileWidth, Level.TileWidth);
             this.speed = 200;
             this.BulletList = new List<Bullet>();
             this.direction = new Vector2(0, 1);
@@ -140,8 +140,19 @@ namespace Purgatory.Game
 
             this.LastPosition = this.Position;
             this.Position += movementDirection * speed * (float)time.ElapsedGameTime.TotalSeconds;
+
+            this.CheckForCollisions();
         }
 
+        private void CheckForCollisions()
+        {
+            List<Rectangle> possibleRectangles = Level.GetPossibleRectangles(Position, LastPosition);
+
+            foreach (Rectangle r in possibleRectangles)
+            {
+                CollisionSolver.SolveCollision(this, r);
+            }
+        }
         public Level Level { get; private set; }
 
         public Rectangle CollisionRectangle
