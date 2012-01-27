@@ -21,7 +21,7 @@ namespace Purgatory.Game
         {
             this.Level = new Level("LifeMaze00");
             this.collisionRectangle = new Rectangle(0, 0, Level.TileWidth, Level.TileWidth);
-            this.speed = 250;
+            this.speed = 50;
         }
 
         public void Initialize(KeyboardManager controlScheme, Sprite sprite)

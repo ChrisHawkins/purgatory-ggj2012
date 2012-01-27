@@ -95,7 +95,7 @@ namespace Purgatory.Game
         {
             for (int i = -HalfTilesWideOnScreen; i < HalfTilesWideOnScreen; ++i)
             {
-                for (int j = -HalfTilesWideOnScreen; j < HalfTilesLongOnScreen; ++j)
+                for (int j = -HalfTilesLongOnScreen; j < HalfTilesLongOnScreen; ++j)
                 {
                     int xTileIndex = (int)playerPosition.X + i;
                     int yTileIndex = (int)playerPosition.Y + j;
@@ -104,11 +104,11 @@ namespace Purgatory.Game
                     {
                         if (WalkableTile[xTileIndex][yTileIndex])
                         {
-                            this.whiteWall.Draw(batch, new Vector2(xTileIndex * TileWidth + TileWidth / 2, yTileIndex * TileWidth + TileWidth / 2));
+                            this.whiteWall.Draw(batch, new Vector2(i * TileWidth, j * TileWidth));
                         }
                         else
                         {
-                            this.blackWall.Draw(batch, new Vector2(xTileIndex * TileWidth + TileWidth / 2, yTileIndex * TileWidth + TileWidth / 2));
+                            this.blackWall.Draw(batch, new Vector2(i * TileWidth, j * TileWidth));
                         }
                     }
                 }
