@@ -84,7 +84,7 @@ namespace Purgatory.Game
                     {
                         if (!WalkableTile[i][j])
                         {
-                            rectangles.Add(new Rectangle(i * TileWidth, j * TileWidth, TileWidth, TileWidth));
+                            rectangles.Add(new Rectangle(i * TileWidth - TileWidth / 2, j * TileWidth - TileWidth / 2, TileWidth, TileWidth));
                         }
                     }
                 }

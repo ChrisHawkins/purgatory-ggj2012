@@ -13,8 +13,8 @@ namespace Purgatory.Game.Graphics
         public int FrameCount { get; private set; }
 
         public Texture2D Texture2D { get; private set; }
-        public int Width { get; private set; }
-        public int Height { get; private set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
 
         private TimeSpan sinceLastFrame = TimeSpan.Zero;
 
