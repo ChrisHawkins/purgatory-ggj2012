@@ -7,6 +7,7 @@ namespace Purgatory.Game
     using System.Text;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using Purgatory.Game.Graphics;
 
     public class Level
     {
@@ -18,6 +19,7 @@ namespace Purgatory.Game
         public const int TileWidth = 32;
 
         private List<Rectangle> rectangles;
+        private Sprite whileWall, blackWall;
 
         public Level(string levelTextureString)
         {
@@ -30,6 +32,10 @@ namespace Purgatory.Game
 
             // Load level texture;
             Texture2D levelTexture = BigEvilStatic.Content.Load<Texture2D>(levelTextureString);
+
+            //Debug textures
+            Texture2D whileWall = BigEvilStatic.Content.Load<Texture2D>("WhiteWall");
+            Texture2D blackWall = BigEvilStatic.Content.Load<Texture2D>("BlackWall");
 
             //Get pixel data as array
             Color[] pixelData = new Color[levelTexture.Width * levelTexture.Height];
@@ -82,7 +88,7 @@ namespace Purgatory.Game
             return rectangles;
         }
 
-        public void Draw(Vector2 playerPosition)
+        public void Draw(SpriteBatch batch, Bounds bounds, Vector2 playerPosition)
         {
             for (int i = -HalfTilesWideOnScreen; i < HalfTilesWideOnScreen; ++i)
             {
@@ -95,7 +101,7 @@ namespace Purgatory.Game
                     {
                         if (WalkableTile[i][j])
                         {
-                            //Draw GroundTile
+                            batch.Draw(whileWall, 
                         }
                         else
                         {
