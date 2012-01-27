@@ -75,8 +75,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WhileWall.bmp">
-      <Name>WhileWall</Name>
+    <Compile Include="WhiteWall.bmp">
+      <Name>WhiteWall</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
