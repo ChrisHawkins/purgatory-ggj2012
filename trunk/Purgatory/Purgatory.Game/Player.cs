@@ -35,6 +35,7 @@ namespace Purgatory.Game
         public void Draw(SpriteBatch batch, Bounds bounds)
         {
             this.sprite.Draw(batch, bounds.AdjustPoint(this.Position));
+            this.Level.Draw(batch, bounds, this.Position);
         }
 
         private void UpdateMovement()
