@@ -10,7 +10,7 @@ namespace Purgatory
         /// </summary>
         static void Main(string[] args)
         {
-            using (Purgatory game = new Purgatory())
+            using (PurgatoryGame game = new PurgatoryGame())
             {
                 game.Run();
             }
