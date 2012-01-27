@@ -40,7 +40,22 @@ namespace Purgatory.Game
                 throw new InvalidOperationException("Max 2 screens");
             }
 
-            int heightAlloc = Device.Viewport.Height / 2;
+            // VERTICALLY
+
+            //int heightAlloc = Device.Viewport.Height / 2;
+
+            //int i;
+
+            //for (i = 0; i < this.screens.Count; i++)
+            //{
+            //    if (this.screens[i].Screen == screen) break;
+            //}
+
+            //return new Bounds(new Rectangle(0, heightAlloc * i, this.Device.Viewport.Width, heightAlloc));
+
+            // HORIZONTALLY
+
+            int widthAlloc = Device.Viewport.Width / 2;
 
             int i;
 
@@ -49,7 +64,7 @@ namespace Purgatory.Game
                 if (this.screens[i].Screen == screen) break;
             }
 
-            return new Bounds(new Rectangle(0, heightAlloc * i, this.Device.Viewport.Width, heightAlloc));
+            return new Bounds(new Rectangle(i * widthAlloc, 0, widthAlloc, this.Device.Viewport.Height));
         }
 
         private class ScreenToDraw
