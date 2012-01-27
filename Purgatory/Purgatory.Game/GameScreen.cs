@@ -27,7 +27,7 @@ namespace Purgatory.Game
                 texture = BigEvilStatic.Content.Load<Texture2D>("TotalRed");
             }
 
-            Sprite playerSprite = new Sprite(BigEvilStatic.Content.Load<Texture2D>("Player"), 32, 32);
+            Sprite playerSprite = new Sprite(BigEvilStatic.Content.Load<Texture2D>("death"), 32, 32);
             this.player = new Player(playerSprite, BigEvilStatic.CreateControlSchemeArrows());
             this.batch = new SpriteBatch(device);
         }
