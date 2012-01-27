@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Purgatory.Game;
 
 namespace Purgatory
 {
@@ -18,6 +19,8 @@ namespace Purgatory
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        DualScreen ds;
 
         public Game1()
         {
@@ -33,8 +36,6 @@ namespace Purgatory
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
             base.Initialize();
         }
 
@@ -47,7 +48,17 @@ namespace Purgatory
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            this.graphics.PreferredBackBufferWidth = 1024;
+            this.graphics.PreferredBackBufferHeight = 768;
+            this.graphics.ApplyChanges();
+
+            GameContext context = new GameContext();
+
+            BigEvilStatic.Init(Content);
+
+            this.ds = new DualScreen(this.graphics.GraphicsDevice);
+            this.ds.AddScreen(new GameScreen(this.graphics.GraphicsDevice, context));
+            this.ds.AddScreen(new GameScreen(this.graphics.GraphicsDevice, context));
         }
 
         /// <summary>
@@ -81,9 +92,9 @@ namespace Purgatory
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Fuchsia);
 
-            // TODO: Add your drawing code here
+            this.ds.Draw(Bounds.Screen);
 
             base.Draw(gameTime);
         }
