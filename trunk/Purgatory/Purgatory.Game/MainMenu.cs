@@ -4,23 +4,33 @@ namespace Purgatory.Game
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
+using Purgatory.Game.Graphics;
 
     public class MainMenu : Screen
     {
+        SpriteBatch batch;
+        Sprite background;
+
         public MainMenu(GraphicsDevice device) : base(device)
         {
+            background = new Sprite(BigEvilStatic.Content.Load<Texture2D>("title"), 1024, 768);
+            batch = new SpriteBatch(device);
         }
 
         public override void Draw(Bounds bounds)
         {
+            batch.Begin();
             this.Device.Clear(Color.Fuchsia);
+            background.Draw(batch, new Vector2(background.Height, background.Width) / 2.0f);
+            batch.End();
         }
 
         public override void Update(GameTime time)
         {
+           
             KeyboardState kb = Keyboard.GetState();
 
-            if (kb.IsKeyDown(Keys.Enter) || kb.IsKeyDown(Keys.Space))
+            if (kb.GetPressedKeys().Length > 0)
             {
                 GameContext context = new GameContext();
                 context.InitializePlayer(BigEvilStatic.CreateControlSchemeWASD(), BigEvilStatic.CreateControlSchemeArrows(), BigEvilStatic.Content);

@@ -33,7 +33,7 @@ namespace Purgatory.Game
             this.speed = 200;
             this.bulletList = new List<Bullet>();
             this.direction = new Vector2(0, 1);
-            this.shootCooldown = 0.5f;
+            this.shootCooldown = 0.2f;
         }
 
         public void Initialize(KeyboardManager controlScheme, Sprite sprite, Sprite bulletSprite)
