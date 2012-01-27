@@ -63,20 +63,18 @@ namespace Purgatory.Game
             }
         }
 
-        public List<Rectangle> GetPossibleRectangles(Vector2 playerPosition, Vector2 velocity)
+        public List<Rectangle> GetPossibleRectangles(Vector2 position, Vector2 lastPosition)
         {
             rectangles.Clear();
 
-            Vector2 newPosition = playerPosition + velocity;
+            Vector2 min = Vector2.Min(position, lastPosition);// / TileWidth;
+            Vector2 max = Vector2.Max(position, lastPosition);// / TileWidth;
 
-            Vector2 min = Vector2.Min(newPosition, playerPosition);
-            Vector2 max = Vector2.Max(newPosition, playerPosition);
+            int minX = (int)Math.Floor((min.X - TileWidth / 2) / TileWidth);
+            int minY = (int)Math.Floor((min.Y - TileWidth / 2) / TileWidth);
 
-            int minX = (int)min.X;
-            int minY = (int)min.Y;
-
-            int maxX = (int)Math.Ceiling(max.X);
-            int maxY = (int)Math.Ceiling(max.Y);
+            int maxX = (int)Math.Ceiling((max.X + TileWidth / 2) / TileWidth);
+            int maxY = (int)Math.Ceiling((max.Y + TileWidth / 2) / TileWidth);
 
             for (int i = minX; i <= maxX; ++i )
             {

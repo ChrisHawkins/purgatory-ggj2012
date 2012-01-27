@@ -106,6 +106,8 @@
     <Compile Include="Physics\CollisionSolver.cs" />
     <Compile Include="Physics\IMoveable.cs" />
     <Compile Include="Physics\IStatic.cs" />
+    <Compile Include="Physics\Line.cs" />
+    <Compile Include="Physics\Vector2Extensions.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerNumber.cs" />
     <Compile Include="Screen.cs" />
