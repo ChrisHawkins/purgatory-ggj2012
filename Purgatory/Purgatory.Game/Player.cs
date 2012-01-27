@@ -88,7 +88,7 @@ namespace Purgatory.Game
             this.shootTimer += (float)time.ElapsedGameTime.TotalSeconds;
             if (this.controls.ShootControlPressed() && this.shootTimer > this.shootCooldown)
             {
-                Vector2 bulletPos = this.Position + new Vector2(this.sprite.Width / 2.0f, this.sprite.Height / 2.0f) * direction;
+                Vector2 bulletPos = this.Position;
                 Bullet b = new Bullet(bulletPos, this.bulletDirection, this.speed * 7f, bulletSprite, this.Level);
                 this.BulletList.Add(b);
                 this.shootTimer = 0.0f;

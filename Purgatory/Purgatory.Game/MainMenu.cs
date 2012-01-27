@@ -8,6 +8,7 @@ using Purgatory.Game.Graphics;
 
     public class MainMenu : Screen
     {
+        private float timer;
         SpriteBatch batch;
         Sprite background;
         WinScreen winscreen;
@@ -30,9 +31,11 @@ using Purgatory.Game.Graphics;
         public override void Update(GameTime time)
         {
             KeyboardState kb = Keyboard.GetState();
+            timer += (float)time.ElapsedGameTime.TotalSeconds;
 
-            if (kb.GetPressedKeys().Length > 0)
+            if (kb.GetPressedKeys().Length > 0 && timer > 0.5f)
             {
+                this.timer = 0;
                 GameContext context = new GameContext(winscreen);
                 context.InitializePlayer(BigEvilStatic.CreateControlSchemeWASD(), BigEvilStatic.CreateControlSchemeArrows(), BigEvilStatic.Content);
 
