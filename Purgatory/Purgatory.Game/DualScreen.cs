@@ -69,11 +69,15 @@ namespace Purgatory.Game
 
         public override void Update(GameTime time)
         {
+            this.ContextUpdater(time);
+
             foreach (var screen in this.screens)
             {
                 screen.Screen.Update(time);
             }
         }
+
+        public Action<GameTime> ContextUpdater { get; set; }
 
         private class ScreenToDraw
         {

@@ -10,11 +10,12 @@ namespace Purgatory.Game
         private SpriteBatch batch;
         private GameContext context;
         private Texture2D texture;
-        private Player player;
+        private PlayerNumber playerNumber;
 
         public GameScreen(GraphicsDevice device, GameContext context, PlayerNumber playerNumber)
             : base(device)
         {
+            this.playerNumber = playerNumber;
             this.context = context;
 
             if (playerNumber == PlayerNumber.PlayerOne)
@@ -26,13 +27,7 @@ namespace Purgatory.Game
                 texture = BigEvilStatic.Content.Load<Texture2D>("TotalRed");
             }
 
-            this.player = context.GetPlayer(playerNumber);
             this.batch = new SpriteBatch(device);
-        }
-
-        public override void Update(GameTime time)
-        {
-            this.player.Update(time);
         }
 
         public override void Draw(Bounds bounds)
@@ -43,14 +38,20 @@ namespace Purgatory.Game
             };
 
             this.Device.ScissorRectangle = bounds.ToRectangle(this.Device);
-            bounds.Camera = -this.player.Position;
+            bounds.Camera = -this.context.GetPlayer(this.playerNumber).Position;
 
             this.batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, state);
 
             this.batch.Draw(texture, this.Device.Viewport.Bounds, Color.White);
-            this.player.Draw(batch, bounds);
+
+            this.context.GetPlayer(PlayerNumber.PlayerOne).Draw(batch, bounds);
+            this.context.GetPlayer(PlayerNumber.PlayerTwo).Draw(batch, bounds);
 
             this.batch.End();
+        }
+
+        public override void Update(GameTime time)
+        {
         }
     }
 }
