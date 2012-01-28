@@ -95,15 +95,15 @@ namespace Purgatory.Game
                 {
                     if (!data[i, j])
                     {
-                        if (j + 1 < height && !data[i,j + 1])
+                        if (j + 1 < height && data[i,j + 1])
                         {
                             WalkableTile[i][j] = TileType.WallTop;
                         }
-                        else if (j - 1 >= 0 && !data[i,j - 1])
+                        else if (j - 1 >= 0 && data[i,j - 1])
                         {
                             WalkableTile[i][j] = TileType.WallBottom;
                         }
-                        else if (i + 1 < width && !data[i + 1,j])
+                        else if (i + 1 < width && data[i + 1,j])
                         {
                             WalkableTile[i][j] = TileType.WallLeft;
                         }
