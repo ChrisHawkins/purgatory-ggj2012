@@ -109,7 +109,7 @@ namespace Purgatory.Game
             this.purgatoryOverlay.Effects.Add(new PurgatoryEffect());
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             this.purgatoryOverlay.UpdateEffects(gameTime);
         }
@@ -350,8 +350,8 @@ namespace Purgatory.Game
                 pickUp.SetPosition(loc);
             }
         }
-
-        public void Draw(SpriteBatch batch, Bounds bounds)
+        
+        public virtual void Draw(SpriteBatch batch, Bounds bounds)
         {
             int numAcross = bounds.Rectangle.Width / backgroundGround.Width + 3;
             int numUp = bounds.Rectangle.Height / backgroundGround.Height + 3;

@@ -7,15 +7,25 @@ namespace Purgatory.Game
     using Microsoft.Xna.Framework.Graphics;
     using Purgatory.Game.Graphics;
     using Purgatory.Game.PowerUps;
+    using Purgatory.Game.Animation;
 
     public class PurgatoryLevel : Level
     {
-        public PurgatoryLevel(string levelType, TileType[][] maze1, TileType[][] maze2) : base()
+        private Sprite overlay;
+
+        public PurgatoryLevel(string levelType, TileType[][] maze1, TileType[][] maze2)
+            : base()
         {
             this.pickupSFX = AudioManager.Instance.LoadCue("Purgatory_PickupItem");
 
             // Temp list of rectangles to return
             rectangles = new List<Rectangle>();
+
+            this.overlay = new Sprite(BigEvilStatic.Content.Load<Texture2D>("PurgMapOverlay"), 800, 800);
+            this.overlay.Alpha = 1f;
+            this.overlay.Zoom = 1.15f;
+            this.overlay.Effects.Add(new PulsateEffect(1000f, 0.4f));
+            this.overlay.Effects.Add(new SpinEffect(4000f));
 
             // Set Tiles Wide
             HalfTilesWideOnScreen = (int)Math.Ceiling((double)BigEvilStatic.Viewport.Width / 4 / TileWidth);
@@ -72,6 +82,20 @@ namespace Purgatory.Game
             //}
 
             pickUps = new List<PlayerPickUp>();
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            this.overlay.Alpha = 1f;
+            this.overlay.UpdateEffects(gameTime);
+        }
+
+        public override void Draw(SpriteBatch batch, Bounds bounds)
+        {
+            base.Draw(batch, bounds);
+            this.overlay.Draw(batch, new Vector2(bounds.Rectangle.Left + bounds.Rectangle.Width / 2f, bounds.Rectangle.Height / 2f));
+            //this.overlay.Draw(batch, new Vector2(0f, 0f));
         }
     }
 }
