@@ -71,7 +71,7 @@ namespace Purgatory.Game
         public void InitializePlayer(KeyboardManager playerOneControlScheme, KeyboardManager playerTwoControlScheme, ContentManager Content)
         {
             Texture2D lifeBulletTexture = Content.Load<Texture2D>("halo");
-            Texture2D deathBulletTexture = Content.Load<Texture2D>("deathDown");
+            Texture2D deathBulletTexture = Content.Load<Texture2D>("scythe");
 
             this.player1.Initialize(playerOneControlScheme, new DirectionalSprite("life"), new Graphics.Sprite(lifeBulletTexture, lifeBulletTexture.Height, lifeBulletTexture.Height));
             this.player2.Initialize(playerTwoControlScheme, new DirectionalSprite("death"), new Graphics.Sprite(deathBulletTexture, deathBulletTexture.Height, deathBulletTexture.Height));
