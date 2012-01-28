@@ -290,7 +290,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = Sound::19f27180-6887-487b-b2ea-e806dfd271a1;
+            Name = Sound::0e0cb248-a77c-442f-9ece-adeb2d6e28e1;
             Property = 0;
             Sound = 1;
             Line Color = 4286287161;
@@ -327,8 +327,8 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Bank Last Revised Low = 860717527;
-    Bank Last Revised High = 30203239;
+    Bank Last Revised Low = 440643845;
+    Bank Last Revised High = 30203251;
 
     Wave
     {
@@ -605,6 +605,29 @@ Wave Bank
             Last Modified High = 30203199;
         }
     }
+
+    Wave
+    {
+        Name = Purgatory_PlayerDash;
+        File = SFX\Purgatory_PlayerDash.wav;
+        Build Settings Last Modified Low = 401881628;
+        Build Settings Last Modified High = 30203251;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 51638;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 4219921645;
+            Last Modified High = 30203250;
+        }
+    }
 }
 
 Sound Bank
@@ -614,6 +637,8 @@ Sound Bank
     Windows File = Win\Sound Bank.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
+    Header Last Modified High = 0;
+    Header Last Modified Low = 0;
 
     Sound
     {
@@ -1258,6 +1283,53 @@ Sound Bank
         }
     }
 
+    Sound
+    {
+        Name = Purgatory_PlayerDash;
+        Volume = -1800;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = SFX;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = Purgatory_PlayerDash;
+                    Entry Index = 12;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
     Cue
     {
         Name = Purgatory_DeathDamageScream;
@@ -1493,6 +1565,26 @@ Sound Bank
         {
             Name = Purgatory_DeathWins;
             Index = 11;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = Purgatory_PlayerDash;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Purgatory_PlayerDash;
+            Index = 12;
             Weight Min = 0;
             Weight Max = 255;
         }
