@@ -75,8 +75,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WhiteWall.bmp">
-      <Name>WhiteWall</Name>
+    <Compile Include="lifeWallOutsideCorner.bmp">
+      <Name>lifeWallOutsideCorner</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -264,6 +264,20 @@
   <ItemGroup>
     <Compile Include="lifeGround.png">
       <Name>lifeGround</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="lifeWallTopLeft.png">
+      <Name>lifeWallTopLeft</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="lifeWallTopRight.png">
+      <Name>lifeWallTopRight</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
