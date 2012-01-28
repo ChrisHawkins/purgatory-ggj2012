@@ -209,7 +209,7 @@ namespace Purgatory.Game
                 {
                     this.purgatory.PlayPurgatoryAnimation();
                     this.player2.Level = purgatory;
-                    purgatory.AddToPickups(new Portal(this.player2Level, this.purgatoryMusic, this.ds.BackgroundMusic), this.player2.Position, 40 * 32);
+                    purgatory.AddToPickups(new Portal(this.player2Level, this.purgatoryMusic, this.ds.BackgroundMusic), this.player2.Position, 50 * 32);
                     this.purgatoryTimer = 0f;
                     AudioManager.Instance.CrossFade(ds.BackgroundMusic, this.purgatoryMusic, 1.5f, false);
                     this.player1.EnterPurgatory(PlayerNumber.PlayerTwo);
