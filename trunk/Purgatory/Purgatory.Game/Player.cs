@@ -49,8 +49,6 @@ namespace Purgatory.Game
         public int BulletBounce { get; set; }
         public List<Bullet> BulletList { get; set; }
 
-        private Sprite purgatoryOverlay;
-
         private Rectangle collisionRectangle;
 
         public Cue ShootSFX;
@@ -63,10 +61,6 @@ namespace Purgatory.Game
             this.BulletBounce = 0;
             dashPath = new List<DashSprite>();
             lastDashSprite = new Vector2(float.PositiveInfinity);
-
-            this.purgatoryOverlay = new Sprite(BigEvilStatic.Content.Load<Texture2D>("WhiteOut"), 48, 48);
-            this.purgatoryOverlay.Zoom = 100f;
-            this.purgatoryOverlay.Alpha = 0f;
 
             this.TimeSinceLastDash = 100;
             this.Speed = 350;
@@ -137,6 +131,8 @@ namespace Purgatory.Game
 
         public void Update(GameTime gameTime)
         {
+            this.Level.Update(gameTime);
+
             if (!InputFrozen)
             {
                 TimeSinceLastDash += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -161,15 +157,15 @@ namespace Purgatory.Game
                 this.RegenEnergy(gameTime);
             }
 
-            this.purgatoryOverlay.UpdateEffects(gameTime);
             this.sprite.UpdateAnimation(gameTime);
             this.Level.CheckPickUpCollisions(this);
 
             if (Microsoft.Xna.Framework.Input.Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.K))
             {
-                //this.sprite.AddEffect(new PopInEffect(1000f, 0.25f));
+                this.sprite.AddEffect(new PopInEffect(1000f, 0.25f));
                 //this.sprite.AddEffect(new PurgatoryEffect());
-                PlayPurgatoryAnimation();
+                //PlayPurgatoryAnimation();
+                //this.sprite.AddEffect(new PopInEffect(1000f, 0.25f, true));
             }
         }
 
@@ -207,8 +203,6 @@ namespace Purgatory.Game
             {
                 dash.Draw(batch, bounds);
             }
-
-            this.purgatoryOverlay.Draw(batch, new Vector2(0f, 0f), false);
         }
 
         private void UpdateMovement(GameTime gameTime)
@@ -346,11 +340,6 @@ namespace Purgatory.Game
         {
             this.BulletDirection = targetPosition - this.Position;
             this.BulletDirection.Normalize();
-        }
-
-        internal void PlayPurgatoryAnimation()
-        {
-            this.purgatoryOverlay.Effects.Add(new PurgatoryEffect());
         }
     }
 }

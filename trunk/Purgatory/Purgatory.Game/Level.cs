@@ -316,7 +316,11 @@ namespace Purgatory.Game
             }
         }
 
-        public void Draw(SpriteBatch batch, Bounds bounds)
+        public virtual void Update(GameTime gameTime)
+        {
+        }
+
+        public virtual void Draw(SpriteBatch batch, Bounds bounds)
         {
             int numAcross = bounds.Rectangle.Width / backgroundGround.Width + 3;
             int numUp = bounds.Rectangle.Height / backgroundGround.Height + 3;
