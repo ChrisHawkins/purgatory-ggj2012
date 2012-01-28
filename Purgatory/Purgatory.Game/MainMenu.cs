@@ -17,7 +17,8 @@ namespace Purgatory.Game
         private Cue buttonPress;
         WinScreen winscreen;
 
-        public MainMenu(GraphicsDevice device) : base(device)
+        public MainMenu(GraphicsDevice device)
+            : base(device)
         {
             background = new Sprite(BigEvilStatic.Content.Load<Texture2D>("title"), 1024, 768);
             batch = new SpriteBatch(device);
@@ -53,20 +54,35 @@ namespace Purgatory.Game
                 GameContext context = new GameContext(ds, winscreen);
 
                 context.InitializePlayer(BigEvilStatic.CreateControlSchemeWASD(), BigEvilStatic.CreateControlSchemeArrows(), BigEvilStatic.Content);
-                //context.InitializePlayer(BigEvilStatic.CreateControlXboxPlayerOne(), BigEvilStatic.CreateControlXboxPlayerTwo(), BigEvilStatic.Content);
-
-                ds.ContextUpdater = gt => context.UpdateGameLogic(gt);
-                ds.AddScreen(new GameScreen(this.Device, context, PlayerNumber.PlayerOne));
-                ds.AddScreen(new GameScreen(this.Device, context, PlayerNumber.PlayerTwo));
-
-                this.LoadScreen(ds);
-
-                AudioManager.Instance.PlayCue(ref this.buttonPress, false);
-
-                // crossfade into game music
-                AudioManager.Instance.CrossFade(this.menuMusic, ds.BackgroundMusic, 2f, true);
-                this.MusicPlaying = false;
+                this.StartGame(ds, context);
             }
+
+            GamePadState gs = GamePad.GetState(PlayerIndex.One);
+
+            if (gs.IsButtonDown(Buttons.Start))
+            {
+                this.timer = 0;
+                DualScreen ds = new DualScreen(this.Device);
+                GameContext context = new GameContext(ds, winscreen);
+
+                context.InitializePlayer(BigEvilStatic.CreateControlXboxPlayerOne(), BigEvilStatic.CreateControlXboxPlayerTwo(), BigEvilStatic.Content);
+                this.StartGame(ds, context);
+            }
+        }
+
+        private void StartGame(DualScreen ds, GameContext context)
+        {
+            ds.ContextUpdater = gt => context.UpdateGameLogic(gt);
+            ds.AddScreen(new GameScreen(this.Device, context, PlayerNumber.PlayerOne));
+            ds.AddScreen(new GameScreen(this.Device, context, PlayerNumber.PlayerTwo));
+
+            this.LoadScreen(ds);
+
+            AudioManager.Instance.PlayCue(ref this.buttonPress, false);
+
+            // crossfade into game music
+            AudioManager.Instance.CrossFade(this.menuMusic, ds.BackgroundMusic, 2f, true);
+            this.MusicPlaying = false;
         }
     }
 }
