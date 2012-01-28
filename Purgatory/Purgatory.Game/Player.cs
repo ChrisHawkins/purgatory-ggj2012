@@ -9,6 +9,7 @@ namespace Purgatory.Game
     using System.Collections.Generic;
     using System;
     using Microsoft.Xna.Framework.Audio;
+    using Purgatory.Game.Animation;
 
     public class Player : IMoveable
     {
@@ -316,6 +317,7 @@ namespace Purgatory.Game
 
                     if (this.Health > 0)
                     {
+                        this.sprite.AddEffect(new PainEffect());
                         AudioManager.Instance.PlayCue(ref this.DamageSFX, false);
                     }
                     else if (Level is PurgatoryLevel)
