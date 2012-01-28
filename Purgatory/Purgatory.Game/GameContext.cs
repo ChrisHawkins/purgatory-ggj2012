@@ -90,7 +90,7 @@ namespace Purgatory.Game
             }
         }
 
-        public void InitializePlayer(IInputController playerOneControlScheme, IInputController playerTwoControlScheme, ContentManager Content)
+        public void InitializePlayer(InputController playerOneControlScheme, InputController playerTwoControlScheme, ContentManager Content)
         {
             Texture2D lifeBulletTexture = Content.Load<Texture2D>("halo");
             Texture2D deathBulletTexture = Content.Load<Texture2D>("scythe");

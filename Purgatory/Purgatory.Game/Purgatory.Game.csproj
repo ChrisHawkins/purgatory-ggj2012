@@ -108,7 +108,7 @@
     <Compile Include="PowerUps\BouncePowerUp.cs" />
     <Compile Include="Bounds.cs" />
     <Compile Include="Bullet.cs" />
-    <Compile Include="Controls\IInputController.cs" />
+    <Compile Include="Controls\InputController.cs" />
     <Compile Include="Controls\KeyboardInputController.cs" />
     <Compile Include="Controls\KeyboardManager.cs" />
     <Compile Include="Controls\XboxInputController.cs" />
