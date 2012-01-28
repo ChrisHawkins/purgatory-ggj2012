@@ -327,15 +327,15 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Bank Last Revised Low = 4144246627;
-    Bank Last Revised High = 30203226;
+    Bank Last Revised Low = 860717527;
+    Bank Last Revised High = 30203239;
 
     Wave
     {
         Name = Purgatory_DeathDamageScream;
         File = SFX\Purgatory_DeathDamageScream.wav;
-        Build Settings Last Modified Low = 2667134555;
-        Build Settings Last Modified High = 30203194;
+        Build Settings Last Modified Low = 575951239;
+        Build Settings Last Modified High = 30203239;
 
         Cache
         {
@@ -495,8 +495,8 @@ Wave Bank
     {
         Name = Purgatory_PurgatoryChase;
         File = Music\Purgatory_PurgatoryChase.wav;
-        Build Settings Last Modified Low = 2797642019;
-        Build Settings Last Modified High = 30203194;
+        Build Settings Last Modified Low = 860717527;
+        Build Settings Last Modified High = 30203239;
 
         Cache
         {
@@ -518,8 +518,8 @@ Wave Bank
     {
         Name = Purgatory_HaloThrow;
         File = SFX\Purgatory_HaloThrow.wav;
-        Build Settings Last Modified Low = 990692116;
-        Build Settings Last Modified High = 30203198;
+        Build Settings Last Modified Low = 822905364;
+        Build Settings Last Modified High = 30203239;
 
         Cache
         {
@@ -541,8 +541,8 @@ Wave Bank
     {
         Name = Purgatory_LifeWins;
         File = Music\Purgatory_LifeWins.wav;
-        Build Settings Last Modified Low = 2108634421;
-        Build Settings Last Modified High = 30203199;
+        Build Settings Last Modified Low = 789533456;
+        Build Settings Last Modified High = 30203239;
 
         Cache
         {
@@ -564,8 +564,8 @@ Wave Bank
     {
         Name = Purgatory_ButtonPress;
         File = SFX\Purgatory_ButtonPress.wav;
-        Build Settings Last Modified Low = 2276309097;
-        Build Settings Last Modified High = 30203202;
+        Build Settings Last Modified Low = 755451506;
+        Build Settings Last Modified High = 30203239;
 
         Cache
         {
@@ -586,23 +586,23 @@ Wave Bank
     Wave
     {
         Name = Purgatory_DeathWins;
-        File = ..\..\..\..\Sound\Final\Music\Purgatory_DeathWins.wav;
-        Build Settings Last Modified Low = 4121785343;
-        Build Settings Last Modified High = 30203226;
+        File = Music\Purgatory_DeathWins.wav;
+        Build Settings Last Modified Low = 711418988;
+        Build Settings Last Modified High = 30203239;
 
         Cache
         {
             Format Tag = 0;
             Channels = 1;
-            Sampling Rate = 48000;
+            Sampling Rate = 44100;
             Bits Per Sample = 1;
             Play Region Offset = 44;
-            Play Region Length = 870312;
+            Play Region Length = 799600;
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 3800306955;
-            Last Modified High = 30203226;
+            Last Modified Low = 1686350267;
+            Last Modified High = 30203199;
         }
     }
 }
