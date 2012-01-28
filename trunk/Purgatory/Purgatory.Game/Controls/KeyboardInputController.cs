@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Purgatory.Game.Graphics;
-
+﻿
 namespace Purgatory.Game.Controls
 {
+    using System.Collections.Generic;
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Input;
+    using Purgatory.Game.Graphics;
+
     public class KeyboardInputController : IInputController
     {
         private KeyboardManager controls;
@@ -71,7 +69,7 @@ namespace Purgatory.Game.Controls
             if (this.controls.ShootControlPressed() && this.shootTimer > this.shootCooldown && player.Energy > 0)
             {
                 Vector2 bulletPos = player.Position;
-                Bullet b = new Bullet(bulletPos, player.BulletDirection, player.BulletBounce, 500.0f, new Sprite(player.BulletSprite), player.Level);
+                Bullet b = new Bullet(bulletPos, Vector2.Normalize(player.BulletDirection), player.BulletBounce, 500.0f, new Sprite(player.BulletSprite), player.Level);
                 player.BulletList.Add(b);
                 --player.Energy;
                 this.shootTimer = 0.0f;
