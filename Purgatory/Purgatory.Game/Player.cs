@@ -151,7 +151,7 @@ namespace Purgatory.Game
             if (playerNumber == this.playerNumber)
             {
                 this.Speed = this.Speed * 3 / 4;
-                this.Health = Player.MaxHealth;
+                this.Health = Player.MaxHealth / 2;
                 this.Energy = 0;
                 this.BulletBounce = 0;
                 this.BulletList.Clear();
@@ -167,12 +167,15 @@ namespace Purgatory.Game
             this.Health = Player.MaxHealth;
             this.Energy = Player.MaxEnergy;
             this.Speed = Player.MaxSpeed;
+            this.Level.ClearPickups();
         }
 
         public void Update(GameTime gameTime)
         {
             this.Level.Update(gameTime);
+
             this.BulletBounce = (int)MathHelper.Clamp(this.BulletBounce, 0, 5);
+            this.Health = (int)MathHelper.Clamp(this.Health, 0, Player.MaxHealth);
 
             if (!InputFrozen)
             {
