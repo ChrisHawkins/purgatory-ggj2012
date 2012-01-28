@@ -6,6 +6,7 @@ namespace Purgatory.Game
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     using Purgatory.Game.Graphics;
+    using Purgatory.Game.Controls;
 
     public class MainMenu : Screen
     {
@@ -59,12 +60,7 @@ namespace Purgatory.Game
 
             GamePadState gs = GamePad.GetState(PlayerIndex.One);
 
-            if (gs.IsButtonDown(Buttons.Start) ||
-                gs.IsButtonDown(Buttons.A) ||
-                gs.IsButtonDown(Buttons.B) ||
-                gs.IsButtonDown(Buttons.X) ||
-                gs.IsButtonDown(Buttons.Y) ||
-                gs.IsButtonDown(Buttons.BigButton))
+            if (XboxUtility.ButtonDown(true))
             {
                 this.timer = 0;
                 DualScreen ds = new DualScreen(this.Device);
