@@ -95,6 +95,7 @@
     <Compile Include="AudioManager.cs" />
     <Compile Include="AmmoPickUp.cs" />
     <Compile Include="BigEvilStatic.cs" />
+    <Compile Include="BouncePowerUp.cs" />
     <Compile Include="Bounds.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="Controls\KeyboardManager.cs" />
