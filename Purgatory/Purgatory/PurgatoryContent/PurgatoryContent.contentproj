@@ -75,13 +75,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HealthBar.bmp">
-      <Name>HealthBar</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="deathwins.png">
       <Name>deathwins</Name>
       <Importer>TextureImporter</Importer>
@@ -581,15 +574,22 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EnergyBar.bmp">
+    <Compile Include="hud.png">
+      <Name>hud</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="EnergyBar.png">
       <Name>EnergyBar</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="hud.png">
-      <Name>hud</Name>
+    <Compile Include="HealthBar.png">
+      <Name>HealthBar</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

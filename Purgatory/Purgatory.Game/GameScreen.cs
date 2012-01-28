@@ -35,12 +35,12 @@ namespace Purgatory.Game
             this.batch = new SpriteBatch(device);
 
             this.healthBar = new StatusBar(
-                new Vector2(120f, this.Device.Viewport.Height - 30f),
+                new Vector2(120f, this.Device.Viewport.Height - 65f),
                 this.context.GetPlayer(this.playerNumber).Health,
                 BigEvilStatic.Content.Load<Texture2D>("HealthBar"));
 
             this.energyBar = new StatusBar(
-                new Vector2(120f, this.Device.Viewport.Height - 65f),
+                new Vector2(120f, this.Device.Viewport.Height - 30f),
                 this.context.GetPlayer(this.playerNumber).Energy,
                 BigEvilStatic.Content.Load<Texture2D>("EnergyBar"));
 
