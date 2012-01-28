@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using Purgatory.Game.Animation;
-
+﻿
 namespace Purgatory.Game.Graphics
 {
+    using System;
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+    using Purgatory.Game.Animation;
+
     public class DirectionalSprite
     {
         private Sprite upSprite;
@@ -17,15 +15,15 @@ namespace Purgatory.Game.Graphics
 
         public bool PlayAnimation { get; set; }
 
-        public int Width {get { return upSprite.Width;}}
-        public int Height {get { return upSprite.Height;}}
+        public int Width { get { return upSprite.Width; } }
+        public int Height { get { return upSprite.Height; } }
 
         public void AddEffect(SpriteEffect effect)
         {
-            upSprite.Effects.Add(effect);
-            downSprite.Effects.Add(effect);
-            leftSprite.Effects.Add(effect);
-            rightSprite.Effects.Add(effect);
+            if (!upSprite.Effects.Contains(effect)) upSprite.Effects.Add(effect);
+            if (!downSprite.Effects.Contains(effect)) downSprite.Effects.Add(effect);
+            if (!leftSprite.Effects.Contains(effect)) leftSprite.Effects.Add(effect);
+            if (!rightSprite.Effects.Contains(effect)) rightSprite.Effects.Add(effect);
         }
 
         public void AddEmbellishment(Embellishment embellishment)
@@ -43,7 +41,7 @@ namespace Purgatory.Game.Graphics
             leftSprite.UpdateEffects(time);
             rightSprite.UpdateEffects(time);
 
-            if(this.PlayAnimation)
+            if (this.PlayAnimation)
             {
                 upSprite.UpdateAnimation(time);
                 downSprite.UpdateAnimation(time);
@@ -65,29 +63,29 @@ namespace Purgatory.Game.Graphics
 
         public void Draw(Vector2 direction, SpriteBatch batch, Vector2 point)
         {
-             if(direction.Y > 0)
-             {
+            if (direction.Y > 0)
+            {
                 downSprite.Draw(batch, point);
                 return;
-             }
+            }
 
-            if(direction.Y < 0)
-             {
+            if (direction.Y < 0)
+            {
                 upSprite.Draw(batch, point);
                 return;
-             }
+            }
 
-            if(direction.X > 0)
-             {
+            if (direction.X > 0)
+            {
                 rightSprite.Draw(batch, point);
                 return;
-             }
+            }
 
-            if(direction.X < 0)
-             {
+            if (direction.X < 0)
+            {
                 leftSprite.Draw(batch, point);
                 return;
-             }
+            }
         }
 
         public Sprite CreateSprite(Vector2 direction)
@@ -108,6 +106,14 @@ namespace Purgatory.Game.Graphics
             {
                 return new Sprite(leftSprite);
             }
+        }
+
+        public void RemoveEffect(SpriteEffect effect)
+        {
+            this.upSprite.Effects.Remove(effect);
+            this.downSprite.Effects.Remove(effect);
+            this.leftSprite.Effects.Remove(effect);
+            this.rightSprite.Effects.Remove(effect);
         }
     }
 }

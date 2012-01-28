@@ -56,6 +56,8 @@ namespace Purgatory.Game
         public List<Bullet> BulletList { get; set; }
         private List<Bullet> dyingBullets { get; set; }
 
+        private GrowShrinkEffect effect;
+
         private Rectangle collisionRectangle;
 
         public Cue ShootSFX;
@@ -78,6 +80,7 @@ namespace Purgatory.Game
             this.Energy = Player.MaxEnergy;
             this.BulletList = new List<Bullet>();
             this.direction = new Vector2(0, 1);
+            this.effect = new GrowShrinkEffect(1000f, 0.02f);
 
             this.xPenetrations = new List<float>();
             this.yPenetrations = new List<float>();
@@ -187,9 +190,12 @@ namespace Purgatory.Game
                 {
                     this.direction = MovementDirection;
                     this.sprite.PlayAnimation = true;
+
+                    this.sprite.AddEffect(this.effect);
                 }
                 else
                 {
+                    this.sprite.RemoveEffect(this.effect);
                     this.sprite.PlayAnimation = false;
                 }
 
@@ -235,7 +241,7 @@ namespace Purgatory.Game
 
             if (Microsoft.Xna.Framework.Input.Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.K))
             {
-                this.Health -= 1;
+                //this.Health -= 1;
                 //this.ShieldHealth = 10;
                 //this.sprite.AddEffect(new PopInEffect(1000f, 0.25f));
                 //this.sprite.AddEffect(new PurgatoryEffect());
