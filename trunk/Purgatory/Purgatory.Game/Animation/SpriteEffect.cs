@@ -10,7 +10,7 @@ namespace Purgatory.Game.Animation
         public TimeSpan Duration { get; protected set; }
         protected TimeSpan TimeElapsed { get; private set; }
 
-        public abstract void Update(Sprite sprite, float time);
+        protected abstract void Update(Sprite sprite, float time);
 
         public void Update(Sprite sprite, GameTime gameTime)
         {

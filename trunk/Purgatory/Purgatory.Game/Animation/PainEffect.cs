@@ -12,7 +12,7 @@ namespace Purgatory.Game.Animation
             this.Duration = TimeSpan.FromMilliseconds(700);
         }
 
-        public override void Update(Sprite sprite, float time)
+        protected override void Update(Sprite sprite, float time)
         {
             if (time > 0.5f)
             {

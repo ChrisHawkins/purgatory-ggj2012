@@ -22,7 +22,7 @@ namespace Purgatory.Game.Animation
             this.reverse = reverse;
         }
 
-        public override void Update(Sprite sprite, float time)
+        protected override void Update(Sprite sprite, float time)
         {
             if (reverse)
             {
