@@ -303,10 +303,12 @@ namespace Purgatory.Game
                 {
                     if (xPenetrations.Count >= yPenetrations.Count)
                     {
+                        this.xPenetrations.Sort();
                         this.position.X -= xPenetrations[0];
                     }
                     if (yPenetrations.Count >= xPenetrations.Count)
                     {
+                        this.yPenetrations.Sort();
                         this.position.Y -= yPenetrations[0];
                     }
                 }
