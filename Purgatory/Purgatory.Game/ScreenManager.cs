@@ -20,6 +20,11 @@ namespace Purgatory.Game
 
         void LoadingScreen(object sender, ScreenEventArgs e)
         {
+            if (this.screenStack.Count > 0)
+            {
+                this.screenStack.First().OnControlLost();
+            }
+
             this.OpenScreen(e.Screen);
         }
 

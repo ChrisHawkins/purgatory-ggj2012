@@ -15,6 +15,7 @@ namespace Purgatory.Game
         private Form hud;
         private StatusBar healthBar;
         private StatusBar energyBar;
+        private StatusBar timeBar;
         private LocatorArrow arrow;
 
         public GameScreen(GraphicsDevice device, GameContext context, PlayerNumber playerNumber)
@@ -46,10 +47,18 @@ namespace Purgatory.Game
                 this.context.GetPlayer(this.playerNumber).Energy,
                 BigEvilStatic.Content.Load<Texture2D>("EnergyBar"));
 
+            this.timeBar = new StatusBar(
+                new Vector2(0f, 10f),
+                this.context.Time,
+                BigEvilStatic.Content.Load<Texture2D>("EnergyBar"));
+
+            if (this.playerNumber == PlayerNumber.PlayerOne) this.timeBar.RightToLeft = true;
+
             this.arrow = new LocatorArrow(BigEvilStatic.Content.Load<Texture2D>("Arrow"));
 
             this.hud.Controls.Add(this.healthBar);
             this.hud.Controls.Add(this.energyBar);
+            this.hud.Controls.Add(this.timeBar);
         }
 
         public override void Draw(Bounds bounds)
@@ -77,6 +86,10 @@ namespace Purgatory.Game
 
             this.healthBar.Left = bounds.Rectangle.Left;
             this.energyBar.Left = bounds.Rectangle.Left;
+
+            this.timeBar.Left = bounds.Rectangle.Left;
+            this.timeBar.Right = bounds.Rectangle.Right;
+
             this.hud.Draw();
         }
 
@@ -96,6 +109,7 @@ namespace Purgatory.Game
 
             this.healthBar.Value = this.context.GetPlayer(this.playerNumber).Health;
             this.energyBar.Value = this.context.GetPlayer(this.playerNumber).Energy;
+            this.timeBar.Value = this.context.Time;
             this.hud.Update(time);
         }
     }
