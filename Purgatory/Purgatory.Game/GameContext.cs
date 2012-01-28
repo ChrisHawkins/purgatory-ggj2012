@@ -25,6 +25,8 @@ namespace Purgatory.Game
         private Random rng;
         private DualScreen ds;
         private Cue purgatoryMusic;
+        private Cue purgatoryVoice;
+        private Cue findPortalVoice;
         private bool endFadingMusic = false;
         private float purgatoryTimer;
 
@@ -54,6 +56,8 @@ namespace Purgatory.Game
 
             rng = new Random();
             this.purgatoryMusic = AudioManager.Instance.LoadCue("Purgatory_PurgatoryChase");
+            this.purgatoryVoice = AudioManager.Instance.LoadCue("Purgatory_Purgatory");
+            this.findPortalVoice = AudioManager.Instance.LoadCue("Purgatory_FindPortal");
         }
 
         public Player GetPlayer(PlayerNumber playerNumber)
@@ -163,9 +167,13 @@ namespace Purgatory.Game
                 {
                     this.purgatory.PlayPurgatoryAnimation();
                     this.player1.Level = purgatory;
-                    purgatory.AddToPickups(new Portal(this.player2Level, this.purgatoryMusic, this.ds.BackgroundMusic), this.player1.Position, 40 * 32);
+                    purgatory.AddToPickups(new Portal(this.player1Level, this.purgatoryMusic, this.ds.BackgroundMusic), this.player1.Position, 40 * 32);
                     this.purgatoryTimer = 0f;
-                    AudioManager.Instance.CrossFade(ds.BackgroundMusic, this.purgatoryMusic, 1.5f, false);
+                    //AudioManager.Instance.CrossFade(ds.BackgroundMusic, this.purgatoryMusic, 1.5f, false);
+                    this.purgatoryVoice = AudioManager.Instance.LoadCue(this.purgatoryVoice.Name);
+                    this.findPortalVoice = AudioManager.Instance.LoadCue(this.findPortalVoice.Name);
+                    this.purgatoryVoice = AudioManager.Instance.EnqueueCue(this.purgatoryVoice);
+                    this.findPortalVoice = AudioManager.Instance.EnqueueCue(this.findPortalVoice);
                     this.player1.EnterPurgatory(PlayerNumber.PlayerOne);
                     this.player2.EnterPurgatory(PlayerNumber.PlayerOne);
                     
@@ -208,7 +216,11 @@ namespace Purgatory.Game
                     this.player2.Level = purgatory;
                     purgatory.AddToPickups(new Portal(this.player2Level, this.purgatoryMusic, this.ds.BackgroundMusic), this.player2.Position, 50 * 32);
                     this.purgatoryTimer = 0f;
-                    AudioManager.Instance.CrossFade(ds.BackgroundMusic, this.purgatoryMusic, 1.5f, false);
+                    //AudioManager.Instance.CrossFade(ds.BackgroundMusic, this.purgatoryMusic, 1.5f, false);
+                    this.purgatoryVoice = AudioManager.Instance.LoadCue(this.purgatoryVoice.Name);
+                    this.findPortalVoice = AudioManager.Instance.LoadCue(this.findPortalVoice.Name);
+                    this.purgatoryVoice = AudioManager.Instance.EnqueueCue(this.purgatoryVoice);
+                    this.findPortalVoice = AudioManager.Instance.EnqueueCue(this.findPortalVoice);
                     this.player1.EnterPurgatory(PlayerNumber.PlayerTwo);
                     this.player2.EnterPurgatory(PlayerNumber.PlayerTwo);
                 }

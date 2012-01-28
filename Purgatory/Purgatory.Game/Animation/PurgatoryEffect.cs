@@ -4,9 +4,11 @@ namespace Purgatory.Game.Animation
     using System;
     using Microsoft.Xna.Framework;
     using Purgatory.Game.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
     public class PurgatoryEffect : SpriteEffect
     {
+        
         public PurgatoryEffect()
         {
             this.Duration = TimeSpan.FromMilliseconds(250);

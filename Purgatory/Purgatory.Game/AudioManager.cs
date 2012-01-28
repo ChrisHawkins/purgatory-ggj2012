@@ -21,6 +21,7 @@ using System.Collections.Generic;
         private float maxFadeVol;
         private float gFadeTimer;
         private float gFadeTime;
+        private Queue<Cue> CueQueue;
 
         private List<FadeInfo> fadingCues;
 
@@ -63,6 +64,7 @@ using System.Collections.Generic;
             this.audioEngine = new AudioEngine("Content\\PurgatoryXACT.xgs");
             this.waveBank = new WaveBank(this.audioEngine, "Content\\Wave Bank.xwb");
             this.soundBank = new SoundBank(this.audioEngine, "Content\\Sound Bank.xsb");
+            this.CueQueue = new Queue<Cue>();
 
             this.SetGlobalVolume(1f);
             this.SetMusicVolume(0.5f);
@@ -106,7 +108,7 @@ using System.Collections.Generic;
         /// Plays a sound cue that has already been loaded.
         /// </summary>
         /// <param name="cue">The sound cue that is to be played.</param>
-        public void PlayCue(ref Cue cue, bool allowMultipleInstances)
+        public Cue PlayCue(ref Cue cue, bool allowMultipleInstances)
         {
             if (!cue.IsPlaying)
             {
@@ -121,6 +123,8 @@ using System.Collections.Generic;
             {
                 AudioManager.Instance.LoadCue(cue.Name).Play();
             }
+
+            return cue;
         }
 
         /// <summary>
@@ -201,7 +205,33 @@ using System.Collections.Generic;
 
             #endregion
 
+            if (CueQueue.Count > 0)
+            {
+                if (!CueQueue.Peek().IsPlaying)
+                {
+                    CueQueue.Dequeue();
+
+                    if (CueQueue.Count > 0)
+                    {
+                        Cue cue = CueQueue.Peek();
+                        cue = this.PlayCue(ref cue, false);
+                    }
+                }
+            }
+
             this.audioEngine.Update();
+        }
+
+        public Cue EnqueueCue(Cue cue)
+        {
+            this.CueQueue.Enqueue(cue);
+
+            if (CueQueue.Count == 1)
+            {
+                cue = this.PlayCue(ref cue, false);
+            }
+
+            return cue;
         }
 
         /// <summary>
@@ -235,7 +265,7 @@ using System.Collections.Generic;
             this.fadingCues.Add(f);
         }
 
-        public void FadeIn(Cue cue, float fadeTime)
+        public Cue FadeIn(Cue cue, float fadeTime)
         {
             if (!cue.IsPlaying)
             {
@@ -243,9 +273,11 @@ using System.Collections.Generic;
             }
 
             this.fadingCues.Add(new FadeInfo(cue, fadeTime, true, false));
+
+            return cue;
         }
         
-        public void FadeIn(Cue cue, float fadeTime, float minVolume, float maxVolume)
+        public Cue FadeIn(Cue cue, float fadeTime, float minVolume, float maxVolume)
         {
             if (!cue.IsPlaying)
             {
@@ -256,12 +288,14 @@ using System.Collections.Generic;
             f.MinVolume = minVolume;
             f.MaxVolume = maxVolume;
             this.fadingCues.Add(f);
+
+            return cue;
         }
 
-        public void CrossFade(Cue fadeOut, Cue fadeIn, float fadeTime, bool stopFirstCueAfterFade)
+        public Cue CrossFade(Cue fadeOut, Cue fadeIn, float fadeTime, bool stopFirstCueAfterFade)
         {
             this.FadeOut(fadeOut, fadeTime, stopFirstCueAfterFade);
-            this.FadeIn(fadeIn, fadeTime);
+            return this.FadeIn(fadeIn, fadeTime);
         }
 
         public void FadeVolumeDown(float fadeTime, float minVolume, float maxVolume)
