@@ -115,6 +115,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PurgatoryXACT.xap">
+      <Name>PurgatoryXACT</Name>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="lifeDown.png">
       <Name>lifeDown</Name>
       <Importer>TextureImporter</Importer>

@@ -5,6 +5,7 @@ namespace Purgatory.Game
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     using Purgatory.Game.Graphics;
+    using Microsoft.Xna.Framework.Audio;
 
     public class WinScreen: Screen
     {
@@ -13,8 +14,8 @@ namespace Purgatory.Game
         private Sprite background;
         private float timer;
         private KeyboardState kb;
+        public Cue WinMusic;
         
-
         public WinScreen(GraphicsDevice device)
             : base(device)
         {
@@ -45,8 +46,17 @@ namespace Purgatory.Game
                 if (kb.GetPressedKeys().Length > 0)
                 {
                     this.CloseUntil(typeof(MainMenu));
+                    Cue buttonPress = AudioManager.Instance.LoadCue("Purgatory_ButtonPress");
+                    AudioManager.Instance.PlayCue(ref buttonPress, false);
                 }
             }
+        }
+
+        public override void OnControlLost()
+        {
+            base.OnControlLost();
+
+            AudioManager.Instance.FadeOut(this.WinMusic, 1, true);
         }
     }
 }

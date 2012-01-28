@@ -12,6 +12,11 @@ namespace Purgatory.Game
 
         public void OpenScreen(Screen screen)
         {
+            if (this.screenStack.Count > 0)
+            {
+                this.screenStack.First().OnControlLost();
+            }
+
             screen.ClosingScreen += new EventHandler(ScreenClosing);
             screen.LoadingScreen += new EventHandler<ScreenEventArgs>(LoadingScreen);
             screen.ClosingAllScreensUntil += new EventHandler<ScreenTypeEventArgs>(CloseScreensUntil);
@@ -20,11 +25,6 @@ namespace Purgatory.Game
 
         void LoadingScreen(object sender, ScreenEventArgs e)
         {
-            if (this.screenStack.Count > 0)
-            {
-                this.screenStack.First().OnControlLost();
-            }
-
             this.OpenScreen(e.Screen);
         }
 
@@ -55,9 +55,10 @@ namespace Purgatory.Game
             this.screenStack.First().Draw(Bounds.Screen);
         }
 
-        public void Update(GameTime time)
+        public void Update(GameTime gameTime)
         {
-            this.screenStack.First().Update(time);
+            this.screenStack.First().Update(gameTime);
+            AudioManager.Instance.Update(gameTime);
         }
 
         public event EventHandler ScreensEmpty;

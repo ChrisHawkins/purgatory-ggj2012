@@ -5,12 +5,16 @@ namespace Purgatory.Game
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
 using Purgatory.Game.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
     public class MainMenu : Screen
     {
         private float timer;
         SpriteBatch batch;
         Sprite background;
+        bool MusicPlaying = false;
+        private Cue menuMusic;
+        private Cue buttonPress;
         WinScreen winscreen;
 
         public MainMenu(GraphicsDevice device) : base(device)
@@ -18,6 +22,8 @@ using Purgatory.Game.Graphics;
             background = new Sprite(BigEvilStatic.Content.Load<Texture2D>("title"), 1024, 768);
             batch = new SpriteBatch(device);
             this.winscreen = new WinScreen(device);
+            menuMusic = AudioManager.Instance.LoadCue("Purgatory_MainMenu");
+            buttonPress = AudioManager.Instance.LoadCue("Purgatory_ButtonPress");
         }
 
         public override void Draw(Bounds bounds)
@@ -30,6 +36,13 @@ using Purgatory.Game.Graphics;
 
         public override void Update(GameTime time)
         {
+            // play the menu music
+            if (!MusicPlaying)
+            {
+                AudioManager.Instance.PlayCue(ref menuMusic, false);
+                this.MusicPlaying = true;
+            }
+
             KeyboardState kb = Keyboard.GetState();
             timer += (float)time.ElapsedGameTime.TotalSeconds;
 
@@ -45,6 +58,12 @@ using Purgatory.Game.Graphics;
                 ds.AddScreen(new GameScreen(this.Device, context, PlayerNumber.PlayerTwo));
 
                 this.LoadScreen(ds);
+
+                AudioManager.Instance.PlayCue(ref this.buttonPress, false);
+
+                // crossfade into game music
+                AudioManager.Instance.CrossFade(this.menuMusic, ds.BackgroundMusic, 2f, true);
+                this.MusicPlaying = false;
             }
         }
     }

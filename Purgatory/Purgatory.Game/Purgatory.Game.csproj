@@ -92,11 +92,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AudioManager.cs" />
     <Compile Include="AmmoPickUp.cs" />
     <Compile Include="BigEvilStatic.cs" />
     <Compile Include="Bounds.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="Controls\KeyboardManager.cs" />
+    <Compile Include="Cu.cs" />
     <Compile Include="DualScreen.cs" />
     <Compile Include="GameContext.cs" />
     <Compile Include="GameScreen.cs" />

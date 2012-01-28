@@ -32,6 +32,7 @@ namespace Purgatory.Game
 
         protected void CloseUntil(Type screenType)
         {
+            this.OnControlLost();
             this.ClosingAllScreensUntil(this, new ScreenTypeEventArgs(screenType));
         }
 
