@@ -3,9 +3,9 @@ namespace Purgatory.Game
 {
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
-using Purgatory.Game.Controls;
     using Microsoft.Xna.Framework.Input;
-using Purgatory.Game.Graphics;
+    using Purgatory.Game.Controls;
+    using Purgatory.Game.Graphics;
 
     public static class BigEvilStatic
     {
@@ -22,24 +22,24 @@ using Purgatory.Game.Graphics;
             Viewport = viewport;
         }
 
-        public static KeyboardManager CreateControlSchemeWASD()
+        public static KeyboardInputController CreateControlSchemeWASD()
         {
-            return new KeyboardManager(Keys.W, Keys.S, Keys.A, Keys.D, Keys.Space, Keys.LeftShift);
+            return new KeyboardInputController(Keys.W, Keys.S, Keys.A, Keys.D, Keys.Space, Keys.LeftShift);
         }
 
-        public static KeyboardManager CreateControlSchemeArrows()
+        public static KeyboardInputController CreateControlSchemeArrows()
         {
-            return new KeyboardManager(Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Enter, Keys.RightShift);
+            return new KeyboardInputController(Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Enter, Keys.RightShift);
         }
 
-        public static KeyboardManager CreateControlWinatronPlayerOne()
+        public static KeyboardInputController CreateControlWinatronPlayerOne()
         {
-            return new KeyboardManager(Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Z, Keys.X); // use X aswell
+            return new KeyboardInputController(Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Z, Keys.X); // use X aswell
         }
 
-        public static KeyboardManager CreateControlWinatronPlayerTwo()
+        public static KeyboardInputController CreateControlWinatronPlayerTwo()
         {
-            return new KeyboardManager(Keys.I, Keys.K, Keys.J, Keys.L, Keys.M, Keys.M); // can use n aswell
+            return new KeyboardInputController(Keys.I, Keys.K, Keys.J, Keys.L, Keys.M, Keys.M); // can use n aswell
         }
 
         public static Sprite CreateDeathWinBackground()

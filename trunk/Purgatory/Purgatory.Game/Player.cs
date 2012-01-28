@@ -13,38 +13,34 @@ namespace Purgatory.Game
     public class Player : IMoveable
     {
         public static bool InputFrozen = false;
-        private float speed;
+        public float Speed { get; set; }
         private float dashShadowInterval = 1f;
 
-        private KeyboardManager controls;
         private Vector2 direction;
-        private Vector2 movementDirection;
+        public Vector2 MovementDirection { get; set; }
         private DirectionalSprite sprite;
         private PlayerNumber playerNumber;
-        private Vector2 bulletDirection;
-        
+        public Vector2 BulletDirection { get; set; }
 
         private List<float> xPenetrations;
         private List<float> yPenetrations;
 
-        private Vector2 DashVelocity;
+        public Vector2 DashVelocity { get; set; }
 
-        private const float dashCooldownTime = 1;
-        private float timeSinceLastDash = 0;
+        public const float DashCooldownTime = 1;
+        public float TimeSinceLastDash { get; set; }
 
         private List<DashSprite> dashPath;
         private Vector2 lastDashSprite;
 
-        private Sprite bulletSprite;
+        public Sprite BulletSprite { get; set; }
+        private IInputController inputController;
 
         public int Health { get; set; }
         public int Energy { get; set; }
 
-        public int bulletBounce { get; set; }
-        public List<Bullet> BulletList { get; private set; }
-
-        private float shootCooldown;
-        private float shootTimer;
+        public int BulletBounce { get; set; }
+        public List<Bullet> BulletList { get; set; }
 
         private Rectangle collisionRectangle;
 
@@ -55,18 +51,17 @@ namespace Purgatory.Game
 
         public Player(PlayerNumber playerNumber)
         {
-            this.bulletBounce = 0;
+            this.BulletBounce = 0;
             dashPath = new List<DashSprite>();
             lastDashSprite = new Vector2(float.PositiveInfinity);
-            
-            this.timeSinceLastDash = 100;
-            this.speed = 350;
+
+            this.TimeSinceLastDash = 100;
+            this.Speed = 350;
             this.playerNumber = playerNumber;
             this.Health = 20;
             this.Energy = 100;
             this.BulletList = new List<Bullet>();
             this.direction = new Vector2(0, 1);
-            this.shootCooldown = 0.2f;
 
             this.xPenetrations = new List<float>();
             this.yPenetrations = new List<float>();
@@ -87,12 +82,13 @@ namespace Purgatory.Game
             this.DashSFX = AudioManager.Instance.LoadCue("Purgatory_PlayerDash");
         }
 
-        public void Initialize(KeyboardManager controlScheme, DirectionalSprite sprite, Sprite bulletSprite)
+        public void Initialize(IInputController controller, DirectionalSprite sprite, Sprite bulletSprite)
         {
-            this.controls = controlScheme;
+            this.inputController = controller;
             this.sprite = sprite;
-            this.bulletSprite = bulletSprite;
+            this.BulletSprite = bulletSprite;
             this.collisionRectangle = new Rectangle(0, 0, sprite.Width, sprite.Height);
+            
             this.position = Level.FindSpawnPoint(true);
             
             //if (this.playerNumber == PlayerNumber.PlayerOne)
@@ -121,14 +117,13 @@ namespace Purgatory.Game
         {
             if (!InputFrozen)
             {
-                timeSinceLastDash += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                this.controls.Update();
+                TimeSinceLastDash += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 this.UpdateMovement(gameTime);
 
                 // Update player direction. Dont change if movement direction has no length
-                if (movementDirection.LengthSquared() != 0)
+                if (MovementDirection.LengthSquared() != 0)
                 {
-                    this.direction = movementDirection;
+                    this.direction = MovementDirection;
                     this.sprite.PlayAnimation = true;
                 }
                 else
@@ -136,38 +131,11 @@ namespace Purgatory.Game
                     this.sprite.PlayAnimation = false;
                 }
 
-                this.UpdateShoot(gameTime);
+                this.inputController.UpdateShoot(this, gameTime);
             }
 
             this.sprite.UpdateAnimation(gameTime);
             this.Level.CheckPickUpCollisions(this);
-        }
-
-        private void UpdateShoot(GameTime time)
-        {
-            this.shootTimer += (float)time.ElapsedGameTime.TotalSeconds;
-            if (this.controls.ShootControlPressed() && this.shootTimer > this.shootCooldown && Energy > 0)
-            {
-                Vector2 bulletPos = this.Position;
-                Bullet b = new Bullet(bulletPos, this.bulletDirection, this.bulletBounce, 500.0f, new Sprite(bulletSprite), this.Level);
-                this.BulletList.Add(b);
-                --this.Energy;
-                this.shootTimer = 0.0f;
-                AudioManager.Instance.PlayCue(ref this.ShootSFX, true);
-            }
-
-            List<Bullet> tmpBulletList = new List<Bullet>();
-            foreach (var bullet in BulletList)
-            {
-                bullet.Update(time);
-                if (!bullet.RemoveFromList)
-                {
-                    tmpBulletList.Add(bullet);
-                }
-
-            }
-
-            BulletList = tmpBulletList;
         }
 
         public void Draw(SpriteBatch batch, Bounds bounds)
@@ -187,42 +155,7 @@ namespace Purgatory.Game
 
         private void UpdateMovement(GameTime time)
         {
-            if (this.DashVelocity == Vector2.Zero)
-            {
-                movementDirection = new Vector2();
-
-                if (controls.UpControlPressed())
-                {
-                    movementDirection.Y -= 1;
-                }
-
-                if (controls.DownControlPressed())
-                {
-                    movementDirection.Y += 1;
-                }
-
-                if (controls.LeftControlPressed())
-                {
-                    movementDirection.X -= 1;
-                }
-
-                if (controls.RightControlPressed())
-                {
-                    movementDirection.X += 1;
-                }
-
-                if (movementDirection.LengthSquared() != 0)
-                {
-                    movementDirection.Normalize();
-
-                    if (controls.DashControlPressed() && this.timeSinceLastDash > dashCooldownTime)
-                    {
-                        AudioManager.Instance.PlayCue(ref this.DashSFX, false);
-                        this.DashVelocity = speed * 5 * movementDirection;
-                        this.timeSinceLastDash = 0;
-                    }
-                }
-            }
+            this.inputController.UpdateMovement(this, time);
 
             if (this.DashVelocity != Vector2.Zero)
             {
@@ -230,7 +163,7 @@ namespace Purgatory.Game
                 this.position += DashVelocity * (float)time.ElapsedGameTime.TotalSeconds;
                 this.DashVelocity -= 10 * this.DashVelocity * (float)time.ElapsedGameTime.TotalSeconds;
 
-                if (DashVelocity.LengthSquared() <= speed * speed)
+                if (DashVelocity.LengthSquared() <= Speed * Speed)
                 {
                     this.DashVelocity = Vector2.Zero;
                 }
@@ -239,14 +172,14 @@ namespace Purgatory.Game
             {
                 this.lastDashSprite = new Vector2(float.PositiveInfinity);
                 this.LastPosition = this.Position;
-                this.position += movementDirection * speed * (float)time.ElapsedGameTime.TotalSeconds;
+                this.position += MovementDirection * Speed * (float)time.ElapsedGameTime.TotalSeconds;
             }
 
             this.CheckForCollisions();
 
             // Update dash path transparency.
             List<DashSprite> tmp = new List<DashSprite>();
-            foreach(var dashSprite in this.dashPath)
+            foreach (var dashSprite in this.dashPath)
             {
                 dashSprite.update(time);
                 if (!dashSprite.RemoveFromList)
@@ -256,14 +189,15 @@ namespace Purgatory.Game
             }
             this.dashPath = tmp;
 
-            if(this.DashVelocity != Vector2.Zero)
-            {   float distanceCheck = 15;
-                if(Vector2.DistanceSquared(lastDashSprite, this.position) > distanceCheck * distanceCheck)
+            if (this.DashVelocity != Vector2.Zero)
+            {
+                float distanceCheck = 15;
+                if (Vector2.DistanceSquared(lastDashSprite, this.position) > distanceCheck * distanceCheck)
                 {
                     Vector2 posChange = (this.position - lastDashSprite);
                     posChange.Normalize();
                     lastDashSprite += posChange * distanceCheck;
-                    DashSprite dashSprite = new DashSprite(this.sprite.CreateSprite(this.movementDirection), this.position);
+                    DashSprite dashSprite = new DashSprite(this.sprite.CreateSprite(this.MovementDirection), this.position);
                     this.dashPath.Add(dashSprite);
                 }
             }
@@ -335,8 +269,8 @@ namespace Purgatory.Game
 
         internal void SetBulletDirection(Vector2 targetPosition)
         {
-            this.bulletDirection = targetPosition - this.Position;
-            this.bulletDirection.Normalize();
+            this.BulletDirection = targetPosition - this.Position;
+            this.BulletDirection.Normalize();
         }
     }
 }
