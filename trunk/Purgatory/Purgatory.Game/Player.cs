@@ -92,7 +92,8 @@ namespace Purgatory.Game
                 this.DeathSFX = AudioManager.Instance.LoadCue("Purgatory_DeathDyingScream");
             }
 
-            this.shieldSprite = new Sprite(BigEvilStatic.Content.Load<Texture2D>("Shield"), 64, 64);
+            String asset = this.playerNumber == PlayerNumber.PlayerOne ? "LifeShield" : "DeathShield";
+            this.shieldSprite = new Sprite(BigEvilStatic.Content.Load<Texture2D>(asset), 64, 64);
             this.DashSFX = AudioManager.Instance.LoadCue("Purgatory_PlayerDash");
         }
 
