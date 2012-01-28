@@ -198,10 +198,10 @@ namespace Purgatory.Game
             //    }
             //}
 
-            int numAcross = bounds.Rectangle.Width / backgroundGround.Width + 1;
-            int numUp = bounds.Rectangle.Height / backgroundGround.Height + 1;
-            int playerBGIndexX = (int)-bounds.Camera.X / backgroundGround.Width;
-            int playerBGIndexY = (int)-bounds.Camera.Y / backgroundGround.Height;
+            int numAcross = bounds.Rectangle.Width / backgroundGround.Width + 3;
+            int numUp = bounds.Rectangle.Height / backgroundGround.Height + 3;
+            int playerBGIndexX = (int)-bounds.Camera.X / backgroundGround.Width + 1;
+            int playerBGIndexY = (int)-bounds.Camera.Y / backgroundGround.Height + 1;
 
             for (int i = playerBGIndexX - numAcross / 2; i <= playerBGIndexX + numAcross / 2; ++i)
             {
