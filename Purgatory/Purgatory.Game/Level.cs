@@ -159,15 +159,15 @@ namespace Purgatory.Game
 
         public void LoadLevelData(bool[,] data, int width, int height)
         {
-            Texture2D levelTexture = BigEvilStatic.Content.Load<Texture2D>("DeathMaze00");
+            //Texture2D levelTexture = BigEvilStatic.Content.Load<Texture2D>("DeathMaze00");
 
-            Color[] pixelData = new Color[levelTexture.Width * levelTexture.Height];
-            levelTexture.GetData<Color>(pixelData);
+            //Color[] pixelData = new Color[levelTexture.Width * levelTexture.Height];
+            //levelTexture.GetData<Color>(pixelData);
 
-            this.WalkableTile = new TileType[levelTexture.Width][];
-            for (int i = 0; i < levelTexture.Height; ++i)
+            this.WalkableTile = new TileType[width][];
+            for (int i = 0; i < width; ++i)
             {
-                this.WalkableTile[i] = new TileType[levelTexture.Height];
+                this.WalkableTile[i] = new TileType[height];
             }
 
             for (int i = 0; i < width; ++i)
