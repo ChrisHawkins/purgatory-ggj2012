@@ -68,7 +68,7 @@ using System;
         public void InitializePlayer(KeyboardManager playerOneControlScheme, KeyboardManager playerTwoControlScheme, ContentManager Content)
         {
             Texture2D lifeTexture = Content.Load<Texture2D>("lifeDown");
-            Texture2D lifeBulletTexture = Content.Load<Texture2D>("lifeDown");
+            Texture2D lifeBulletTexture = Content.Load<Texture2D>("halo");
             Texture2D deathTexture = Content.Load<Texture2D>("deathDown");
             Texture2D deathBulletTexture = Content.Load<Texture2D>("deathDown");
 
