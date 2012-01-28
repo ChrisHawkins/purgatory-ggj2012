@@ -54,6 +54,7 @@ namespace Purgatory.Game
         private Embellishment shield;
 
         public List<Bullet> BulletList { get; set; }
+        private List<Bullet> dyingBullets { get; set; }
 
         private Rectangle collisionRectangle;
 
@@ -67,6 +68,8 @@ namespace Purgatory.Game
             this.BulletBounce = 0;
             dashPath = new List<DashSprite>();
             lastDashSprite = new Vector2(float.PositiveInfinity);
+
+            this.dyingBullets = new List<Bullet>();
 
             this.TimeSinceLastDash = 100;
             this.Speed = 350;
@@ -105,7 +108,7 @@ namespace Purgatory.Game
             {
                 EmbellishmentSprite = new Sprite(BigEvilStatic.Content.Load<Texture2D>(asset), 64, 64),
                 Entrance = new PopInEffect(750f, 0.2f),
-                Exit = new PopInEffect(750f, 0.2f, true),
+                Exit = new ExpandDeathEffect(3000f, 200f),
                 Persists = true
             };
 
@@ -175,6 +178,17 @@ namespace Purgatory.Game
                 if (!(this.Level is PurgatoryLevel))
                 {
                     this.inputController.UpdateShoot(this, gameTime);
+
+                    for (int i = this.BulletList.Count - 1; i >= 0; --i)
+                    {
+                        this.BulletList[i].Update(gameTime);
+
+                        if (this.BulletList[i].RemoveFromList)
+                        {
+                            AddDyingBullet(this.BulletList[i]);
+                            this.BulletList.RemoveAt(i);
+                        }
+                    }
                 }
 
                 this.RegenEnergy(gameTime);
@@ -209,6 +223,29 @@ namespace Purgatory.Game
                 //PlayPurgatoryAnimation();
                 //this.sprite.AddEffect(new PopInEffect(1000f, 0.25f, true));
             }
+
+            List<Bullet> finallyDeleteAlltogether = new List<Bullet>();
+
+            foreach (var bullet in this.dyingBullets)
+            {
+                bullet.Sprite.UpdateEffects(gameTime);
+
+                if (bullet.Sprite.Effects.Count == 0)
+                {
+                    finallyDeleteAlltogether.Add(bullet);
+                }
+            }
+
+            foreach (var bullet in finallyDeleteAlltogether)
+            {
+                this.dyingBullets.Remove(bullet);
+            }
+        }
+
+        private void AddDyingBullet(Bullet bullet)
+        {
+            bullet.Sprite.Effects.Add(new PopInEffect(250f, 0f, true));
+            this.dyingBullets.Add(bullet);
         }
 
         private void RegenEnergy(GameTime gameTime)
@@ -237,6 +274,11 @@ namespace Purgatory.Game
             this.sprite.Draw(this.direction, batch, bounds.AdjustPoint(this.Position));
 
             foreach (var bullet in BulletList)
+            {
+                bullet.Draw(batch, bounds);
+            }
+
+            foreach (var bullet in this.dyingBullets)
             {
                 bullet.Draw(batch, bounds);
             }
@@ -396,8 +438,6 @@ namespace Purgatory.Game
 
                         list[b].RemoveFromList = true;
                     }
-
-                    
                 }
             }
         }

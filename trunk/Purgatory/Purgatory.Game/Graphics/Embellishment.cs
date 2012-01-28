@@ -45,7 +45,8 @@ namespace Purgatory.Game.Graphics
 
         public bool HasFinished()
         {
-            return !Persists && this.lifeSoFar > this.Lifespan;
+            if (Persists) return destroyed;
+            return this.lifeSoFar > this.Lifespan;
         }
 
         public void Destroy()
