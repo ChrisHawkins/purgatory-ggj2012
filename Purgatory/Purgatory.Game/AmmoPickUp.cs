@@ -8,8 +8,8 @@ namespace Purgatory.Game
 {
     public class AmmoPickUp : PlayerPickUp
     {
-        public AmmoPickUp(Vector2 position)
-            : base("BlackWall", position)
+        public AmmoPickUp()
+            : base("BlackWall")
         { }
 
         public override void PlayerEffect(Player player)
