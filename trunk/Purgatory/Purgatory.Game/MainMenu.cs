@@ -16,6 +16,7 @@ namespace Purgatory.Game
         bool MusicPlaying = false;
         private Cue menuMusic;
         private Cue buttonPress;
+        private Cue beginVoice;
         WinScreen winscreen;
 
         public MainMenu(GraphicsDevice device)
@@ -26,6 +27,7 @@ namespace Purgatory.Game
             this.winscreen = new WinScreen(device);
             menuMusic = AudioManager.Instance.LoadCue("Purgatory_MainMenu");
             buttonPress = AudioManager.Instance.LoadCue("Purgatory_ButtonPress");
+            this.beginVoice = AudioManager.Instance.LoadCue("Purgatory_Begin");
         }
 
         public override void Draw(Bounds bounds)
@@ -80,9 +82,10 @@ namespace Purgatory.Game
             this.LoadScreen(ds);
 
             AudioManager.Instance.PlayCue(ref this.buttonPress, false);
+            AudioManager.Instance.PlayCue(ref this.beginVoice, false);
 
             // crossfade into game music
-            AudioManager.Instance.CrossFade(this.menuMusic, ds.BackgroundMusic, 2f, true);
+            ds.BackgroundMusic = AudioManager.Instance.CrossFade(this.menuMusic, ds.BackgroundMusic, 2f, true);
             this.MusicPlaying = false;
         }
     }

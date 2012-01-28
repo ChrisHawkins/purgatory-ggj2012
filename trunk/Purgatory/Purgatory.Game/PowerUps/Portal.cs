@@ -18,6 +18,7 @@ namespace Purgatory.Game.PowerUps
             this.PlayerLevel = playerLevel;
             this.PurgatoryMusic = purgatoryMusic;
             this.BackgroundMusic = backgroundMusic;
+            this.PurgatoryMusic = AudioManager.Instance.CrossFade(this.BackgroundMusic, this.PurgatoryMusic, 1.5f, false);
         }
 
         public override void PlayerEffect(Player player)
@@ -25,7 +26,7 @@ namespace Purgatory.Game.PowerUps
             player.Level = this.PlayerLevel;
             PlayerLevel.PlayPurgatoryAnimation();
             player.Spawn();
-            AudioManager.Instance.CrossFade(this.PurgatoryMusic, this.BackgroundMusic, 1.5f, true);
+            this.BackgroundMusic = AudioManager.Instance.CrossFade(this.PurgatoryMusic, this.BackgroundMusic, 1.5f, true);
         }
     }
 }
