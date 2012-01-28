@@ -7,6 +7,7 @@ namespace Purgatory.Game
     using Microsoft.Xna.Framework.Graphics;
     using Purgatory.Game.Graphics;
     using Microsoft.Xna.Framework.Audio;
+    using Purgatory.Game.PowerUps;
 
     public class Level
     {

@@ -7,7 +7,7 @@ using Purgatory.Game.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Purgatory.Game
+namespace Purgatory.Game.PowerUps
 {
     public abstract class PlayerPickUp : IStatic
     {

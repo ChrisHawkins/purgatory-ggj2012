@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Purgatory.Game
+namespace Purgatory.Game.PowerUps
 {
     public class BouncePowerUp : PlayerPickUp
     {
         public BouncePowerUp()
-            : base("BlackWall")
+            : base("BouncePickUp")
         {
         }
 
