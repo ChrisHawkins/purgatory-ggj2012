@@ -8,7 +8,7 @@ namespace Purgatory.Game
     {
         public static Level GenerateLevel(string levelType)
         {
-            Texture2D levelTexture = BigEvilStatic.Content.Load<Texture2D>("DeathMaze00");
+            Texture2D levelTexture = BigEvilStatic.Content.Load<Texture2D>(levelType + "Maze00");
             bool[,] generatedLevel = new bool[levelTexture.Width, levelTexture.Height];
 
             Color[] pixelData = new Color[levelTexture.Width * levelTexture.Height];
