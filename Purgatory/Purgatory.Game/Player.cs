@@ -93,15 +93,16 @@ namespace Purgatory.Game
             this.sprite = sprite;
             this.bulletSprite = bulletSprite;
             this.collisionRectangle = new Rectangle(0, 0, sprite.Width, sprite.Height);
-            if (this.playerNumber == PlayerNumber.PlayerOne)
-            {
-                this.position = new Vector2(Level.TileWidth) * 55;
-            }
-            else if (this.playerNumber == PlayerNumber.PlayerTwo)
-            {
-                this.position = new Vector2(Level.TileWidth * 127, Level.TileWidth * 141);
-            }
-
+            this.position = Level.FindSpawnPoint(true);
+            
+            //if (this.playerNumber == PlayerNumber.PlayerOne)
+            //{
+            //    this.position = new Vector2(Level.TileWidth) * 55;
+            //}
+            //else if (this.playerNumber == PlayerNumber.PlayerTwo)
+            //{
+            //    this.position = new Vector2(Level.TileWidth * 127, Level.TileWidth * 141);
+            //}
         }
 
         public Vector2 Position
