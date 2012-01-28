@@ -112,7 +112,7 @@ namespace Purgatory.Game
                 Persists = true
             };
 
-            this.shield.EmbellishmentSprite.Effects.Add(new PulsateEffect(0.10f));
+            this.shield.EmbellishmentSprite.Effects.Add(new PulsateEffect(2000f, 0.10f));
             this.sprite.AddEmbellishment(this.shield);
         }
 
@@ -216,7 +216,7 @@ namespace Purgatory.Game
                     this.MakeShield();
                 }
 
-                this.shield.EmbellishmentSprite.Alpha = (float)this.ShieldHealth / (float)ShieldMaxHealth;
+                this.shield.EmbellishmentSprite.Alpha = (float)this.ShieldHealth / (float)ShieldMaxHealth + 0.2f;
             }
             else
             {
@@ -232,14 +232,15 @@ namespace Purgatory.Game
 
             if (Microsoft.Xna.Framework.Input.Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.K))
             {
+                this.Health -= 1;
                 //this.ShieldHealth = 10;
                 //this.sprite.AddEffect(new PopInEffect(1000f, 0.25f));
                 //this.sprite.AddEffect(new PurgatoryEffect());
                 //PlayPurgatoryAnimation();
                 //this.sprite.AddEffect(new PopInEffect(1000f, 0.25f, true));
 
-                this.sprite.AddEffect(new SpinEffect(1250f));
-                this.sprite.AddEffect(new PopInEffect(3000f, 0.2f, true));
+                //this.sprite.AddEffect(new SpinEffect(1250f));
+                //this.sprite.AddEffect(new PopInEffect(3000f, 0.2f, true));
             }
 
             List<Bullet> finallyDeleteAlltogether = new List<Bullet>();

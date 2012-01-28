@@ -9,9 +9,9 @@ namespace Purgatory.Game.Animation
     {
         private float rangeFromMainOpacity;
 
-        public PulsateEffect(float rangeFromMainOpacity)
+        public PulsateEffect(float milliseconds, float rangeFromMainOpacity)
         {
-            this.Duration = TimeSpan.FromSeconds(2f);
+            this.Duration = TimeSpan.FromMilliseconds(milliseconds);
             this.Permanent = true;
 
             this.rangeFromMainOpacity = rangeFromMainOpacity;
