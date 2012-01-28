@@ -15,7 +15,7 @@ namespace Purgatory.Game
     {
         public static bool InputFrozen = false;
         private const int ShieldMaxHealth = 10;
-        public const int MaxHealth = 20;
+        public const int MaxHealth = 15;
         public const float MaxEnergy = 10;
         private const float EnergyRegenChargeTime = 3f;
         private const float MinEnergyPerSecond = 2f;
@@ -154,7 +154,7 @@ namespace Purgatory.Game
             if (playerNumber == this.playerNumber)
             {
                 this.Speed = this.Speed * 3 / 4;
-                this.Health = Player.MaxHealth / 2;
+                this.Health = Player.MaxHealth;
                 this.Energy = 0;
                 this.BulletBounce = 0;
                 this.BulletList.Clear();
