@@ -16,6 +16,7 @@ namespace Purgatory.Game.Controls
         public XboxInputController(PlayerIndex player)
         {
             this.playerIndex = player;
+            this.shootCooldown = 0.2f;
         }
 
         public void UpdateMovement(Player player, GameTime gameTime)
@@ -25,7 +26,7 @@ namespace Purgatory.Game.Controls
             if (player.DashVelocity == Vector2.Zero)
             {
                 player.MovementDirection = new Vector2();
-                player.MovementDirection = state.ThumbSticks.Left;
+                player.MovementDirection = state.ThumbSticks.Left * new Vector2(1f, -1f);
 
                 if (player.MovementDirection.LengthSquared() != 0)
                 {
@@ -50,7 +51,7 @@ namespace Purgatory.Game.Controls
             if (state.Triggers.Right > 0.5f && this.shootTimer > this.shootCooldown && player.Energy > 0)
             {
                 Vector2 bulletPos = player.Position;
-                Bullet b = new Bullet(bulletPos, player.BulletDirection, player.BulletBounce, 500.0f, new Sprite(player.BulletSprite), player.Level);
+                Bullet b = new Bullet(bulletPos, Vector2.Normalize(player.BulletDirection), player.BulletBounce, 500.0f, new Sprite(player.BulletSprite), player.Level);
                 player.BulletList.Add(b);
                 --player.Energy;
                 this.shootTimer = 0.0f;

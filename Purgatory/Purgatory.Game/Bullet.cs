@@ -67,10 +67,10 @@ using Purgatory.Game.Graphics;
                 {
                     this.direction.X = -this.direction.X;
                 }
+
                 if (yPenetrations.Count >= xPenetrations.Count)
                 {
                     this.direction.Y = -this.direction.Y;
-                    
                 }
 
                 this.bounce--;

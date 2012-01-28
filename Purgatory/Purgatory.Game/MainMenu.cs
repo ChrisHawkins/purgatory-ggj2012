@@ -2,10 +2,10 @@
 namespace Purgatory.Game
 {
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Audio;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
-using Purgatory.Game.Graphics;
-using Microsoft.Xna.Framework.Audio;
+    using Purgatory.Game.Graphics;
 
     public class MainMenu : Screen
     {
@@ -51,7 +51,9 @@ using Microsoft.Xna.Framework.Audio;
                 this.timer = 0;
                 DualScreen ds = new DualScreen(this.Device);
                 GameContext context = new GameContext(ds, winscreen);
-                context.InitializePlayer(BigEvilStatic.CreateControlSchemeWASD(), BigEvilStatic.CreateControlSchemeArrows(), BigEvilStatic.Content);
+
+                //context.InitializePlayer(BigEvilStatic.CreateControlSchemeWASD(), BigEvilStatic.CreateControlSchemeArrows(), BigEvilStatic.Content);
+                context.InitializePlayer(BigEvilStatic.CreateControlXboxPlayerOne(), BigEvilStatic.CreateControlXboxPlayerTwo(), BigEvilStatic.Content);
 
                 ds.ContextUpdater = gt => context.UpdateGameLogic(gt);
                 ds.AddScreen(new GameScreen(this.Device, context, PlayerNumber.PlayerOne));

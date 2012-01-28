@@ -1,6 +1,7 @@
 ﻿
 namespace Purgatory.Game
 {
+    using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
@@ -40,6 +41,16 @@ namespace Purgatory.Game
         public static KeyboardInputController CreateControlWinatronPlayerTwo()
         {
             return new KeyboardInputController(Keys.I, Keys.K, Keys.J, Keys.L, Keys.M, Keys.M); // can use n aswell
+        }
+
+        public static XboxInputController CreateControlXboxPlayerOne()
+        {
+            return new XboxInputController(PlayerIndex.One);
+        }
+
+        public static XboxInputController CreateControlXboxPlayerTwo()
+        {
+            return new XboxInputController(PlayerIndex.Two);
         }
 
         public static Sprite CreateDeathWinBackground()
