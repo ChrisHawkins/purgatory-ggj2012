@@ -10,13 +10,10 @@ namespace Purgatory.Game.Controls
     public class XboxInputController : IInputController
     {
         private PlayerIndex playerIndex;
-        private float shootCooldown;
-        private float shootTimer;
 
         public XboxInputController(PlayerIndex player)
         {
             this.playerIndex = player;
-            this.shootCooldown = 0.2f;
         }
 
         public void UpdateMovement(Player player, GameTime gameTime)
@@ -46,15 +43,15 @@ namespace Purgatory.Game.Controls
         {
             GamePadState state = GamePad.GetState(this.playerIndex);
 
-            this.shootTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            player.ShootTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (state.Triggers.Right > 0.5f && this.shootTimer > this.shootCooldown && player.Energy > 0)
+            if (state.Triggers.Right > 0.5f && player.ShootTimer > player.ShootCooldown && player.Energy > 0)
             {
                 Vector2 bulletPos = player.Position;
                 Bullet b = new Bullet(bulletPos, Vector2.Normalize(player.BulletDirection), player.BulletBounce, 500.0f, new Sprite(player.BulletSprite), player.Level);
                 player.BulletList.Add(b);
                 --player.Energy;
-                this.shootTimer = 0.0f;
+                player.ShootTimer = 0.0f;
                 AudioManager.Instance.PlayCue(ref player.ShootSFX, true);
             }
 

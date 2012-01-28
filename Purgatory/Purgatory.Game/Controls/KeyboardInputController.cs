@@ -10,13 +10,11 @@ namespace Purgatory.Game.Controls
     {
         private KeyboardManager controls;
 
-        private float shootCooldown;
-        private float shootTimer;
+        
 
         public KeyboardInputController(Keys up, Keys down, Keys left, Keys right, Keys shoot, Keys dash)
         {
             this.controls = new KeyboardManager(up, down, left, right, shoot, dash);
-            this.shootCooldown = 0.2f;
         }
 
         public void UpdateMovement(Player player, GameTime gameTime)
@@ -65,14 +63,14 @@ namespace Purgatory.Game.Controls
         {
             this.controls.Update();
 
-            this.shootTimer += (float)time.ElapsedGameTime.TotalSeconds;
-            if (this.controls.ShootControlPressed() && this.shootTimer > this.shootCooldown && player.Energy > 0)
+            player.ShootTimer += (float)time.ElapsedGameTime.TotalSeconds;
+            if (this.controls.ShootControlPressed() && player.ShootTimer > player.ShootCooldown && player.Energy > 0)
             {
                 Vector2 bulletPos = player.Position;
                 Bullet b = new Bullet(bulletPos, Vector2.Normalize(player.BulletDirection), player.BulletBounce, 500.0f, new Sprite(player.BulletSprite), player.Level);
                 player.BulletList.Add(b);
                 --player.Energy;
-                this.shootTimer = 0.0f;
+                player.ShootTimer = 0.0f;
                 AudioManager.Instance.PlayCue(ref player.ShootSFX, true);
             }
 
