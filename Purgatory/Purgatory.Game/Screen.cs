@@ -4,11 +4,15 @@ namespace Purgatory.Game
     using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using Purgatory.Game.UI;
 
     public abstract class Screen
     {
+        public Form Hud { get; private set; }
+
         public Screen(GraphicsDevice device)
         {
+            this.Hud = new Form(device);
             this.Device = device;
         }
 

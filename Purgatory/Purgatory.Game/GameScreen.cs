@@ -12,7 +12,6 @@ namespace Purgatory.Game
         private Texture2D texture;
         private PlayerNumber playerNumber;
 
-        private Form hud;
         private StatusBar healthBar;
         private StatusBar energyBar;
         private StatusBar timeBar;
@@ -35,15 +34,13 @@ namespace Purgatory.Game
 
             this.batch = new SpriteBatch(device);
 
-            this.hud = new Form(this.Device);
-
             this.healthBar = new StatusBar(
-                new Vector2(10f, this.Device.Viewport.Height - 40f),
+                new Vector2(120f, this.Device.Viewport.Height - 30f),
                 this.context.GetPlayer(this.playerNumber).Health,
                 BigEvilStatic.Content.Load<Texture2D>("HealthBar"));
 
             this.energyBar = new StatusBar(
-                new Vector2(10f, this.Device.Viewport.Height - 60f),
+                new Vector2(120f, this.Device.Viewport.Height - 65f),
                 this.context.GetPlayer(this.playerNumber).Energy,
                 BigEvilStatic.Content.Load<Texture2D>("EnergyBar"));
 
@@ -58,9 +55,9 @@ namespace Purgatory.Game
 
             this.arrow = new LocatorArrow(BigEvilStatic.Content.Load<Texture2D>("Arrow"));
 
-            this.hud.Controls.Add(this.healthBar);
-            this.hud.Controls.Add(this.energyBar);
-            this.hud.Controls.Add(this.timeBar);
+            this.Hud.Controls.Add(this.healthBar);
+            this.Hud.Controls.Add(this.energyBar);
+            this.Hud.Controls.Add(this.timeBar);
         }
 
         public override void Draw(Bounds bounds)
@@ -92,7 +89,7 @@ namespace Purgatory.Game
             this.timeBar.Left = bounds.Rectangle.Left;
             this.timeBar.Right = bounds.Rectangle.Right;
 
-            this.hud.Draw();
+            this.Hud.Draw();
         }
 
         public override void Update(GameTime time)
@@ -115,7 +112,7 @@ namespace Purgatory.Game
             this.timeBar.Value = this.context.PurgatoryCountdown;
             this.timeBar.Visible = this.context.InPurgatory;
 
-            this.hud.Update(time);
+            this.Hud.Update(time);
         }
     }
 }

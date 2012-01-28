@@ -12,6 +12,8 @@ namespace Purgatory.Game
     {
         public PurgatoryLevel(string levelType, TileType[][] maze1, TileType[][] maze2) : base()
         {
+            this.pickupSFX = AudioManager.Instance.LoadCue("Purgatory_PickupItem");
+
             // Temp list of rectangles to return
             rectangles = new List<Rectangle>();
 

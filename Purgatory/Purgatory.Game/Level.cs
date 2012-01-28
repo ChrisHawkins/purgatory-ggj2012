@@ -26,7 +26,7 @@ namespace Purgatory.Game
         protected Sprite wall, wallTop, wallBottom, wallLeft, wallRight, wallOutsideTopLeft, wallOutsideTopRight, wallOutsideBottomLeft, wallOutsideBottomRight, wallInsideTopLeft, wallInsideTopRight, wallInsideBottomLeft, wallInsideBottomRight;
         protected Sprite backgroundGround;
         protected List<PlayerPickUp> pickUps;
-        private Cue pickupSFX;
+        protected Cue pickupSFX;
         private const int MaxPickups = 30;
 
         protected Level()
@@ -131,7 +131,7 @@ namespace Purgatory.Game
         {
             int maxX = this.WalkableTile.Length;
             int maxY = this.WalkableTile[0].Length;
-            
+
             while (true)
             {
                 int locX = rng.Next(maxX);
@@ -314,7 +314,7 @@ namespace Purgatory.Game
 
         public void CheckPickUpCollisions(Player player)
         {
-            for (int i = pickUps.Count - 1; i >= 0; --i )
+            for (int i = pickUps.Count - 1; i >= 0; --i)
             {
                 if (pickUps[i].CollisionRectangle.Intersects(player.CollisionRectangle))
                 {
@@ -330,6 +330,22 @@ namespace Purgatory.Game
             if (this.pickUps.Count < Level.MaxPickups)
             {
                 Vector2 loc = FindSpawnPoint(false);
+                this.pickUps.Add(pickUp);
+                pickUp.SetPosition(loc);
+            }
+        }
+
+        public void AddToPickups(PlayerPickUp pickUp, Vector2 playerPosition, int minDistance)
+        {
+            if (this.pickUps.Count < Level.MaxPickups)
+            {
+                Vector2 loc;
+                do
+                {
+                    loc = FindSpawnPoint(false);
+                }
+                while(Vector2.DistanceSquared(loc, playerPosition) < minDistance * minDistance);
+
                 this.pickUps.Add(pickUp);
                 pickUp.SetPosition(loc);
             }
