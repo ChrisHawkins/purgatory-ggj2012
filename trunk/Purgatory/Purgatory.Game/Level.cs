@@ -29,17 +29,18 @@ namespace Purgatory.Game
         private Cue pickupSFX;
         private const int MaxPickups = 30;
 
-        protected Level() { }
+        protected Level()
+        {
+            this.purgatoryOverlay = new Sprite(BigEvilStatic.Content.Load<Texture2D>("WhiteOut"), 48, 48);
+            this.purgatoryOverlay.Zoom = 100f;
+            this.purgatoryOverlay.Alpha = 0f;
+        }
 
-        public Level(string levelType)
+        public Level(string levelType) : this()
         {
             this.pickupSFX = AudioManager.Instance.LoadCue("Purgatory_PickupItem");
             // Temp list of rectangles to return
             rectangles = new List<Rectangle>();
-
-            this.purgatoryOverlay = new Sprite(BigEvilStatic.Content.Load<Texture2D>("WhiteOut"), 48, 48);
-            this.purgatoryOverlay.Zoom = 100f;
-            this.purgatoryOverlay.Alpha = 0f;
 
             // Set Tiles Wide
             HalfTilesWideOnScreen = (int)Math.Ceiling((double)BigEvilStatic.Viewport.Width / 4 / TileWidth);
