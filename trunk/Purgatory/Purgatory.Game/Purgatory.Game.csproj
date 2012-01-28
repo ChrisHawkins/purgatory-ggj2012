@@ -102,6 +102,7 @@
     <Compile Include="GeometryUtility.cs" />
     <Compile Include="Graphics\DirectionalSprite.cs" />
     <Compile Include="Graphics\Sprite.cs" />
+    <Compile Include="LocatorArrow.cs" />
     <Compile Include="StatusBar.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="MainMenu.cs" />
