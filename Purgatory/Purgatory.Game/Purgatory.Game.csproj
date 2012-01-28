@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation\ExpandDeathEffect.cs" />
+    <Compile Include="Animation\GrowShrinkEffect.cs" />
     <Compile Include="Animation\PainEffect.cs" />
     <Compile Include="Animation\PopInEffect.cs" />
     <Compile Include="Animation\PulsateEffect.cs" />
