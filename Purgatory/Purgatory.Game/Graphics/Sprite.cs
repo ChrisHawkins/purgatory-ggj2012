@@ -41,7 +41,8 @@ namespace Purgatory.Game.Graphics
             this.LoadAnimation();
         }
 
-        public Sprite(Sprite sprite) : this(sprite.Texture2D, sprite.Width, sprite.Height)
+        public Sprite(Sprite sprite)
+            : this(sprite.Texture2D, sprite.Width, sprite.Height)
         {
             this.CurrentFrame = sprite.CurrentFrame;
         }
