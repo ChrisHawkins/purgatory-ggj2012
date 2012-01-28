@@ -47,6 +47,10 @@ namespace Purgatory.Game
         public float Energy { get; set; }
 
         public int BulletBounce { get; set; }
+        
+        public int ShieldHealth { get; set; }
+        private Sprite shieldSprite;
+
         public List<Bullet> BulletList { get; set; }
 
         private Rectangle collisionRectangle;
@@ -74,7 +78,7 @@ namespace Purgatory.Game
             this.yPenetrations = new List<float>();
 
             this.ShootCooldown = 0.2f;
-
+             
             if (this.playerNumber == PlayerNumber.PlayerOne)
             {
                 this.ShootSFX = AudioManager.Instance.LoadCue("Purgatory_HaloThrow");
@@ -88,6 +92,7 @@ namespace Purgatory.Game
                 this.DeathSFX = AudioManager.Instance.LoadCue("Purgatory_DeathDyingScream");
             }
 
+            this.shieldSprite = new Sprite(BigEvilStatic.Content.Load<Texture2D>("Shield"), 64, 64);
             this.DashSFX = AudioManager.Instance.LoadCue("Purgatory_PlayerDash");
         }
 
@@ -171,7 +176,7 @@ namespace Purgatory.Game
 
         private void RegenEnergy(GameTime gameTime)
         {
-            if (this.Energy < Player.MaxEnergy)
+            if (this.Energy < Player.MaxEnergy && !(this.Level is PurgatoryLevel))
             {
                 float regenRate;
 
@@ -203,6 +208,10 @@ namespace Purgatory.Game
             {
                 dash.Draw(batch, bounds);
             }
+
+            this.shieldSprite.Alpha = MathHelper.Clamp(this.ShieldHealth, 0, 5 / 5);
+            this.shieldSprite.Draw(batch, bounds.AdjustPoint(this.position));
+
         }
 
         private void UpdateMovement(GameTime gameTime)
@@ -241,7 +250,7 @@ namespace Purgatory.Game
 
             if(this.DashVelocity != Vector2.Zero)
             {   
-                float distanceCheck = 15;
+                float distanceCheck = 20;
                 if(Vector2.DistanceSquared(lastDashSprite, this.position) > distanceCheck * distanceCheck)
                 {
                     if (float.IsInfinity(this.lastDashSprite.X))
@@ -315,23 +324,45 @@ namespace Purgatory.Game
 
         public void CheckBulletCollisions(List<Bullet> list)
         {
-            foreach (var bullet in list)
+            for(int b = 0; b < list.Count; ++b)
             {
-                if (this.CollisionRectangle.Intersects(bullet.CollisionRectangle))
+                if (this.CollisionRectangle.Intersects(list[b].CollisionRectangle))
                 {
-                    bullet.RemoveFromList = true;
-                    this.Health -= 1;
+                    
+                    if (this.ShieldHealth > 0)
+                    {
+                        this.ShieldHealth--;
+                        list[b].SwitchOwner(this);
 
-                    if (this.Health > 0)
-                    {
-                        this.sprite.AddEffect(new PainEffect());
-                        AudioManager.Instance.PlayCue(ref this.DamageSFX, false);
+                        Vector2 displacement = this.position - list[b].Position;
+                        Vector2 normal = Vector2.Normalize(displacement);
+                        Vector2 projection = Vector2.Dot(list[b].Direction, normal) * normal;
+                        Vector2 rejection = direction - projection;
+                        list[b].Direction = Vector2.Normalize(rejection - projection);
+
+                        this.BulletList.Add(list[b]);
+                        list.RemoveAt(b);
+                        --b;
                     }
-                    else if (Level is PurgatoryLevel)
+                    else
                     {
-                        AudioManager.Instance.PlayCue(ref this.DeathSFX, false);
-                        Player.InputFrozen = true;
+                        this.Health --;
+
+                        if (this.Health > 0)
+                        {
+                            this.sprite.AddEffect(new PainEffect());
+                            AudioManager.Instance.PlayCue(ref this.DamageSFX, false);
+                        }
+                        else if (Level is PurgatoryLevel)
+                        {
+                            AudioManager.Instance.PlayCue(ref this.DeathSFX, false);
+                            Player.InputFrozen = true;
+                        }
+
+                        list[b].RemoveFromList = true;
                     }
+
+                    
                 }
             }
         }

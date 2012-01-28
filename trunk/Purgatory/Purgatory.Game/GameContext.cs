@@ -110,22 +110,22 @@ namespace Purgatory.Game
             if (timeSinceLastRandomDrop > 3)
             {
                 timeSinceLastRandomDrop -= 1;
-                int num = rng.Next(12);
+                int num = rng.Next(100);
 
-                if (num == 1)
-                {
-                    player1Level.AddToPickups(new AmmoPickUp());
-                    player2Level.AddToPickups(new AmmoPickUp());
-                }
-                else if (num == 2)
+                if (num < 20)
                 {
                     player1Level.AddToPickups(new BouncePowerUp());
                     player2Level.AddToPickups(new BouncePowerUp());
                 }
-                else if (num == 3)
+                else if (num < 30)
                 {
                     player1Level.AddToPickups(new HealthPickUp());
                     player2Level.AddToPickups(new HealthPickUp());
+                }
+                else if (num < 35)
+                {
+                    this.player1Level.AddToPickups(new ShieldPowerUp());
+                    this.player2Level.AddToPickups(new ShieldPowerUp());
                 }
             }
 

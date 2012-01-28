@@ -12,7 +12,7 @@ using Purgatory.Game.Graphics;
 
     public class Bullet : IMoveable
     {
-        private Vector2 direction;
+        public Vector2 Direction { get; set; }
         private int bounce;
         private float speed;
         private Sprite sprite;
@@ -23,7 +23,7 @@ using Purgatory.Game.Graphics;
         public Bullet(Vector2 position, Vector2 direction, int bounce, float speed, Sprite sprite, Level level)
         {
             this.Position = position;
-            this.direction = direction;
+            this.Direction = direction;
             this.bounce = bounce;
             this.speed = speed;
             this.sprite = sprite;
@@ -32,11 +32,18 @@ using Purgatory.Game.Graphics;
             this.yPenetrations = new List<float>();
         }
 
+        public void SwitchOwner(Player player)
+        {
+            this.sprite = new Sprite(player.BulletSprite);
+            //this.level = player.Level;
+        }
+
+
         public void Update(GameTime time)
         {
             sprite.UpdateAnimation(time);
             this.LastPosition = this.Position;
-            this.Position += direction * speed * (float)time.ElapsedGameTime.TotalSeconds;
+            this.Position += Direction * speed * (float)time.ElapsedGameTime.TotalSeconds;
             this.sprite.UpdateEffects(time);
             this.sprite.UpdateAnimation(time);
             this.CheckForCollisions();
@@ -66,12 +73,12 @@ using Purgatory.Game.Graphics;
             {
                 if (xPenetrations.Count >= yPenetrations.Count)
                 {
-                    this.direction.X = -this.direction.X;
+                    this.Direction = new Vector2(-this.Direction.X, this.Direction.Y);
                 }
 
                 if (yPenetrations.Count >= xPenetrations.Count)
                 {
-                    this.direction.Y = -this.direction.Y;
+                    this.Direction = new Vector2(this.Direction.X, -this.Direction.Y);
                 }
 
                 this.bounce--;

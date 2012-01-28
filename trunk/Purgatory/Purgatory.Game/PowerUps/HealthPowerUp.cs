@@ -14,7 +14,7 @@ namespace Purgatory.Game.PowerUps
 
         public override void PlayerEffect(Player player)
         {
-            player.Health += Player.MaxHealth / 2;
+            player.Health += Player.MaxHealth / 4;
             player.Health = Math.Min(player.Health, Player.MaxHealth);
         }
     }
