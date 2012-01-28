@@ -59,7 +59,12 @@ namespace Purgatory.Game
 
             GamePadState gs = GamePad.GetState(PlayerIndex.One);
 
-            if (gs.IsButtonDown(Buttons.Start))
+            if (gs.IsButtonDown(Buttons.Start) ||
+                gs.IsButtonDown(Buttons.A) ||
+                gs.IsButtonDown(Buttons.B) ||
+                gs.IsButtonDown(Buttons.X) ||
+                gs.IsButtonDown(Buttons.Y) ||
+                gs.IsButtonDown(Buttons.BigButton))
             {
                 this.timer = 0;
                 DualScreen ds = new DualScreen(this.Device);
