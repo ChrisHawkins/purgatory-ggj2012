@@ -139,7 +139,7 @@ namespace Purgatory.Game
                 }
             }
             
-            if (this.player2.Health < 1 && !this.player2.DeathSFX.IsPlaying)
+            if (this.player2.Health < 1)
             {
                 if (this.player2.Level is PurgatoryLevel)
                 {

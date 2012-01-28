@@ -10,7 +10,7 @@ namespace Purgatory.Game
 
     public class Level
     {
-        private Random rng;
+        private static readonly Random rng = new Random();
         public TileType[][] WalkableTile;
 
         protected int HalfTilesWideOnScreen;
@@ -32,7 +32,6 @@ namespace Purgatory.Game
             levelType = "life";
             // Temp list of rectangles to return
             rectangles = new List<Rectangle>();
-            rng = new Random();
 
             // Set Tiles Wide
             HalfTilesWideOnScreen = (int)Math.Ceiling((double)BigEvilStatic.Viewport.Width / 4 / TileWidth);
@@ -87,6 +86,73 @@ namespace Purgatory.Game
             //}
 
             pickUps = new List<PlayerPickUp>();
+        }
+
+        public bool ItemAtLocation(Vector2 location)
+        {
+            foreach (PlayerPickUp item in pickUps)
+            {
+                if (item.Position == location)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public Vector2 FindSpawnPoint(bool playerSafe)
+        {
+            int maxX = this.WalkableTile.Length;
+            int maxY = this.WalkableTile[0].Length;
+            
+            while (true)
+            {
+                int locX = rng.Next(maxX);
+                int locY = rng.Next(maxY);
+
+                if (WalkableTile[locX][locY] == TileType.Ground)
+                {
+                    if (playerSafe)
+                    {
+                        // top left
+                        if (WalkableTile[locX - 1][locY] == TileType.Ground &&
+                            WalkableTile[locX - 1][locY + 1] == TileType.Ground &&
+                            WalkableTile[locX][locY + 1] == TileType.Ground)
+                        {
+                            return new Vector2((locX + locX - 1) / 2.0f, (locY + locY + 1) / 2.0f) * Level.TileWidth;
+                        }
+                        // top right
+                        else if (WalkableTile[locX + 1][locY] == TileType.Ground &&
+                                 WalkableTile[locX + 1][locY + 1] == TileType.Ground &&
+                                 WalkableTile[locX][locY + 1] == TileType.Ground)
+                        {
+                            return new Vector2((locX + locX + 1) / 2.0f, (locY + locY + 1) / 2.0f) * Level.TileWidth;
+                        }
+                        // bottom left
+                        else if (WalkableTile[locX - 1][locY] == TileType.Ground &&
+                                 WalkableTile[locX - 1][locY - 1] == TileType.Ground &&
+                                 WalkableTile[locX][locY - 1] == TileType.Ground)
+                        {
+                            return new Vector2((locX + locX - 1) / 2.0f, (locY + locY - 1) / 2.0f) * Level.TileWidth;
+                        }
+                        // bottom left
+                        else if (WalkableTile[locX + 1][locY] == TileType.Ground &&
+                                 WalkableTile[locX + 1][locY - 1] == TileType.Ground &&
+                                 WalkableTile[locX][locY - 1] == TileType.Ground)
+                        {
+                            return new Vector2((locX + locX + 1) / 2.0f, (locY + locY - 1) / 2.0f) * Level.TileWidth;
+                        }
+                    }
+
+                    Vector2 loc = new Vector2(locX, locY) * Level.TileWidth;
+
+                    if (!ItemAtLocation(loc))
+                    {
+                        return loc;
+                    }
+                }
+            }
         }
 
         public void LoadLevelData(bool[,] data, int width, int height)
@@ -242,22 +308,25 @@ namespace Purgatory.Game
 
         public void AddToPickups(PlayerPickUp pickUp)
         {
-            int maxX = this.WalkableTile.Length;
-            int maxY = this.WalkableTile[0].Length;
+            Vector2 loc = FindSpawnPoint(false);
+            this.pickUps.Add(pickUp);
+            pickUp.SetPosition(loc);
+            //int maxX = this.WalkableTile.Length;
+            //int maxY = this.WalkableTile[0].Length;
 
-            bool ammoPlaced = false;
-            while (!ammoPlaced)
-            {
-                int locX = rng.Next(maxX);
-                int locY = rng.Next(maxY);
+            //bool ammoPlaced = false;
+            //while (!ammoPlaced)
+            //{
+            //    int locX = rng.Next(maxX);
+            //    int locY = rng.Next(maxY);
 
-                if (WalkableTile[locX][locY] == TileType.Ground)
-                {
-                    ammoPlaced = true;
-                    this.pickUps.Add(pickUp);
-                    pickUp.SetPosition(new Vector2(locX, locY) * Level.TileWidth);
-                }
-            }
+            //    if (WalkableTile[locX][locY] == TileType.Ground)
+            //    {
+            //        ammoPlaced = true;
+            //        this.pickUps.Add(pickUp);
+            //        pickUp.SetPosition(new Vector2(locX, locY) * Level.TileWidth);
+            //    }
+            //}
         }
 
         public void Draw(SpriteBatch batch, Bounds bounds)
