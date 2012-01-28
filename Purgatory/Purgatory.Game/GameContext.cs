@@ -58,6 +58,8 @@ namespace Purgatory.Game
             this.purgatoryMusic = AudioManager.Instance.LoadCue("Purgatory_PurgatoryChase");
             this.purgatoryVoice = AudioManager.Instance.LoadCue("Purgatory_Purgatory");
             this.findPortalVoice = AudioManager.Instance.LoadCue("Purgatory_FindPortal");
+
+            Player.InputFrozen = false;
         }
 
         public Player GetPlayer(PlayerNumber playerNumber)
@@ -125,23 +127,23 @@ namespace Purgatory.Game
                 if (num < 15)
                 {
                     if (player1Level.GetItemCount(typeof(BouncePowerUp)) < 4 && player1.BulletBounce < Player.MaxBounce && !(player1.Level is PurgatoryLevel))
-                        player1Level.AddToPickups(new BouncePowerUp());
+                        player1Level.AddToPickups(new BouncePowerUp(), false);
                     if (player2Level.GetItemCount(typeof(BouncePowerUp)) < 4 && player2.BulletBounce < Player.MaxBounce && !(player2.Level is PurgatoryLevel))
-                        player2Level.AddToPickups(new BouncePowerUp()); 
+                        player2Level.AddToPickups(new BouncePowerUp(), false); 
                 }
                 else if (num < 25)
                 {
                     if (player1Level.GetItemCount(typeof(HealthPickUp)) < 4 && player1.Health < Player.MaxHealth && !(player1.Level is PurgatoryLevel))
-                        player1Level.AddToPickups(new HealthPickUp());
+                        player1Level.AddToPickups(new HealthPickUp(), false);
                     if (player2Level.GetItemCount(typeof(HealthPickUp)) < 4 && player2.Health < Player.MaxHealth && !(player2.Level is PurgatoryLevel))
-                        player2Level.AddToPickups(new HealthPickUp());
+                        player2Level.AddToPickups(new HealthPickUp(), false);
                 }
                 else if (num < 30)
                 {
                     if (player1Level.GetItemCount(typeof(ShieldPowerUp)) < 1 && !(player1.Level is PurgatoryLevel))
-                        this.player1Level.AddToPickups(new ShieldPowerUp());
+                        this.player1Level.AddToPickups(new ShieldPowerUp(), false);
                     if (player2Level.GetItemCount(typeof(ShieldPowerUp)) < 1 && !(player2.Level is PurgatoryLevel))
-                        this.player2Level.AddToPickups(new ShieldPowerUp());
+                        this.player2Level.AddToPickups(new ShieldPowerUp(), false);
                 }
             }
 
@@ -151,7 +153,7 @@ namespace Purgatory.Game
                 {
                     if (!this.player1.DeathSFX.IsPlaying)
                     {
-                        Player.InputFrozen = false;
+                        Player.InputFrozen = true;
                         winScreen.SetBackground(BigEvilStatic.CreateDeathWinBackground());
                         winScreen.WinMusic = AudioManager.Instance.LoadCue("Purgatory_DeathWins");
                         BigEvilStatic.ScreenManager.OpenScreen(winScreen);
@@ -182,14 +184,18 @@ namespace Purgatory.Game
                 }
             }
 
-            // Check for purgatory and update the timer. Revive player if timer is up
+            // Check for purgatory and update the timer. Kill player if timer is up
             if (this.player1.Level is PurgatoryLevel)
             {
                 this.purgatoryTimer += elapsedTime;
 
-                if (purgatoryTimer >= GameContext.PurgatoryTime)
+                if (purgatoryTimer >= GameContext.PurgatoryTime && !Player.InputFrozen)
                 {
                     this.player1.Health = 0;
+                    Player.InputFrozen = true;
+                    AudioManager.Instance.FadeOut(this.purgatoryMusic, 1, true);
+                    AudioManager.Instance.FadeOut(this.ds.BackgroundMusic, 1, true);
+                    AudioManager.Instance.PlayCue(ref this.player1.DeathSFX, false);
                 }
             }
             
@@ -199,7 +205,7 @@ namespace Purgatory.Game
                 {
                     if (!this.player2.DeathSFX.IsPlaying)
                     {
-                        Player.InputFrozen = false;
+                        Player.InputFrozen = true;
                         winScreen.SetBackground(BigEvilStatic.CreateLifeWinBackground());
                         winScreen.WinMusic = AudioManager.Instance.LoadCue("Purgatory_LifeWins");
                         BigEvilStatic.ScreenManager.OpenScreen(winScreen);
@@ -230,14 +236,18 @@ namespace Purgatory.Game
                 }
             }
 
-            // Check for purgatory and update the timer. Revive player if timer is up
+            // Check for purgatory and update the timer. Kill player if timer is up
             if (this.player2.Level is PurgatoryLevel)
             {
                 this.purgatoryTimer += elapsedTime;
 
-                if (purgatoryTimer >= GameContext.PurgatoryTime)
+                if (purgatoryTimer >= GameContext.PurgatoryTime && !Player.InputFrozen)
                 {
                     this.player2.Health = 0;
+                    Player.InputFrozen = true;
+                    AudioManager.Instance.FadeOut(this.purgatoryMusic, 1, true);
+                    AudioManager.Instance.FadeOut(this.ds.BackgroundMusic, 1, true);
+                    AudioManager.Instance.PlayCue(ref this.player2.DeathSFX, false);
                 }
             }
         }

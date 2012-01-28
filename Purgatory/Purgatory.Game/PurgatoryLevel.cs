@@ -12,6 +12,7 @@ namespace Purgatory.Game
     public class PurgatoryLevel : Level
     {
         private Sprite overlay;
+        public Portal Portal { get; set; }
 
         public PurgatoryLevel(string levelType, TileType[][] maze1, TileType[][] maze2)
             : base()
@@ -82,6 +83,16 @@ namespace Purgatory.Game
             //}
 
             pickUps = new List<PlayerPickUp>();
+        }
+
+        public override void AddToPickups(PlayerPickUp pickUp, Vector2 playerPosition, int minDistance, bool safe4)
+        {
+            base.AddToPickups(pickUp, playerPosition, minDistance, safe4);
+
+            if (pickUp is Portal)
+            {
+                this.Portal = pickUp as Portal;
+            }
         }
 
         public override void Update(GameTime gameTime)

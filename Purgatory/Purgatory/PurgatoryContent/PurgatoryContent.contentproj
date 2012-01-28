@@ -146,8 +146,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Arrow.png">
-      <Name>Arrow</Name>
+    <Compile Include="ArrowRed.png">
+      <Name>ArrowRed</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -590,6 +590,13 @@
   <ItemGroup>
     <Compile Include="HealthBar.png">
       <Name>HealthBar</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ArrowGreen.png">
+      <Name>ArrowGreen</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
