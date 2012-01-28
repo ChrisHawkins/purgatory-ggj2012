@@ -18,7 +18,7 @@ namespace Purgatory.Game
         private KeyboardManager controls;
         private Vector2 direction;
         private Vector2 movementDirection;
-        private Sprite sprite;
+        private DirectionalSprite sprite;
         private PlayerNumber playerNumber;
         private Vector2 bulletDirection;
 
@@ -75,7 +75,7 @@ namespace Purgatory.Game
             }
         }
 
-        public void Initialize(KeyboardManager controlScheme, Sprite sprite, Sprite bulletSprite)
+        public void Initialize(KeyboardManager controlScheme, DirectionalSprite sprite, Sprite bulletSprite)
         {
             this.controls = controlScheme;
             this.sprite = sprite;
@@ -87,10 +87,7 @@ namespace Purgatory.Game
             }
             else if (this.playerNumber == PlayerNumber.PlayerTwo)
             {
-                int width = this.Level.WalkableTile.Length - 19;
-                int height = this.Level.WalkableTile[0].Length - 5;
-
-                this.position = new Vector2(Level.TileWidth * 120, Level.TileWidth * 144);
+                this.position = new Vector2(Level.TileWidth * 127, Level.TileWidth * 141);
             }
 
         }
@@ -139,7 +136,7 @@ namespace Purgatory.Game
             if (this.controls.ShootControlPressed() && this.shootTimer > this.shootCooldown && Energy > 0)
             {
                 Vector2 bulletPos = this.Position;
-                Bullet b = new Bullet(bulletPos, this.bulletDirection, this.speed * 3f, bulletSprite, this.Level);
+                Bullet b = new Bullet(bulletPos, this.bulletDirection, 600.0f, new Sprite(bulletSprite), this.Level);
                 this.BulletList.Add(b);
                 --this.Energy;
                 this.shootTimer = 0.0f;
@@ -162,7 +159,7 @@ namespace Purgatory.Game
 
         public void Draw(SpriteBatch batch, Bounds bounds)
         {
-            this.sprite.Draw(batch, bounds.AdjustPoint(this.Position));
+            this.sprite.Draw(this.direction, batch, bounds.AdjustPoint(this.Position));
 
             foreach (var bullet in BulletList)
             {

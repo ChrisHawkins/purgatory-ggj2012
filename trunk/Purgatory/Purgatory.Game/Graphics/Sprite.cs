@@ -20,6 +20,7 @@ namespace Purgatory.Game.Graphics
         public int Height { get; set; }
 
         private TimeSpan sinceLastFrame = TimeSpan.Zero;
+        private Sprite bulletSprite;
 
         public Sprite(Texture2D texture, int width, int height)
         {
@@ -32,6 +33,10 @@ namespace Purgatory.Game.Graphics
             this.Alpha = 1f;
 
             this.LoadAnimation();
+        }
+
+        public Sprite(Sprite sprite) : this(sprite.Texture2D, sprite.Width, sprite.Height)
+        {
         }
 
         private void LoadAnimation()

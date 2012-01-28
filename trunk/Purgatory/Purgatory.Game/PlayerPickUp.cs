@@ -14,11 +14,15 @@ namespace Purgatory.Game
         private Sprite sprite;
         private Rectangle collisionRectangle;
 
-        public PlayerPickUp(String spriteAsset, Vector2 postition)
+        public PlayerPickUp(String spriteAsset)
         {
             Texture2D texture = BigEvilStatic.Content.Load<Texture2D>(spriteAsset);
             this.sprite = new Sprite(texture, texture.Width, texture.Height);
-            this.Position = postition;
+        }
+
+        public void SetPosition(Vector2 position)
+        {
+            this.Position = position;
             this.collisionRectangle = new Rectangle((int)(this.Position.X - (this.sprite.Width / 2.0f)), (int)(this.Position.Y - (this.sprite.Height / 2.0f)), this.sprite.Width, this.sprite.Height);
         }
 

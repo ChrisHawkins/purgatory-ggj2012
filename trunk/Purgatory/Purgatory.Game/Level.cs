@@ -12,6 +12,7 @@ namespace Purgatory.Game
 
     public class Level
     {
+        private Random rng;
         public TileType[][] WalkableTile;
 
         private int HalfTilesWideOnScreen;
@@ -28,6 +29,7 @@ namespace Purgatory.Game
         {
             // Temp list of rectangles to return
             rectangles = new List<Rectangle>();
+            rng = new Random();
 
             // Set Tiles Wide
             HalfTilesWideOnScreen = (int)Math.Ceiling((double)BigEvilStatic.Viewport.Width / 4 / TileWidth);
@@ -135,7 +137,22 @@ namespace Purgatory.Game
 
         public void AddToPickups(PlayerPickUp pickUp)
         {
-            this.pickUps.Add(pickUp);
+            int maxX = this.WalkableTile.Length;
+            int maxY = this.WalkableTile[0].Length;
+
+            bool ammoPlaced = false;
+            while (!ammoPlaced)
+            {
+                int locX = rng.Next(maxX);
+                int locY = rng.Next(maxY);
+
+                if (WalkableTile[locX][locY] == TileType.Ground)
+                {
+                    ammoPlaced = true;
+                    this.pickUps.Add(pickUp);
+                    pickUp.SetPosition(new Vector2(locX, locY) * Level.TileWidth);
+                }
+            }
         }
 
         public void Draw(SpriteBatch batch, Bounds bounds)

@@ -7,7 +7,8 @@ namespace Purgatory.Game
     using Purgatory.Game.Controls;
     using System.Collections.Generic;
     using Purgatory.Game.Physics;
-using System;
+    using System;
+    using Purgatory.Game.Graphics;
 
     public class GameContext
     {
@@ -67,13 +68,11 @@ using System;
 
         public void InitializePlayer(KeyboardManager playerOneControlScheme, KeyboardManager playerTwoControlScheme, ContentManager Content)
         {
-            Texture2D lifeTexture = Content.Load<Texture2D>("lifeDown");
             Texture2D lifeBulletTexture = Content.Load<Texture2D>("halo");
-            Texture2D deathTexture = Content.Load<Texture2D>("deathDown");
             Texture2D deathBulletTexture = Content.Load<Texture2D>("deathDown");
 
-            this.player1.Initialize(playerOneControlScheme, new Graphics.Sprite(lifeTexture, lifeTexture.Height, lifeTexture.Height), new Graphics.Sprite(lifeBulletTexture, lifeBulletTexture.Height, lifeBulletTexture.Height));
-            this.player2.Initialize(playerTwoControlScheme, new Graphics.Sprite(deathTexture, deathTexture.Height, deathTexture.Height), new Graphics.Sprite(deathBulletTexture, deathBulletTexture.Height, deathBulletTexture.Height));
+            this.player1.Initialize(playerOneControlScheme, new DirectionalSprite("life"), new Graphics.Sprite(lifeBulletTexture, lifeBulletTexture.Height, lifeBulletTexture.Height));
+            this.player2.Initialize(playerTwoControlScheme, new DirectionalSprite("death"), new Graphics.Sprite(deathBulletTexture, deathBulletTexture.Height, deathBulletTexture.Height));
 
 
         }
@@ -93,42 +92,11 @@ using System;
                 this.player2.CheckBulletCollisions(player1.BulletList);
             }
 
-            // Random Ammo Drops
+            // Random Energy Drops
             if (rng.Next(RandomChanceForEnergyDrop) == 1)
             {
-                //create ammo pack in life level
-                int maxX = player1Level.WalkableTile.Length;
-                int maxY = player1Level.WalkableTile[0].Length;
-                
-                bool ammoPlaced = false;
-                while (!ammoPlaced)
-                {
-                    int locX = rng.Next(maxX);
-                    int locY = rng.Next(maxY);
-
-                    if (player1Level.WalkableTile[locX][locY] == TileType.Ground)
-                    {
-                        ammoPlaced = true;
-                        this.player1Level.AddToPickups(new AmmoPickUp(new Vector2(locX, locY) * Level.TileWidth));
-                    }
-                }
-
-                //create ammo pack in Death level
-                maxX = player2Level.WalkableTile.Length;
-                maxY = player2Level.WalkableTile[0].Length;
-
-                ammoPlaced = false;
-                while (!ammoPlaced)
-                {
-                    int locX = rng.Next(maxX);
-                    int locY = rng.Next(maxY);
-
-                    if (player2Level.WalkableTile[locX][locY] == TileType.Ground)
-                    {
-                        ammoPlaced = true;
-                        this.player2Level.AddToPickups(new AmmoPickUp(new Vector2(locX, locY) * Level.TileWidth + new Vector2(Level.TileWidth) / 2));
-                    }
-                }
+                player1Level.AddToPickups(new AmmoPickUp());
+                player2Level.AddToPickups(new AmmoPickUp());
             }
 
             if (this.player1.Health < 1 && !this.player1.DeathSFX.IsPlaying)
