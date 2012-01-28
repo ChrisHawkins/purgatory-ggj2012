@@ -19,7 +19,7 @@ namespace Purgatory.Game
                 for (int j = 0; j < levelTexture.Width; ++j)
                 {
                     Color pixelColor = pixelData[i * levelTexture.Width + j];
-                    if (pixelColor != Color.Black)
+                    if (pixelColor == Color.White)
                     {
                         generatedLevel[j, i] = true;
                     }

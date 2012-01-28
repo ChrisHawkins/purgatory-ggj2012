@@ -19,7 +19,7 @@ using Microsoft.Xna.Framework.Audio;
         public const int TileWidth = 32;
 
         protected List<Rectangle> rectangles;
-        protected Sprite wall, wallTop, wallBottom, wallLeft, wallRight;
+        protected Sprite wall, wallTop, wallBottom, wallLeft, wallRight, wallOutsideCorner, wallTopLeft, wallTopRight, wallBottomLeft, wallBottomRight;
         protected Sprite backgroundGround;
         protected List<PlayerPickUp> pickUps;
         private Cue pickupSFX; 
@@ -47,6 +47,11 @@ using Microsoft.Xna.Framework.Audio;
             Texture2D wallBottomTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "WallBottom");
             Texture2D wallLeftTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "WallLeft");
             Texture2D wallRightTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "WallRight");
+            Texture2D wallOutsideTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "WallOutsideCorner");
+            Texture2D wallTopLeftTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "WallTopLeft");
+            Texture2D wallTopRightTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "WallTopRight");
+            Texture2D wallBottomLeftTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "WallBottomLeft");
+            Texture2D wallBottomRightTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "WallBottomRight");
 
 
             wall = new Sprite(wallTex, TileWidth, TileWidth);
@@ -54,6 +59,11 @@ using Microsoft.Xna.Framework.Audio;
             wallBottom = new Sprite(wallBottomTex, TileWidth, TileWidth);
             wallLeft = new Sprite(wallLeftTex, TileWidth, TileWidth);
             wallRight = new Sprite(wallRightTex, TileWidth, TileWidth);
+            wallOutsideCorner = new Sprite(wallOutsideTex, TileWidth, TileWidth);
+            wallTopLeft = new Sprite(wallTopLeftTex, TileWidth, TileWidth);
+            wallBottomRight = new Sprite(wallBottomRightTex, TileWidth, TileWidth);
+            wallBottomLeft = new Sprite(wallBottomLeftTex, TileWidth, TileWidth);
+            wallTopRight = new Sprite(wallTopRightTex, TileWidth, TileWidth);
 
             Texture2D backgroundTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "Ground");
             backgroundGround = new Sprite(backgroundTex, backgroundTex.Width, backgroundTex.Height);
@@ -98,6 +108,8 @@ using Microsoft.Xna.Framework.Audio;
                 {
                     if (!data[i, j])
                     {
+                        WalkableTile[i][j] = TileType.Wall;
+
                         if (j + 1 < height && data[i,j + 1])
                         {
                             WalkableTile[i][j] = TileType.WallTop;
@@ -106,17 +118,36 @@ using Microsoft.Xna.Framework.Audio;
                         {
                             WalkableTile[i][j] = TileType.WallBottom;
                         }
-                        else if (i + 1 < width && data[i + 1,j])
+                        
+                        if (i + 1 < width && data[i + 1,j])
                         {
-                            WalkableTile[i][j] = TileType.WallLeft;
+                            if(WalkableTile[i][j] == TileType.WallTop)
+                            {
+                                WalkableTile[i][j] = TileType.WallOutsideCorner;
+                            }
+                            else if (WalkableTile[i][j] == TileType.WallBottom)
+                            {
+                                WalkableTile[i][j] = TileType.WallOutsideCorner;
+                            }
+                            else
+                            {
+                                WalkableTile[i][j] = TileType.WallLeft;
+                            }
                         }
                         else if (i - 1 >= 0 && data[i - 1, j])
                         {
-                            WalkableTile[i][j] = TileType.WallRight;
-                        }
-                        else
-                        {
-                            WalkableTile[i][j] = TileType.Wall;
+                            if(WalkableTile[i][j] == TileType.WallTop)
+                            {
+                                WalkableTile[i][j] = TileType.WallOutsideCorner;
+                            }
+                            else if (WalkableTile[i][j] == TileType.WallBottom)
+                            {
+                                WalkableTile[i][j] = TileType.WallOutsideCorner;
+                            }
+                            else
+                            {
+                                WalkableTile[i][j] = TileType.WallRight;
+                            }
                         }
                     }
                     else
@@ -238,6 +269,21 @@ using Microsoft.Xna.Framework.Audio;
                             break;
                         case TileType.WallRight:
                             this.wallRight.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
+                            break;
+                        case TileType.WallOutsideCorner:
+                            this.wallOutsideCorner.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
+                            break;
+                        case TileType.WallTopLeft:
+                            this.wallTopLeft.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
+                            break;
+                        case TileType.WallTopRight:
+                            this.wallTopRight.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
+                            break;
+                        case TileType.WallBottomLeft:
+                            this.wallBottomLeft.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
+                            break;
+                        case TileType.WallBottomRight:
+                            this.wallBottomRight.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                             break;
                     }                    
                 }
