@@ -2,8 +2,10 @@
 namespace Purgatory.Game.Graphics
 {
     using System;
+    using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using Purgatory.Game.Animation;
 
     public class Sprite
     {
@@ -14,6 +16,7 @@ namespace Purgatory.Game.Graphics
         public Color Tint { get; set; }
         public float Alpha { get; set; }
         public float Rotation { get; set; }
+        public LinkedList<SpriteEffect> Effects { get; private set; }
 
         public Texture2D Texture2D { get; private set; }
         public int Width { get; set; }
@@ -28,6 +31,7 @@ namespace Purgatory.Game.Graphics
             this.Width = width;
             this.Height = height;
             this.Tint = Color.White;
+            this.Effects = new LinkedList<SpriteEffect>();
 
             this.Alpha = 1f;
 
@@ -43,6 +47,26 @@ namespace Purgatory.Game.Graphics
         {
             this.FrameCount = this.Texture2D.Width / this.Width;
             this.FrameTime = TimeSpan.FromMilliseconds(33.33);
+        }
+
+        public void UpdateEffects(GameTime time)
+        {
+            List<SpriteEffect> toRemove = new List<SpriteEffect>();
+
+            foreach (var effect in Effects)
+            {
+                effect.Update(this, time);
+
+                if (effect.HasFinished())
+                {
+                    toRemove.Add(effect);
+                }
+            }
+
+            foreach (var effect in toRemove)
+            {
+                Effects.Remove(effect);
+            }
         }
 
         public void UpdateAnimation(GameTime time)

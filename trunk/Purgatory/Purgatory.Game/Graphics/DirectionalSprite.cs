@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Purgatory.Game.Animation;
 
 namespace Purgatory.Game.Graphics
 {
@@ -19,9 +20,21 @@ namespace Purgatory.Game.Graphics
         public int Width {get { return upSprite.Width;}}
         public int Height {get { return upSprite.Height;}}
 
+        public void AddEffect(SpriteEffect effect)
+        {
+            upSprite.Effects.AddLast(effect);
+            downSprite.Effects.AddLast(effect);
+            leftSprite.Effects.AddLast(effect);
+            rightSprite.Effects.AddLast(effect);
+        }
 
         public void UpdateAnimation(GameTime time)
         {
+            upSprite.UpdateEffects(time);
+            downSprite.UpdateEffects(time);
+            leftSprite.UpdateEffects(time);
+            rightSprite.UpdateEffects(time);
+
             if(this.PlayAnimation)
             {
                 upSprite.UpdateAnimation(time);
