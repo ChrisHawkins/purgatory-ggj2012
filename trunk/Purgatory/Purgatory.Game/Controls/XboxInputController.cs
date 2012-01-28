@@ -29,7 +29,7 @@ namespace Purgatory.Game.Controls
                 {
                     player.MovementDirection.Normalize();
 
-                    if (state.IsButtonDown(Buttons.A) && player.TimeSinceLastDash > Player.DashCooldownTime)
+                    if (state.IsButtonDown(Buttons.A) && player.TimeSinceLastDash > Player.DashCooldownTime && !(player.Level is PurgatoryLevel))
                     {
                         AudioManager.Instance.PlayCue(ref player.DashSFX, false);
                         player.DashVelocity = player.Speed * 5 * player.MovementDirection;

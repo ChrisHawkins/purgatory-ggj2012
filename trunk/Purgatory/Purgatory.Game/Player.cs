@@ -147,7 +147,11 @@ namespace Purgatory.Game
                     this.sprite.PlayAnimation = false;
                 }
 
-                this.inputController.UpdateShoot(this, gameTime);
+                if (!(this.Level is PurgatoryLevel))
+                {
+                    this.inputController.UpdateShoot(this, gameTime);
+                }
+
                 this.RegenEnergy(gameTime);
             }
 
