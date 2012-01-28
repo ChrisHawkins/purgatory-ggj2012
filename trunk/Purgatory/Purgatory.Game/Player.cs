@@ -10,10 +10,34 @@ namespace Purgatory.Game
     using System;
     using Microsoft.Xna.Framework.Audio;
 
+    public class FadingImage
+    {
+        private Vector2 Position;
+        private Sprite Sprite;
+        private float FadeTime = 0.5f;
+        private float FadeTimer = 0.5f;
+
+        public FadingImage(Vector2 position, Sprite sprite)
+        {
+            this.Position = position;
+            this.Sprite = sprite;
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            this.FadeTimer -= elapsedTime;
+            float lerp = FadeTimer / FadeTime;
+            this.Sprite.Alpha = lerp;
+        }
+    }
+
     public class Player : IMoveable
     {
         public static bool InputFrozen = false;
         private float speed;
+        private float dashShadowInterval = 1f;
+        private Dictionary<Vector2, Texture2D> dashPositions;
 
         private KeyboardManager controls;
         private Vector2 direction;
@@ -47,7 +71,7 @@ namespace Purgatory.Game
         public Cue ShootSFX;
         public Cue DamageSFX;
         public Cue DeathSFX;
-
+        public Cue DashSFX;
 
         public Player(PlayerNumber playerNumber)
         {
@@ -75,6 +99,8 @@ namespace Purgatory.Game
                 this.DamageSFX = AudioManager.Instance.LoadCue("Purgatory_DeathDamageScream");
                 this.DeathSFX = AudioManager.Instance.LoadCue("Purgatory_DeathDyingScream");
             }
+
+            this.DashSFX = AudioManager.Instance.LoadCue("Purgatory_PlayerDash");
         }
 
         public void Initialize(KeyboardManager controlScheme, DirectionalSprite sprite, Sprite bulletSprite)
@@ -201,6 +227,7 @@ namespace Purgatory.Game
 
                     if (controls.DashControlPressed() && this.timeSinceLastDash > dashCooldownTime)
                     {
+                        AudioManager.Instance.PlayCue(ref this.DashSFX, false);
                         this.DashVelocity = speed * 5 * movementDirection;
                         this.timeSinceLastDash = 0;
                     }
