@@ -167,6 +167,7 @@ namespace Purgatory.Game
                 if (purgatoryTimer >= GameContext.PurgatoryTime)
                 {
                     this.player1.Level = this.player1Level;
+                    this.player1Level.PlayPurgatoryAnimation();
                     this.player1.Spawn();
                     AudioManager.Instance.CrossFade(this.purgatoryMusic, this.ds.BackgroundMusic, 1.5f, true);
                 }
@@ -209,6 +210,7 @@ namespace Purgatory.Game
                 if (purgatoryTimer >= GameContext.PurgatoryTime)
                 {
                     this.player2.Level = this.player2Level;
+                    this.player2Level.PlayPurgatoryAnimation();
                     this.player2.Spawn();
                     AudioManager.Instance.CrossFade(this.purgatoryMusic, this.ds.BackgroundMusic, 1.5f, true);
                 }
