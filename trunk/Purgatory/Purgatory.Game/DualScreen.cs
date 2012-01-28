@@ -18,7 +18,6 @@ using Purgatory.Game.Graphics;
         public Cue BackgroundMusic;
         public Cue PurgatoryChaseMusic;
         public bool ChaseMusicPlaying = false;
-        private Form HUD;
 
         public DualScreen(GraphicsDevice device)
             : base(device)
@@ -33,10 +32,9 @@ using Purgatory.Game.Graphics;
             this.BackgroundMusic = AudioManager.Instance.LoadCue("Purgatory_Gameplay_Joined");
             this.PurgatoryChaseMusic = AudioManager.Instance.LoadCue("Purgatory_PurgatoryChase");
             this.menu.Visible = false;
-            this.HUD = new Form(device);
             Texture2D seperatorTex = BigEvilStatic.Content.Load<Texture2D>("hud");
             Sprite seperator = new Sprite(seperatorTex, seperatorTex.Width, seperatorTex.Height);
-            HUD.Controls.Add(new SpriteControl(seperator, new Vector2(device.Viewport.Width / 2, device.Viewport.Height / 2)));
+            Hud.Controls.Add(new SpriteControl(seperator, new Vector2(device.Viewport.Width / 2, device.Viewport.Height / 2)));
         }
 
         public override void Draw(Bounds bounds)
@@ -46,7 +44,12 @@ using Purgatory.Game.Graphics;
                 toDraw.Screen.Draw(toDraw.Bounds);
             }
 
-            this.HUD.Draw();
+            this.Hud.Draw();
+
+            foreach (var toDraw in screens)
+            {
+                toDraw.Screen.Hud.Draw();
+            }
 
             this.menu.Draw();
         }
@@ -127,7 +130,7 @@ using Purgatory.Game.Graphics;
                 screen.Screen.Update(gameTime);
             }
 
-            this.HUD.Update(gameTime);
+            this.Hud.Update(gameTime);
         }
 
         public Action<GameTime> ContextUpdater { get; set; }

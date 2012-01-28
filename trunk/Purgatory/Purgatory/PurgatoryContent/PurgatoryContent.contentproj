@@ -115,13 +115,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EnergyBar.bmp">
-      <Name>EnergyBar</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="deathDown.png">
       <Name>deathDown</Name>
       <Importer>TextureImporter</Importer>
@@ -338,8 +331,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ShieldPickUp.png">
-      <Name>ShieldPickUp</Name>
+    <Compile Include="Portal.png">
+      <Name>Portal</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -576,6 +569,20 @@
     </Compile>
     <Compile Include="hudRight.png">
       <Name>hudRight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ShieldPickUp.png">
+      <Name>ShieldPickUp</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="EnergyBar.bmp">
+      <Name>EnergyBar</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

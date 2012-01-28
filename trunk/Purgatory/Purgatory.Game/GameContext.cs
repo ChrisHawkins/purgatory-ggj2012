@@ -157,6 +157,7 @@ namespace Purgatory.Game
                 {
                     this.purgatory.PlayPurgatoryAnimation();
                     this.player1.Level = purgatory;
+                    purgatory.AddToPickups(new Portal(this.player2Level, this.purgatoryMusic, this.ds.BackgroundMusic), this.player1.Position, 40 * 32);
                     this.purgatoryTimer = 0f;
                     AudioManager.Instance.CrossFade(ds.BackgroundMusic, this.purgatoryMusic, 1.5f, false);
                     this.player1.EnterPurgatory(PlayerNumber.PlayerOne);
@@ -166,18 +167,18 @@ namespace Purgatory.Game
             }
 
             // Check for purgatory and update the timer. Revive player if timer is up
-            if (this.player1.Level is PurgatoryLevel)
-            {
-                this.purgatoryTimer += elapsedTime;
+            //if (this.player1.Level is PurgatoryLevel)
+            //{
+            //    this.purgatoryTimer += elapsedTime;
 
-                if (purgatoryTimer >= GameContext.PurgatoryTime)
-                {
-                    this.player1.Level = this.player1Level;
-                    this.player1Level.PlayPurgatoryAnimation();
-                    this.player1.Spawn();
-                    AudioManager.Instance.CrossFade(this.purgatoryMusic, this.ds.BackgroundMusic, 1.5f, true);
-                }
-            }
+            //    if (purgatoryTimer >= GameContext.PurgatoryTime)
+            //    {
+            //        this.player1.Level = this.player1Level;
+            //        this.player1Level.PlayPurgatoryAnimation();
+            //        this.player1.Spawn();
+            //        AudioManager.Instance.CrossFade(this.purgatoryMusic, this.ds.BackgroundMusic, 1.5f, true);
+            //    }
+            //}
             
             if (this.player2.Health < 1)
             {
@@ -202,6 +203,7 @@ namespace Purgatory.Game
                 {
                     this.purgatory.PlayPurgatoryAnimation();
                     this.player2.Level = purgatory;
+                    purgatory.AddToPickups(new Portal(this.player2Level, this.purgatoryMusic, this.ds.BackgroundMusic), this.player2.Position, 40 * 32);
                     this.purgatoryTimer = 0f;
                     AudioManager.Instance.CrossFade(ds.BackgroundMusic, this.purgatoryMusic, 1.5f, false);
                     this.player1.EnterPurgatory(PlayerNumber.PlayerTwo);
@@ -210,18 +212,18 @@ namespace Purgatory.Game
             }
 
             // Check for purgatory and update the timer. Revive player if timer is up
-            if (this.player2.Level is PurgatoryLevel)
-            {
-                this.purgatoryTimer += elapsedTime;
+            //if (this.player2.Level is PurgatoryLevel)
+            //{
+            //    this.purgatoryTimer += elapsedTime;
 
-                if (purgatoryTimer >= GameContext.PurgatoryTime)
-                {
-                    this.player2.Level = this.player2Level;
-                    this.player2Level.PlayPurgatoryAnimation();
-                    this.player2.Spawn();
-                    AudioManager.Instance.CrossFade(this.purgatoryMusic, this.ds.BackgroundMusic, 1.5f, true);
-                }
-            }
+            //    if (purgatoryTimer >= GameContext.PurgatoryTime)
+            //    {
+            //        this.player2.Level = this.player2Level;
+            //        this.player2Level.PlayPurgatoryAnimation();
+            //        this.player2.Spawn();
+            //        AudioManager.Instance.CrossFade(this.purgatoryMusic, this.ds.BackgroundMusic, 1.5f, true);
+            //    }
+            //}
         }
 
         public bool InPurgatory
