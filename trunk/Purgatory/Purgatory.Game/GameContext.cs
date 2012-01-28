@@ -141,7 +141,6 @@ namespace Purgatory.Game
                 {
                     if (!this.player2.DeathSFX.IsPlaying)
                     {
-                        //player1 win code goes here
                         Player.InputFrozen = false;
                         winScreen.SetBackground(BigEvilStatic.CreateLifeWinBackground());
                         winScreen.WinMusic = AudioManager.Instance.LoadCue("Purgatory_LifeWins");
