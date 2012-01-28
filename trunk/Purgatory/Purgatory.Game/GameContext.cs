@@ -21,6 +21,8 @@ using System;
 
         public GameContext(WinScreen winScreen)
         {
+            this.Time = 100;
+
             this.winScreen = winScreen;
             player1 = new Player(PlayerNumber.PlayerOne);
             player2 = new Player(PlayerNumber.PlayerTwo);
@@ -75,6 +77,8 @@ using System;
 
         public void UpdateGameLogic(GameTime time)
         {
+            this.Time -= (float)time.ElapsedGameTime.TotalSeconds;
+
             this.player1.SetBulletDirection(player2.Position);
             this.player2.SetBulletDirection(player1.Position);
             this.player1.Update(time);
@@ -133,6 +137,6 @@ using System;
             }
         }
 
-        
+        public float Time { get; private set; }
     }
 }

@@ -42,5 +42,9 @@ namespace Purgatory.Game
         public virtual void OnControlReturned()
         {
         }
+
+        public virtual void OnControlLost()
+        {
+        }
     }
 }

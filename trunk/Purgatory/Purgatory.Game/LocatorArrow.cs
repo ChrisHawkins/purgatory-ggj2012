@@ -13,8 +13,6 @@ namespace Purgatory.Game
         public LocatorArrow(Texture2D texture)
         {
             this.Sprite = new Sprite(texture, texture.Width, texture.Height);
-
-
             this.Sprite.Alpha = 0.25f;
         }
 
