@@ -49,7 +49,7 @@ namespace Purgatory.Game.Controls
 
                 if (player.MovementDirection.LengthSquared() != 0)
                 {
-                    player.MovementDirection.Normalize();
+                    player.MovementDirection = Vector2.Normalize(player.MovementDirection);
 
                     if (controls.DashControlPressed() && player.TimeSinceLastDash > Player.DashCooldownTime)
                     {
