@@ -165,15 +165,6 @@ namespace Purgatory.Game
             //    }
             //}
 
-            int left = -(int)bounds.Camera.X - bounds.Rectangle.Width / 2;
-            left = left - left.Mod(TileWidth);
-            int right = -(int)bounds.Camera.X + bounds.Rectangle.Width / 2;
-            right = right + right.Mod(TileWidth);
-            int top = -(int)bounds.Camera.Y - bounds.Rectangle.Height / 2;
-            top = top - top.Mod(TileWidth);
-            int bottom = -(int)bounds.Camera.Y + bounds.Rectangle.Height / 2;
-            bottom = bottom + bottom.Mod(TileWidth);
-
             int numAcross = bounds.Rectangle.Width / backgroundGround.Width + 1;
             int numUp = bounds.Rectangle.Height / backgroundGround.Height + 1;
             int playerBGIndexX = (int)-bounds.Camera.X / backgroundGround.Width;
