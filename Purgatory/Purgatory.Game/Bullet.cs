@@ -20,6 +20,11 @@ using Purgatory.Game.Graphics;
         private List<float> xPenetrations;
         private List<float> yPenetrations;
 
+        public Sprite Sprite
+        {
+            get { return this.sprite; }
+        }
+
         public Bullet(Vector2 position, Vector2 direction, int bounce, float speed, Sprite sprite, Level level)
         {
             this.Position = position;

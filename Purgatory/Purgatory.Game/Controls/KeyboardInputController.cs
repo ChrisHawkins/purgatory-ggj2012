@@ -73,16 +73,6 @@ namespace Purgatory.Game.Controls
                 player.ShootTimer = 0.0f;
                 AudioManager.Instance.PlayCue(ref player.ShootSFX, true);
             }
-
-            for (int i = player.BulletList.Count - 1; i >= 0; --i )
-            {
-                player.BulletList[i].Update(time);
-                if (player.BulletList[i].RemoveFromList)
-                {
-                    player.BulletList.RemoveAt(i);
-                }
-
-            }
         }
     }
 }
