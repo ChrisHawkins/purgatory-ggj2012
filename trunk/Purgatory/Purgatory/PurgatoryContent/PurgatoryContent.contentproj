@@ -278,8 +278,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="lifeWalls.png">
-      <Name>lifeWalls</Name>
+    <Compile Include="lifeWall.png">
+      <Name>lifeWall</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
