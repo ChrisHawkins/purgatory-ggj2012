@@ -331,8 +331,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Shield.png">
-      <Name>Shield</Name>
+    <Compile Include="DeathShield.png">
+      <Name>DeathShield</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -391,6 +391,13 @@
   <ItemGroup>
     <Compile Include="WhiteOut.bmp">
       <Name>WhiteOut</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="LifeShield.png">
+      <Name>LifeShield</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
