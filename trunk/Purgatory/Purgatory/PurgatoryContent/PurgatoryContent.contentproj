@@ -403,13 +403,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Seperator.png">
-      <Name>Seperator</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Maze01.png">
       <Name>Maze01</Name>
       <Importer>TextureImporter</Importer>
@@ -571,6 +564,13 @@
     </Compile>
     <Compile Include="9.png">
       <Name>9</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="hud.png">
+      <Name>hud</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

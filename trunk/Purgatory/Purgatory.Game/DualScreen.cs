@@ -34,7 +34,7 @@ using Purgatory.Game.Graphics;
             this.PurgatoryChaseMusic = AudioManager.Instance.LoadCue("Purgatory_PurgatoryChase");
             this.menu.Visible = false;
             this.HUD = new Form(device);
-            Texture2D seperatorTex = BigEvilStatic.Content.Load<Texture2D>("Seperator");
+            Texture2D seperatorTex = BigEvilStatic.Content.Load<Texture2D>("hud");
             Sprite seperator = new Sprite(seperatorTex, seperatorTex.Width, seperatorTex.Height);
             HUD.Controls.Add(new SpriteControl(seperator, new Vector2(device.Viewport.Width / 2, device.Viewport.Height / 2)));
         }
