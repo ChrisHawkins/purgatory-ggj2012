@@ -345,13 +345,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="deathWallInsideBottomLeft.png">
-      <Name>deathWallInsideBottomLeft</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="deathWallInsideBottomRight.png">
-      <Name>deathWallInsideBottomRight</Name>
+    <Compile Include="deathWallInsideTopRight.png">
+      <Name>deathWallInsideTopRight</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -360,8 +355,13 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="deathWallInsideTopRight.png">
-      <Name>deathWallInsideTopRight</Name>
+    <Compile Include="deathWallInsideBottomRight.png">
+      <Name>deathWallInsideBottomRight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="deathWallInsideBottomLeft.png">
+      <Name>deathWallInsideBottomLeft</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
