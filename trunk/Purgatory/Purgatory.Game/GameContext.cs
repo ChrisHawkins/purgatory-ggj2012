@@ -41,8 +41,12 @@ namespace Purgatory.Game
             player1 = new Player(PlayerNumber.PlayerOne);
             player2 = new Player(PlayerNumber.PlayerTwo);
 
-            this.player1Level = LevelGenerator.GenerateLevelFromTexture("Life");
-            this.player2Level = LevelGenerator.GenerateLevelFromTexture("Death");
+            Random rand = new Random();
+            int mapNo = rand.Next(3);
+            int pairNo = rand.Next(2);
+
+            this.player1Level = LevelGenerator.GenerateLevelFromTexture("Life", mapNo, pairNo);
+            this.player2Level = LevelGenerator.GenerateLevelFromTexture("Death", mapNo, 1 - pairNo);
             this.purgatory = new PurgatoryLevel("Death", this.player1Level.WalkableTile, this.player2Level.WalkableTile);
 
             player1.Level = player1Level;
