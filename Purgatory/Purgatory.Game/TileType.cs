@@ -13,5 +13,10 @@ namespace Purgatory.Game
         WallBottom,
         WallLeft,
         WallRight,
+        WallTopLeft,
+        WallTopRight,
+        WallBottomLeft,
+        WallBottomRight,
+        WallOutsideCorner,
     }
 }
