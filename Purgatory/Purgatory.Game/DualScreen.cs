@@ -26,7 +26,7 @@ using Purgatory.Game.Graphics;
             
             this.menu = new Form(device);
             Texture2D texture = BigEvilStatic.Content.Load<Texture2D>("PausedBox");
-            SpriteControl pausedBox = new SpriteControl(new Sprite(texture, texture.Width, texture.Height), new Vector2(0,0));
+            SpriteControl pausedBox = new SpriteControl(new Sprite(texture, texture.Width, texture.Height), new Vector2(device.Viewport.Width / 2, device.Viewport.Height / 2));
             menu.Controls.Add(pausedBox);
             
             this.BackgroundMusic = AudioManager.Instance.LoadCue("Purgatory_Gameplay_Joined");
