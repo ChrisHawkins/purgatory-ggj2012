@@ -13,6 +13,7 @@ namespace Purgatory.Game.Graphics
         public int FrameCount { get; private set; }
         public Color Tint { get; set; }
         public float Alpha { get; set; }
+        public float Rotation { get; set; }
 
         public Texture2D Texture2D { get; private set; }
         public int Width { get; set; }
@@ -69,27 +70,22 @@ namespace Purgatory.Game.Graphics
         {
             Color multipliedTint = this.Tint * this.Alpha;
 
-            if (fromTopLeft)
-            {
-                spriteBatch.Draw(
-                    this.Texture2D,
-                    point,
-                    this.GetSourceRectangle(),
-                    multipliedTint);
-            }
-            else
-            {
-                spriteBatch.Draw(
-                    this.Texture2D,
-                    this.GetDestinationRectangle(point),
-                    this.GetSourceRectangle(),
-                    multipliedTint);
-            }
+            spriteBatch.Draw(
+                this.Texture2D,
+                point,
+                this.GetSourceRectangle(),
+                multipliedTint,
+                this.Rotation,
+                this.GetOrigin(fromTopLeft),
+                1.0f,
+                SpriteEffects.None,
+                0f);
         }
 
-        private Rectangle GetDestinationRectangle(Vector2 point)
+        private Vector2 GetOrigin(bool fromTopLeft)
         {
-            return GeometryUtility.GetAdjustedRectangle(point, new Rectangle(0, 0, this.Width, this.Height));
+            if (fromTopLeft) return Vector2.Zero;
+            else return new Vector2(this.Width / 2f, this.Height / 2f);
         }
 
         private Rectangle? GetSourceRectangle()
