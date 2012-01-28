@@ -20,7 +20,7 @@ namespace Purgatory.Game
         public const int TileWidth = 32;
 
         protected List<Rectangle> rectangles;
-        protected Sprite wall, wallTop, wallBottom, wallLeft, wallRight, wallOutsideCorner, wallTopLeft, wallTopRight, wallBottomLeft, wallBottomRight;
+        protected Sprite wall, wallTop, wallBottom, wallLeft, wallRight, wallOutsideTopLeft, wallOutsideTopRight, wallOutsideBottomLeft, wallOutsideBottomRight, wallInsideTopLeft, wallInsideTopRight, wallInsideBottomLeft, wallInsideBottomRight;
         protected Sprite backgroundGround;
         protected List<PlayerPickUp> pickUps;
         private Cue pickupSFX;
@@ -48,11 +48,14 @@ namespace Purgatory.Game
             Texture2D wallBottomTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "WallBottom");
             Texture2D wallLeftTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "WallLeft");
             Texture2D wallRightTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "WallRight");
-            Texture2D wallOutsideTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "WallOutsideCorner");
-            Texture2D wallTopLeftTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "WallTopLeft");
-            Texture2D wallTopRightTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "WallTopRight");
-            Texture2D wallBottomLeftTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "WallBottomLeft");
-            Texture2D wallBottomRightTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "WallBottomRight");
+            Texture2D wallInsideTopLeftTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "WallInsideTopLeft");
+            Texture2D wallInsideTopRightTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "WallInsideTopRight");
+            Texture2D wallInsideBottomLeftTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "WallInsideBottomLeft");
+            Texture2D wallInsideBottomRightTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "WallInsideBottomRight");
+            Texture2D wallOutsideTopLeftTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "WallOutsideTopLeft");
+            Texture2D wallOutsideTopRightTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "WallOutsideTopRight");
+            Texture2D wallOutsideBottomLeftTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "WallOutsideBottomLeft");
+            Texture2D wallOutsideBottomRightTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "WallOutsideBottomRight");
 
 
             wall = new Sprite(wallTex, TileWidth, TileWidth);
@@ -60,11 +63,14 @@ namespace Purgatory.Game
             wallBottom = new Sprite(wallBottomTex, TileWidth, TileWidth);
             wallLeft = new Sprite(wallLeftTex, TileWidth, TileWidth);
             wallRight = new Sprite(wallRightTex, TileWidth, TileWidth);
-            wallOutsideCorner = new Sprite(wallOutsideTex, TileWidth, TileWidth);
-            wallTopLeft = new Sprite(wallTopLeftTex, TileWidth, TileWidth);
-            wallBottomRight = new Sprite(wallBottomRightTex, TileWidth, TileWidth);
-            wallBottomLeft = new Sprite(wallBottomLeftTex, TileWidth, TileWidth);
-            wallTopRight = new Sprite(wallTopRightTex, TileWidth, TileWidth);
+            wallInsideTopLeft = new Sprite(wallInsideTopLeftTex, TileWidth, TileWidth);
+            wallInsideBottomRight = new Sprite(wallInsideBottomRightTex, TileWidth, TileWidth);
+            wallInsideBottomLeft = new Sprite(wallInsideBottomLeftTex, TileWidth, TileWidth);
+            wallInsideTopRight = new Sprite(wallInsideTopRightTex, TileWidth, TileWidth);
+            wallOutsideTopLeft = new Sprite(wallOutsideTopLeftTex, TileWidth, TileWidth);
+            wallOutsideBottomRight = new Sprite(wallOutsideBottomRightTex, TileWidth, TileWidth);
+            wallOutsideBottomLeft = new Sprite(wallOutsideBottomLeftTex, TileWidth, TileWidth);
+            wallOutsideTopRight = new Sprite(wallOutsideTopRightTex, TileWidth, TileWidth);
 
             Texture2D backgroundTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "Ground");
             backgroundGround = new Sprite(backgroundTex, backgroundTex.Width, backgroundTex.Height);
@@ -191,11 +197,11 @@ namespace Purgatory.Game
                         {
                             if (WalkableTile[i][j] == TileType.WallTop)
                             {
-                                WalkableTile[i][j] = TileType.WallOutsideCorner;
+                                WalkableTile[i][j] = TileType.WallOutsideTopLeft;
                             }
                             else if (WalkableTile[i][j] == TileType.WallBottom)
                             {
-                                WalkableTile[i][j] = TileType.WallOutsideCorner;
+                                WalkableTile[i][j] = TileType.WallOutsideBottomLeft;
                             }
                             else
                             {
@@ -206,11 +212,11 @@ namespace Purgatory.Game
                         {
                             if (WalkableTile[i][j] == TileType.WallTop)
                             {
-                                WalkableTile[i][j] = TileType.WallOutsideCorner;
+                                WalkableTile[i][j] = TileType.WallOutsideTopRight;
                             }
                             else if (WalkableTile[i][j] == TileType.WallBottom)
                             {
-                                WalkableTile[i][j] = TileType.WallOutsideCorner;
+                                WalkableTile[i][j] = TileType.WallOutsideBottomRight;
                             }
                             else
                             {
@@ -224,22 +230,22 @@ namespace Purgatory.Game
                             {
                                 if (j - 1 >= 0 && data[i + 1, j - 1])
                                 {
-                                    WalkableTile[i][j] = TileType.WallBottomLeft;
+                                    WalkableTile[i][j] = TileType.WallInsideBottomLeft;
                                 }
                                 else if (j + 1 < height && data[i + 1, j + 1])
                                 {
-                                    WalkableTile[i][j] = TileType.WallTopLeft;
+                                    WalkableTile[i][j] = TileType.WallInsideTopLeft;
                                 }
                             }
                             if (i - 1 >= 0)
                             {
                                 if (j - 1 >= 0 && data[i - 1, j - 1])
                                 {
-                                    WalkableTile[i][j] = TileType.WallBottomRight;
+                                    WalkableTile[i][j] = TileType.WallInsideBottomRight;
                                 }
                                 else if (j + 1 < height && data[i - 1, j + 1])
                                 {
-                                    WalkableTile[i][j] = TileType.WallTopRight;
+                                    WalkableTile[i][j] = TileType.WallInsideTopRight;
                                 }
                             }
                         }
@@ -354,20 +360,29 @@ namespace Purgatory.Game
                         case TileType.WallRight:
                             this.wallRight.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                             break;
-                        case TileType.WallOutsideCorner:
-                            this.wallOutsideCorner.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
+                        case TileType.WallInsideTopLeft:
+                            this.wallInsideTopLeft.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                             break;
-                        case TileType.WallTopLeft:
-                            this.wallTopLeft.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
+                        case TileType.WallInsideTopRight:
+                            this.wallInsideTopRight.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                             break;
-                        case TileType.WallTopRight:
-                            this.wallTopRight.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
+                        case TileType.WallInsideBottomLeft:
+                            this.wallInsideBottomLeft.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                             break;
-                        case TileType.WallBottomLeft:
-                            this.wallBottomLeft.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
+                        case TileType.WallInsideBottomRight:
+                            this.wallInsideBottomRight.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                             break;
-                        case TileType.WallBottomRight:
-                            this.wallBottomRight.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
+                        case TileType.WallOutsideTopLeft:
+                            this.wallOutsideTopLeft.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
+                            break;
+                        case TileType.WallOutsideTopRight:
+                            this.wallOutsideTopRight.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
+                            break;
+                        case TileType.WallOutsideBottomLeft:
+                            this.wallOutsideBottomLeft.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
+                            break;
+                        case TileType.WallOutsideBottomRight:
+                            this.wallOutsideBottomRight.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                             break;
                     }
                 }
