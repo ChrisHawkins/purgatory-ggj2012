@@ -36,10 +36,10 @@ namespace Purgatory.Game.Graphics
             Texture2D downTexture = BigEvilStatic.Content.Load<Texture2D>(spriteName + "Down");
             Texture2D leftTexture = BigEvilStatic.Content.Load<Texture2D>(spriteName + "Left");
             Texture2D rightTexture = BigEvilStatic.Content.Load<Texture2D>(spriteName + "Right");
-            this.upSprite = new Sprite(upTexture, upTexture.Height, upTexture.Height);
-            this.downSprite = new Sprite(downTexture, upTexture.Height, upTexture.Height);
-            this.leftSprite = new Sprite(leftTexture, upTexture.Height, upTexture.Height);
-            this.rightSprite = new Sprite(rightTexture, upTexture.Height, upTexture.Height);
+            this.upSprite = new Sprite(upTexture, upTexture.Width, upTexture.Height);
+            this.downSprite = new Sprite(downTexture, downTexture.Width, upTexture.Height);
+            this.leftSprite = new Sprite(leftTexture, leftTexture.Width, upTexture.Height);
+            this.rightSprite = new Sprite(rightTexture, rightTexture.Width, upTexture.Height);
         }
 
         public void Draw(Vector2 direction, SpriteBatch batch, Vector2 point)
