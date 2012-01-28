@@ -14,6 +14,7 @@ using System.Collections.Generic;
         private float musicVolume;
         private float SFXVolume;
         private float soundVolume;
+        private float voiceVolume;
         private bool fadingVolume = false;
         private bool fadeDown;
         private float minFadeVol;
@@ -67,6 +68,7 @@ using System.Collections.Generic;
             this.SetMusicVolume(0.5f);
             this.SetSFXVolume(0.85f);
             this.SetSoundVolume(0.85f);
+            this.SetVoiceVolume(1.0f);
             this.AdjustGlobalVolume(this.globalVolume);
 
             this.fadingCues = new List<FadeInfo>();
@@ -292,6 +294,7 @@ using System.Collections.Generic;
             this.AdjustMusicVolume(this.musicVolume * volume);
             this.AdjustSFXVolume(this.SFXVolume * volume);
             this.AdjustSoundVolume(this.soundVolume * volume);
+            this.AdjustVoiceVolume(this.voiceVolume * volume);
         }
 
         public void SetMusicVolume(float volume)
@@ -309,6 +312,11 @@ using System.Collections.Generic;
             this.soundVolume = volume;
         }
 
+        public void SetVoiceVolume(float volume)
+        {
+            this.voiceVolume = volume;
+        }
+
         public void AdjustMusicVolume(float volume)
         {
             this.audioEngine.GetCategory("Music").SetVolume(volume * this.globalVolume);  
@@ -322,6 +330,11 @@ using System.Collections.Generic;
         public void AdjustSoundVolume(float volume)
         {
             this.audioEngine.GetCategory("Sound").SetVolume(volume * this.globalVolume);
+        }
+
+        public void AdjustVoiceVolume(float volume)
+        {
+            this.audioEngine.GetCategory("Voice").SetVolume(volume * this.voiceVolume);
         }
 
         public float TranslateVolume(float volume)
