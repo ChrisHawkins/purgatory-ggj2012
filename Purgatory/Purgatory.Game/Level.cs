@@ -128,7 +128,23 @@ namespace Purgatory.Game
             //    }
             //}
 
-            backgroundWall.Draw(batch, bounds.AdjustPoint(new Vector2(0, 0)));
+            int top = (int)(bounds.Rectangle.Top - bounds.Camera.Y);
+            int bottom = (int)(bounds.Rectangle.Bottom - bounds.Camera.Y);
+            int left = (int)(bounds.Rectangle.Left - bounds.Camera.X);
+            int right = (int)(bounds.Rectangle.Right - bounds.Camera.X);
+
+            top /= backgroundWall.Height;
+            bottom = (int)(bottom / backgroundWall.Height) + 1;
+            left /= backgroundWall.Width;
+            right = (int)(right / backgroundWall.Width) + 1;
+
+            for (int i = left; i <= right; ++i)
+            {
+                for (int j = top; j <= bottom; ++j)
+                {
+                    backgroundWall.Draw(batch, bounds.AdjustPoint(new Vector2(i * backgroundWall.Width, j * backgroundWall.Height)));
+                }
+            }
 
             for (int i = 0; i < WalkableTile.Length; ++i)
             {
