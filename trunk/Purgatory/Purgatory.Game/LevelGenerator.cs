@@ -39,11 +39,11 @@ namespace Purgatory.Game
             return level;
         }
 
-        public static Level GenerateLevelRandomly(string levelType)
+        public static Level GenerateLevelRandomly(string levelType, int mapNo, int pairPart)
         {
             int width = 39;
             int height = 39;
-            bool[,] generatedLevel = new bool[width * 3, height * 3];
+            bool[,] generatedLevel = new bool[width, height];
             Stack<Tuple<int, int>> nodes = new Stack<Tuple<int, int>>();
             List<Tuple<int, int>> neighbours = new List<Tuple<int, int>>();
             List<Tuple<int, int>> otherList = new List<Tuple<int, int>>();
@@ -113,16 +113,16 @@ namespace Purgatory.Game
             while (nodes.Count > 0);
 
             int roomSize = 2;
-            for (int i = 0; i < 30; ++i)
+            for (int i = 0; i < 50; ++i)
             {
                 int xIndex = Rng.Next(width);
                 int yIndex = Rng.Next(height);
 
-                for (int x = xIndex - roomSize / 2; x <= xIndex + roomSize / 2; ++x)
+                for (int x = xIndex - (int)Math.Floor((float)roomSize / 2); x <= xIndex + roomSize / 2; ++x)
                 {
-                    for (int y = yIndex - roomSize / 2; y <= yIndex + roomSize / 2; ++y)
+                    for (int y = yIndex - (int)Math.Ceiling((float)roomSize / 2); y <= yIndex + roomSize / 2; ++y)
                     {
-                        if (x >= 0 && x < width * 3 && y >= 0 && y < height * 3)
+                        if (x >= 0 && x < width && y >= 0 && y < height)
                         {
                             generatedLevel[x, y] = true;
                         }
@@ -130,22 +130,22 @@ namespace Purgatory.Game
                 }
             }
 
-            for (int i = 0; i < 20; ++i)
-            {
-                int xIndex = Rng.Next(width);
-                int yIndex = Rng.Next(height);
+            //for (int i = 0; i < 20; ++i)
+            //{
+            //    int xIndex = Rng.Next(width);
+            //    int yIndex = Rng.Next(height);
 
-                for (int x = xIndex - roomSize / 2; x <= xIndex + roomSize / 2; ++x)
-                {
-                    for (int y = yIndex - roomSize / 2; y <= yIndex + roomSize / 2; ++y)
-                    {
-                        if (x >= 0 && x < width * 3 && y >= 0 && y < height * 3)
-                        {
-                            generatedLevel[x, y] = false;
-                        }
-                    }
-                }
-            }
+            //    for (int x = xIndex - roomSize / 2; x <= xIndex + roomSize / 2; ++x)
+            //    {
+            //        for (int y = yIndex - roomSize / 2; y <= yIndex + roomSize / 2; ++y)
+            //        {
+            //            if (x >= 0 && x < width * 3 && y >= 0 && y < height * 3)
+            //            {
+            //                generatedLevel[x, y] = false;
+            //            }
+            //        }
+            //    }
+            //}
 
             int bufferWidth = 10;
             bool[,] finalLevelBools = new bool[width * 3 + bufferWidth * 2, height * 3 + bufferWidth * 2];
@@ -165,7 +165,7 @@ namespace Purgatory.Game
             }
 
             Level level = new Level(levelType);
-            level.LoadLevelData(finalLevelBools, width * 3, height * 3);
+            level.LoadLevelData(finalLevelBools, width * 3 + bufferWidth * 2, height * 3 + bufferWidth * 2);
 
             return level;
         }
