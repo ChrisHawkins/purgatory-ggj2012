@@ -110,6 +110,7 @@
     <Compile Include="Graphics\DirectionalSprite.cs" />
     <Compile Include="Graphics\Sprite.cs" />
     <Compile Include="LevelGenerator.cs" />
+    <Compile Include="PowerUps\HealthPowerUp.cs" />
     <Compile Include="PowerUps\PlayerPickUp.cs" />
     <Compile Include="LocatorArrow.cs" />
     <Compile Include="PurgatoryLevel.cs" />
