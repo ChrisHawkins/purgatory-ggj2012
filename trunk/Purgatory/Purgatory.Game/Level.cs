@@ -6,7 +6,7 @@ namespace Purgatory.Game
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Purgatory.Game.Graphics;
-using Microsoft.Xna.Framework.Audio;
+    using Microsoft.Xna.Framework.Audio;
 
     public class Level
     {
@@ -22,7 +22,7 @@ using Microsoft.Xna.Framework.Audio;
         protected Sprite wall, wallTop, wallBottom, wallLeft, wallRight, wallOutsideCorner, wallTopLeft, wallTopRight, wallBottomLeft, wallBottomRight;
         protected Sprite backgroundGround;
         protected List<PlayerPickUp> pickUps;
-        private Cue pickupSFX; 
+        private Cue pickupSFX;
 
         protected Level() { }
 
@@ -110,18 +110,18 @@ using Microsoft.Xna.Framework.Audio;
                     {
                         WalkableTile[i][j] = TileType.Wall;
 
-                        if (j + 1 < height && data[i,j + 1])
+                        if (j + 1 < height && data[i, j + 1])
                         {
                             WalkableTile[i][j] = TileType.WallTop;
                         }
-                        else if (j - 1 >= 0 && data[i,j - 1])
+                        else if (j - 1 >= 0 && data[i, j - 1])
                         {
                             WalkableTile[i][j] = TileType.WallBottom;
                         }
-                        
-                        if (i + 1 < width && data[i + 1,j])
+
+                        if (i + 1 < width && data[i + 1, j])
                         {
-                            if(WalkableTile[i][j] == TileType.WallTop)
+                            if (WalkableTile[i][j] == TileType.WallTop)
                             {
                                 WalkableTile[i][j] = TileType.WallOutsideCorner;
                             }
@@ -136,7 +136,7 @@ using Microsoft.Xna.Framework.Audio;
                         }
                         else if (i - 1 >= 0 && data[i - 1, j])
                         {
-                            if(WalkableTile[i][j] == TileType.WallTop)
+                            if (WalkableTile[i][j] == TileType.WallTop)
                             {
                                 WalkableTile[i][j] = TileType.WallOutsideCorner;
                             }
@@ -147,6 +147,32 @@ using Microsoft.Xna.Framework.Audio;
                             else
                             {
                                 WalkableTile[i][j] = TileType.WallRight;
+                            }
+                        }
+
+                        if (WalkableTile[i][j] == TileType.Wall)
+                        {
+                            if (i + 1 < width)
+                            {
+                                if (j - 1 >= 0 && data[i + 1, j - 1])
+                                {
+                                    WalkableTile[i][j] = TileType.WallBottomLeft;
+                                }
+                                else if (j + 1 < height && data[i + 1, j + 1])
+                                {
+                                    WalkableTile[i][j] = TileType.WallTopLeft;
+                                }
+                            }
+                            if (i - 1 >= 0)
+                            {
+                                if (j - 1 >= 0 && data[i - 1, j - 1])
+                                {
+                                    WalkableTile[i][j] = TileType.WallBottomRight;
+                                }
+                                else if (j + 1 < height && data[i - 1, j + 1])
+                                {
+                                    WalkableTile[i][j] = TileType.WallTopRight;
+                                }
                             }
                         }
                     }
@@ -173,7 +199,7 @@ using Microsoft.Xna.Framework.Audio;
             int maxX = (int)Math.Ceiling((max.X + TileWidth / 2) / TileWidth);
             int maxY = (int)Math.Ceiling((max.Y + TileWidth / 2) / TileWidth);
 
-            for (int i = minX; i <= maxX; ++i )
+            for (int i = minX; i <= maxX; ++i)
             {
                 for (int j = minY; j <= maxY; ++j)
                 {
@@ -285,7 +311,7 @@ using Microsoft.Xna.Framework.Audio;
                         case TileType.WallBottomRight:
                             this.wallBottomRight.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                             break;
-                    }                    
+                    }
                 }
             }
 
