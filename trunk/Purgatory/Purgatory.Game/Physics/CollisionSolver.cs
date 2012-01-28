@@ -64,13 +64,13 @@ namespace Purgatory.Game.Physics
         {
             Rectangle rect1 = moveableObject.CollisionRectangle;
 
-            if (rect1.Intersects(staticObject))
+            if (rect1.Intersects(staticObject) || staticObject.Intersects(rect1))
             {
                 Vector2 movement = moveableObject.Position - moveableObject.LastPosition;
                 Vector2 penetration = Vector2.Zero;
                 if (movement.X > 0)
                 {
-                    penetration.X = rect1.Right - staticObject.Left;
+                    penetration.X = moveableObject.Position.X + rect1.Width / 2 - staticObject.Left;
                     if (penetration.X <= 0 || penetration.X > movement.X + 1)
                     {
                         penetration.X = 0;
@@ -78,7 +78,7 @@ namespace Purgatory.Game.Physics
                 }
                 else if (movement.X < 0)
                 {
-                    penetration.X = rect1.Left - staticObject.Right;
+                    penetration.X = moveableObject.Position.X - rect1.Width / 2 - staticObject.Right;
                     if (penetration.X >= 0 || penetration.X < movement.X - 1)
                     {
                         penetration.X = 0;
@@ -87,7 +87,7 @@ namespace Purgatory.Game.Physics
 
                 if (movement.Y > 0)
                 {
-                    penetration.Y = rect1.Bottom - staticObject.Top;
+                    penetration.Y = moveableObject.Position.Y + rect1.Height / 2 - staticObject.Top;
                     if (penetration.Y <= 0 || penetration.Y > movement.Y + 1)
                     {
                         penetration.Y = 0;
@@ -95,7 +95,7 @@ namespace Purgatory.Game.Physics
                 }
                 else if (movement.Y < 0)
                 {
-                    penetration.Y = rect1.Top - staticObject.Bottom;
+                    penetration.Y = moveableObject.Position.Y - rect1.Height / 2 - staticObject.Bottom;
                     if (penetration.Y >= 0 || penetration.Y < movement.Y - 1)
                     {
                         penetration.Y = 0;
