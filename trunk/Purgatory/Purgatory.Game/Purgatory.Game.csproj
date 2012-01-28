@@ -105,6 +105,7 @@
     <Compile Include="GeometryUtility.cs" />
     <Compile Include="Graphics\DirectionalSprite.cs" />
     <Compile Include="Graphics\Sprite.cs" />
+    <Compile Include="LevelGenerator.cs" />
     <Compile Include="PlayerPickUp.cs" />
     <Compile Include="LocatorArrow.cs" />
     <Compile Include="PurgatoryLevel.cs" />

@@ -3,12 +3,9 @@ namespace Purgatory.Game
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Purgatory.Game.Graphics;
-    using Physics;
 
     public class Level
     {
@@ -38,7 +35,7 @@ namespace Purgatory.Game
             HalfTilesLongOnScreen = (int)Math.Ceiling((double)BigEvilStatic.Viewport.Height / 2 / TileWidth);
 
             // Load level texture;
-            Texture2D levelTexture = BigEvilStatic.Content.Load<Texture2D>(levelType + "Maze00");
+            //Texture2D levelTexture = BigEvilStatic.Content.Load<Texture2D>(levelType + "Maze00");
 
             //Debug textures
             Texture2D wallTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "Wall");
@@ -49,33 +46,6 @@ namespace Purgatory.Game
 
             Texture2D backgroundTex = BigEvilStatic.Content.Load<Texture2D>("deathGround");
             backgroundGround = new Sprite(backgroundTex, backgroundTex.Width, backgroundTex.Height);
-
-            //Get pixel data as array
-            Color[] pixelData = new Color[levelTexture.Width * levelTexture.Height];
-            levelTexture.GetData<Color>(pixelData);
-
-            //Fill tile array from pixel data
-            WalkableTile = new TileType[levelTexture.Width][];
-            for (int i = 0; i < levelTexture.Height; ++i)
-            {
-                WalkableTile[i] = new TileType[levelTexture.Height];
-            }
-
-            for (int i = 0; i < levelTexture.Height; ++i)
-            {
-                for (int j = 0; j < levelTexture.Width; ++j)
-                {
-                    Color pixelColor = pixelData[i * levelTexture.Width + j];
-                    if (pixelColor != Color.Black)
-                    {
-                        WalkableTile[j][i] = TileType.Ground;
-                    }
-                    else
-                    {
-                        WalkableTile[j][i] = TileType.Wall;
-                    }
-                }
-            }
 
             //for (int i = 0; i < WalkableTile.Length; ++i)
             //{
@@ -96,6 +66,36 @@ namespace Purgatory.Game
             //}
 
             pickUps = new List<PlayerPickUp>();
+        }
+
+        public void LoadLevelData(bool[,] data)
+        {
+            Texture2D levelTexture = BigEvilStatic.Content.Load<Texture2D>("DeathMaze00");
+
+            Color[] pixelData = new Color[levelTexture.Width * levelTexture.Height];
+            levelTexture.GetData<Color>(pixelData);
+
+            this.WalkableTile = new TileType[levelTexture.Width][];
+            for (int i = 0; i < levelTexture.Height; ++i)
+            {
+                this.WalkableTile[i] = new TileType[levelTexture.Height];
+            }
+
+            for (int i = 0; i < levelTexture.Height; ++i)
+            {
+                for (int j = 0; j < levelTexture.Width; ++j)
+                {
+                    Color pixelColor = pixelData[i * levelTexture.Width + j];
+                    if (pixelColor != Color.Black)
+                    {
+                        this.WalkableTile[j][i] = TileType.Ground;
+                    }
+                    else
+                    {
+                        this.WalkableTile[j][i] = TileType.Wall;
+                    }
+                }
+            }
         }
 
         public List<Rectangle> GetPossibleRectangles(Vector2 position, Vector2 lastPosition)
