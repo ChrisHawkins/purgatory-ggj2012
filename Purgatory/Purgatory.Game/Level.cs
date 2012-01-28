@@ -23,6 +23,7 @@ namespace Purgatory.Game
         protected Sprite backgroundGround;
         protected List<PlayerPickUp> pickUps;
         private Cue pickupSFX;
+        private const int MaxPickups = 30;
 
         protected Level() { }
 
@@ -308,25 +309,12 @@ namespace Purgatory.Game
 
         public void AddToPickups(PlayerPickUp pickUp)
         {
-            Vector2 loc = FindSpawnPoint(false);
-            this.pickUps.Add(pickUp);
-            pickUp.SetPosition(loc);
-            //int maxX = this.WalkableTile.Length;
-            //int maxY = this.WalkableTile[0].Length;
-
-            //bool ammoPlaced = false;
-            //while (!ammoPlaced)
-            //{
-            //    int locX = rng.Next(maxX);
-            //    int locY = rng.Next(maxY);
-
-            //    if (WalkableTile[locX][locY] == TileType.Ground)
-            //    {
-            //        ammoPlaced = true;
-            //        this.pickUps.Add(pickUp);
-            //        pickUp.SetPosition(new Vector2(locX, locY) * Level.TileWidth);
-            //    }
-            //}
+            if (this.pickUps.Count < Level.MaxPickups)
+            {
+                Vector2 loc = FindSpawnPoint(false);
+                this.pickUps.Add(pickUp);
+                pickUp.SetPosition(loc);
+            }
         }
 
         public void Draw(SpriteBatch batch, Bounds bounds)
