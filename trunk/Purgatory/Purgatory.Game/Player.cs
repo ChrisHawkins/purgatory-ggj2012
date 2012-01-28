@@ -225,16 +225,14 @@ namespace Purgatory.Game
             this.CheckForCollisions();
 
             // Update dash path transparency.
-            List<DashSprite> tmp = new List<DashSprite>();
-            foreach (var dashSprite in this.dashPath)
+            for (int i = dashPath.Count - 1; i >= 0; --i )
             {
-                dashSprite.update(gameTime);
-                if (!dashSprite.RemoveFromList)
+                dashPath[i].update(gameTime);
+                if (dashPath[i].RemoveFromList)
                 {
-                    tmp.Add(dashSprite);
+                    dashPath.RemoveAt(i);
                 }
             }
-            this.dashPath = tmp;
 
             if(this.DashVelocity != Vector2.Zero)
             {   

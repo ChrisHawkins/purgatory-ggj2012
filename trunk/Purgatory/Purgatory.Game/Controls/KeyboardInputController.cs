@@ -74,18 +74,15 @@ namespace Purgatory.Game.Controls
                 AudioManager.Instance.PlayCue(ref player.ShootSFX, true);
             }
 
-            List<Bullet> tmpBulletList = new List<Bullet>();
-            foreach (var bullet in player.BulletList)
+            for (int i = player.BulletList.Count - 1; i >= 0; --i )
             {
-                bullet.Update(time);
-                if (!bullet.RemoveFromList)
+                player.BulletList[i].Update(time);
+                if (player.BulletList[i].RemoveFromList)
                 {
-                    tmpBulletList.Add(bullet);
+                    player.BulletList.RemoveAt(i);
                 }
 
             }
-
-            player.BulletList = tmpBulletList;
         }
     }
 }

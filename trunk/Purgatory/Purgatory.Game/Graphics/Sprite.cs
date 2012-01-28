@@ -16,9 +16,8 @@ namespace Purgatory.Game.Graphics
         public Color Tint { get; set; }
         public float Alpha { get; set; }
         public float Rotation { get; set; }
+        public List<SpriteEffect> Effects { get; private set; }
         public float Zoom { get; set; }
-        public LinkedList<SpriteEffect> Effects { get; private set; }
-
         public Texture2D Texture2D { get; private set; }
         public int Width { get; set; }
         public int Height { get; set; }
@@ -32,8 +31,8 @@ namespace Purgatory.Game.Graphics
             this.Width = width;
             this.Height = height;
             this.Tint = Color.White;
+            this.Effects = new List<SpriteEffect>();
             this.Zoom = 1.0f;
-            this.Effects = new LinkedList<SpriteEffect>();
 
             this.Alpha = 1f;
 
@@ -53,21 +52,14 @@ namespace Purgatory.Game.Graphics
 
         public void UpdateEffects(GameTime time)
         {
-            List<SpriteEffect> toRemove = new List<SpriteEffect>();
-
-            foreach (var effect in Effects)
+            for (int i = Effects.Count - 1; i >= 0; --i)
             {
-                effect.Update(this, time);
+                Effects[i].Update(this, time);
 
-                if (effect.HasFinished())
+                if (Effects[i].HasFinished())
                 {
-                    toRemove.Add(effect);
+                    Effects.RemoveAt(i);
                 }
-            }
-
-            foreach (var effect in toRemove)
-            {
-                Effects.Remove(effect);
             }
         }
 

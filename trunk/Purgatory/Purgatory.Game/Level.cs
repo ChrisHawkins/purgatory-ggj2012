@@ -295,22 +295,15 @@ namespace Purgatory.Game
 
         public void CheckPickUpCollisions(Player player)
         {
-            List<PlayerPickUp> tmpList = new List<PlayerPickUp>();
-
-            foreach (var pickUp in this.pickUps)
+            for (int i = pickUps.Count - 1; i >= 0; --i )
             {
-                if (pickUp.CollisionRectangle.Intersects(player.CollisionRectangle))
+                if (pickUps[i].CollisionRectangle.Intersects(player.CollisionRectangle))
                 {
-                    pickUp.PlayerEffect(player);
+                    pickUps[i].PlayerEffect(player);
                     AudioManager.Instance.PlayCue(ref this.pickupSFX, true);
-                }
-                else
-                {
-                    tmpList.Add(pickUp);
+                    pickUps.RemoveAt(i);
                 }
             }
-
-            this.pickUps = tmpList;
         }
 
         public void AddToPickups(PlayerPickUp pickUp)
@@ -338,9 +331,14 @@ namespace Purgatory.Game
                 }
             }
 
-            for (int i = 0; i < WalkableTile.Length; ++i)
+            int numberTilesAcross = bounds.Rectangle.Width / TileWidth + 3;
+            int numberTilesUp = bounds.Rectangle.Height / TileWidth + 3;
+            int xIndex = (int)-bounds.Camera.X / TileWidth + 1;
+            int yIndex = (int)-bounds.Camera.Y / TileWidth + 1;
+
+            for (int i = xIndex - numberTilesAcross / 2; i <= xIndex + numberTilesAcross / 2; ++i)
             {
-                for (int j = 0; j < WalkableTile[i].Length; ++j)
+                for (int j = yIndex - numberTilesUp / 2; j <= yIndex + numberTilesUp / 2; ++j)
                 {
                     switch ((int)WalkableTile[i][j])
                     {
