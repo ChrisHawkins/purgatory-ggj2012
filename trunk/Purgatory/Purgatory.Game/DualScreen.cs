@@ -8,6 +8,7 @@ namespace Purgatory.Game
     using Microsoft.Xna.Framework.Input;
     using Purgatory.Game.UI;
     using Microsoft.Xna.Framework.Audio;
+using Purgatory.Game.Graphics;
 
     public class DualScreen : Screen
     {
@@ -17,6 +18,7 @@ namespace Purgatory.Game
         public Cue BackgroundMusic;
         public Cue PurgatoryChaseMusic;
         public bool ChaseMusicPlaying = false;
+        private Form HUD;
 
         public DualScreen(GraphicsDevice device)
             : base(device)
@@ -26,6 +28,10 @@ namespace Purgatory.Game
             this.BackgroundMusic = AudioManager.Instance.LoadCue("Purgatory_Gameplay_Joined");
             this.PurgatoryChaseMusic = AudioManager.Instance.LoadCue("Purgatory_PurgatoryChase");
             this.menu.Visible = false;
+            this.HUD = new Form(device);
+            Texture2D seperatorTex = BigEvilStatic.Content.Load<Texture2D>("Seperator");
+            Sprite seperator = new Sprite(seperatorTex, seperatorTex.Width, seperatorTex.Height);
+            HUD.Controls.Add(new SpriteControl(seperator, new Vector2(device.Viewport.Width / 2, device.Viewport.Height / 2)));
         }
 
         public override void Draw(Bounds bounds)
@@ -34,6 +40,10 @@ namespace Purgatory.Game
             {
                 toDraw.Screen.Draw(toDraw.Bounds);
             }
+
+            this.HUD.Draw();
+
+            this.menu.Draw();
         }
 
         public void AddScreen(Screen screen)
@@ -80,7 +90,7 @@ namespace Purgatory.Game
             return new Bounds(new Rectangle(i * widthAlloc, 0, widthAlloc, this.Device.Viewport.Height));
         }
 
-        public override void Update(GameTime time)
+        public override void Update(GameTime gameTime)
         {
             KeyboardState kb = Keyboard.GetState();
 
@@ -105,12 +115,14 @@ namespace Purgatory.Game
                 return;
             }
 
-            this.ContextUpdater(time);
+            this.ContextUpdater(gameTime);
 
             foreach (var screen in this.screens)
             {
-                screen.Screen.Update(time);
+                screen.Screen.Update(gameTime);
             }
+
+            this.HUD.Update(gameTime);
         }
 
         public Action<GameTime> ContextUpdater { get; set; }
