@@ -13,7 +13,7 @@ namespace Purgatory.Game
     public class GameContext
     {
         private const int RandomChanceForEnergyDrop = 1000;
-        private const float PurgatoryTime = 20f;
+        private const float PurgatoryTime = 30f;
 
         private float timeSinceLastRandomDrop;
         private Player player1;
@@ -173,18 +173,15 @@ namespace Purgatory.Game
             }
 
             // Check for purgatory and update the timer. Revive player if timer is up
-            //if (this.player1.Level is PurgatoryLevel)
-            //{
-            //    this.purgatoryTimer += elapsedTime;
+            if (this.player1.Level is PurgatoryLevel)
+            {
+                this.purgatoryTimer += elapsedTime;
 
-            //    if (purgatoryTimer >= GameContext.PurgatoryTime)
-            //    {
-            //        this.player1.Level = this.player1Level;
-            //        this.player1Level.PlayPurgatoryAnimation();
-            //        this.player1.Spawn();
-            //        AudioManager.Instance.CrossFade(this.purgatoryMusic, this.ds.BackgroundMusic, 1.5f, true);
-            //    }
-            //}
+                if (purgatoryTimer >= GameContext.PurgatoryTime)
+                {
+                    this.player1.Health = 0;
+                }
+            }
             
             if (this.player2.Health < 1)
             {
@@ -218,18 +215,15 @@ namespace Purgatory.Game
             }
 
             // Check for purgatory and update the timer. Revive player if timer is up
-            //if (this.player2.Level is PurgatoryLevel)
-            //{
-            //    this.purgatoryTimer += elapsedTime;
+            if (this.player2.Level is PurgatoryLevel)
+            {
+                this.purgatoryTimer += elapsedTime;
 
-            //    if (purgatoryTimer >= GameContext.PurgatoryTime)
-            //    {
-            //        this.player2.Level = this.player2Level;
-            //        this.player2Level.PlayPurgatoryAnimation();
-            //        this.player2.Spawn();
-            //        AudioManager.Instance.CrossFade(this.purgatoryMusic, this.ds.BackgroundMusic, 1.5f, true);
-            //    }
-            //}
+                if (purgatoryTimer >= GameContext.PurgatoryTime)
+                {
+                    this.player2.Health = 0;
+                }
+            }
         }
 
         public bool InPurgatory
