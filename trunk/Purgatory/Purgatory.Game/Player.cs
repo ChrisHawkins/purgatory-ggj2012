@@ -8,11 +8,13 @@ namespace Purgatory.Game
     using Purgatory.Game.Physics;
     using System.Collections.Generic;
     using System;
+    using Microsoft.Xna.Framework.Audio;
 
     public class Player : IMoveable
     {
+        public static bool InputFrozen = false;
         private float speed;
-       
+
         private KeyboardManager controls;
         private Vector2 direction;
         private Vector2 movementDirection;
@@ -40,6 +42,10 @@ namespace Purgatory.Game
 
         private Rectangle collisionRectangle;
 
+        public Cue ShootSFX;
+        public Cue DamageSFX;
+        public Cue DeathSFX;
+
 
         public Player(PlayerNumber playerNumber)
         {
@@ -54,6 +60,19 @@ namespace Purgatory.Game
 
             this.xPenetrations = new List<float>();
             this.yPenetrations = new List<float>();
+
+            if (this.playerNumber == PlayerNumber.PlayerOne)
+            {
+                this.ShootSFX = AudioManager.Instance.LoadCue("Purgatory_HaloThrow");
+                this.DamageSFX = AudioManager.Instance.LoadCue("Purgatory_LifeDamageScream");
+                this.DeathSFX = AudioManager.Instance.LoadCue("Purgatory_LifeDyingScream");
+            }
+            else
+            {
+                this.ShootSFX = AudioManager.Instance.LoadCue("Purgatory_ScytheThrow");
+                this.DamageSFX = AudioManager.Instance.LoadCue("Purgatory_DeathDamageScream");
+                this.DeathSFX = AudioManager.Instance.LoadCue("Purgatory_DeathDyingScream");
+            }
         }
 
         public void Initialize(KeyboardManager controlScheme, Sprite sprite, Sprite bulletSprite)
@@ -90,25 +109,28 @@ namespace Purgatory.Game
 
         public void Update(GameTime gameTime)
         {
-            timeSinceLastDash += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            this.controls.Update();
-            this.UpdateMovement(gameTime);
-
-            // Update player direction. Dont change if movement direction has no length
-            if (movementDirection.LengthSquared() != 0)
+            if (!InputFrozen)
             {
-                this.direction = movementDirection;
-                this.sprite.PlayAnimation = true;
-            }
-            else
-            {
-                this.sprite.PlayAnimation = false;
+                timeSinceLastDash += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                this.controls.Update();
+                this.UpdateMovement(gameTime);
+
+                // Update player direction. Dont change if movement direction has no length
+                if (movementDirection.LengthSquared() != 0)
+                {
+                    this.direction = movementDirection;
+                    this.sprite.PlayAnimation = true;
+                }
+                else
+                {
+                    this.sprite.PlayAnimation = false;
+                }
+
+                this.UpdateShoot(gameTime);
             }
 
-            this.UpdateShoot(gameTime);
             this.sprite.UpdateAnimation(gameTime);
             this.Level.CheckPickUpCollisions(this);
-
         }
 
         private void UpdateShoot(GameTime time)
@@ -121,6 +143,7 @@ namespace Purgatory.Game
                 this.BulletList.Add(b);
                 --this.Energy;
                 this.shootTimer = 0.0f;
+                AudioManager.Instance.PlayCue(ref this.ShootSFX, true);
             }
 
             List<Bullet> tmpBulletList = new List<Bullet>();
@@ -141,7 +164,7 @@ namespace Purgatory.Game
         {
             this.sprite.Draw(batch, bounds.AdjustPoint(this.Position));
 
-            foreach(var bullet in BulletList)
+            foreach (var bullet in BulletList)
             {
                 bullet.Draw(batch, bounds);
             }
@@ -255,6 +278,16 @@ namespace Purgatory.Game
                 {
                     bullet.RemoveFromList = true;
                     this.Health -= 1;
+
+                    if (this.Health > 0)
+                    {
+                        AudioManager.Instance.PlayCue(ref this.DamageSFX, false);
+                    }
+                    else
+                    {
+                        AudioManager.Instance.PlayCue(ref this.DeathSFX, false);
+                        Player.InputFrozen = true;
+                    }
                 }
             }
         }

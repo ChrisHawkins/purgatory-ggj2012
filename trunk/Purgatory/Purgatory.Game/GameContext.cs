@@ -87,8 +87,11 @@ using System;
             this.player1.Update(time);
             this.player2.Update(time);
 
-            this.player1.CheckBulletCollisions(player2.BulletList);
-            this.player2.CheckBulletCollisions(player1.BulletList);
+            if (!Player.InputFrozen)
+            {
+                this.player1.CheckBulletCollisions(player2.BulletList);
+                this.player2.CheckBulletCollisions(player1.BulletList);
+            }
 
             // Random Ammo Drops
             if (rng.Next(RandomChanceForEnergyDrop) == 1)
@@ -128,17 +131,23 @@ using System;
                 }
             }
 
-            if (this.player1.Health < 1)
+            if (this.player1.Health < 1 && !this.player1.DeathSFX.IsPlaying)
             {
+                Player.InputFrozen = false;
                 winScreen.SetBackground(BigEvilStatic.CreateDeathWinBackground());
+                winScreen.WinMusic = AudioManager.Instance.LoadCue("Purgatory_DeathWins");
                 BigEvilStatic.ScreenManager.OpenScreen(winScreen);
+                AudioManager.Instance.PlayCue(ref winScreen.WinMusic, false);
             }
             
-            if (this.player2.Health < 1)
+            if (this.player2.Health < 1 && !this.player2.DeathSFX.IsPlaying)
             {
                 //player1 win code goes here
+                Player.InputFrozen = false;
                 winScreen.SetBackground(BigEvilStatic.CreateLifeWinBackground());
+                winScreen.WinMusic = AudioManager.Instance.LoadCue("Purgatory_LifeWins");
                 BigEvilStatic.ScreenManager.OpenScreen(winScreen);
+                AudioManager.Instance.PlayCue(ref winScreen.WinMusic, false);
             }
         }
 

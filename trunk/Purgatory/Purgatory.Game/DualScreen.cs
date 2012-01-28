@@ -7,18 +7,24 @@ namespace Purgatory.Game
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     using Purgatory.Game.UI;
+    using Microsoft.Xna.Framework.Audio;
 
     public class DualScreen : Screen
     {
         private List<ScreenToDraw> screens;
         private bool escapeWasPressed;
         private Form menu;
+        public Cue BackgroundMusic;
+        public Cue PurgatoryChaseMusic;
+        public bool ChaseMusicPlaying = false;
 
         public DualScreen(GraphicsDevice device)
             : base(device)
         {
             this.screens = new List<ScreenToDraw>();
             this.menu = new Form(device);
+            this.BackgroundMusic = AudioManager.Instance.LoadCue("Purgatory_Gameplay_Joined");
+            this.PurgatoryChaseMusic = AudioManager.Instance.LoadCue("Purgatory_PurgatoryChase");
             this.menu.Visible = false;
         }
 
@@ -83,10 +89,12 @@ namespace Purgatory.Game
                 if (this.menu.Visible)
                 {
                     this.menu.Visible = false;
+                    AudioManager.Instance.FadeVolumeUp(1f, 0.25f, 1f);
                 }
                 else
                 {
                     this.menu.Visible = true;
+                    AudioManager.Instance.FadeVolumeDown(1f, 0.25f, 1f);
                 }
             }
 
@@ -117,6 +125,14 @@ namespace Purgatory.Game
                 Screen = screen;
                 Bounds = Bounds.Screen;
             }
+        }
+
+        public override void OnControlLost()
+        {
+            base.OnControlLost();
+
+            AudioManager.Instance.FadeOut(this.BackgroundMusic, 1, true);
+            AudioManager.Instance.FadeOut(this.PurgatoryChaseMusic, 1, true);
         }
     }
 }
