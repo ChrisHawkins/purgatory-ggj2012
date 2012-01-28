@@ -13,7 +13,7 @@ namespace Purgatory.Game.PowerUps
 
         public override void PlayerEffect(Player player)
         {
-            player.ShieldHealth = 10;
+            player.ShieldHealth = 5;
         }
     }
 }

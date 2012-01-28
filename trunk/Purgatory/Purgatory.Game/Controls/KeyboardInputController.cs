@@ -67,7 +67,7 @@ namespace Purgatory.Game.Controls
             if (this.controls.ShootControlPressed() && player.ShootTimer > player.ShootCooldown && player.Energy > 0)
             {
                 Vector2 bulletPos = player.Position;
-                Bullet b = new Bullet(bulletPos, Vector2.Normalize(player.BulletDirection), player.BulletBounce, 500.0f, new Sprite(player.BulletSprite), player.Level);
+                Bullet b = new Bullet(bulletPos, Vector2.Normalize(player.BulletDirection), player.BulletBounce, Player.BulletSpeed, new Sprite(player.BulletSprite), player.Level);
                 player.BulletList.Add(b);
                 --player.Energy;
                 player.ShootTimer = 0.0f;
