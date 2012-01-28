@@ -20,6 +20,7 @@ namespace Purgatory.Game
         private const float EnergyRegenChargeTime = 3f;
         private const float MinEnergyPerSecond = 2f;
         private const float MaxEnergyPerSecond = 10f;
+        public const float MaxSpeed = 350;
         private const float EnergyPerShot = 1f;
         public float Speed { get; set; }
 
@@ -148,6 +149,7 @@ namespace Purgatory.Game
             this.LastPosition = this.position;
             this.Health = Player.MaxHealth;
             this.Energy = Player.MaxEnergy;
+            this.Speed = Player.MaxSpeed;
         }
 
         public void Update(GameTime gameTime)
@@ -405,5 +407,7 @@ namespace Purgatory.Game
             this.BulletDirection = targetPosition - this.Position;
             this.BulletDirection.Normalize();
         }
+
+
     }
 }
