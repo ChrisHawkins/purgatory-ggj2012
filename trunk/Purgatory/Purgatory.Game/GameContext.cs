@@ -117,20 +117,26 @@ namespace Purgatory.Game
                 timeSinceLastRandomDrop -= 1;
                 int num = rng.Next(100);
 
-                if (num < 20)
+                if (num < 15)
                 {
-                    player1Level.AddToPickups(new BouncePowerUp());
-                    player2Level.AddToPickups(new BouncePowerUp());
+                    if (player1Level.GetItemCount(typeof(BouncePowerUp)) < 4 && !(player1.Level is PurgatoryLevel))
+                        player1Level.AddToPickups(new BouncePowerUp());
+                    if (player2Level.GetItemCount(typeof(BouncePowerUp)) < 4 && !(player2.Level is PurgatoryLevel))
+                        player2Level.AddToPickups(new BouncePowerUp()); 
+                }
+                else if (num < 25)
+                {
+                    if (player1Level.GetItemCount(typeof(HealthPickUp)) < 4 && player1.Health < Player.MaxHealth && !(player1.Level is PurgatoryLevel))
+                        player1Level.AddToPickups(new HealthPickUp());
+                    if (player2Level.GetItemCount(typeof(HealthPickUp)) < 4 && player2.Health < Player.MaxHealth && !(player2.Level is PurgatoryLevel))
+                        player2Level.AddToPickups(new HealthPickUp());
                 }
                 else if (num < 30)
                 {
-                    player1Level.AddToPickups(new HealthPickUp());
-                    player2Level.AddToPickups(new HealthPickUp());
-                }
-                else if (num < 36)
-                {
-                    this.player1Level.AddToPickups(new ShieldPowerUp());
-                    this.player2Level.AddToPickups(new ShieldPowerUp());
+                    if (player1Level.GetItemCount(typeof(ShieldPowerUp)) < 1 && !(player1.Level is PurgatoryLevel))
+                        this.player1Level.AddToPickups(new ShieldPowerUp());
+                    if (player2Level.GetItemCount(typeof(ShieldPowerUp)) < 1 && !(player2.Level is PurgatoryLevel))
+                        this.player2Level.AddToPickups(new ShieldPowerUp());
                 }
             }
 

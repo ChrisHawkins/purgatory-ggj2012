@@ -127,6 +127,20 @@ namespace Purgatory.Game
             return false;
         }
 
+
+        public int GetItemCount(Type item)
+        {
+            int count = 0;
+            foreach (var otherItem in this.pickUps)
+            {
+                if (this.pickUps.GetType() == item)
+                {
+                    ++count;
+                }
+            }
+            return count;
+        }
+
         public Vector2 FindSpawnPoint(bool playerSafe)
         {
             int maxX = this.WalkableTile.Length;
@@ -333,6 +347,12 @@ namespace Purgatory.Game
                 this.pickUps.Add(pickUp);
                 pickUp.SetPosition(loc);
             }
+        }
+
+
+        public void ClearPickups()
+        {
+            this.pickUps.Clear();
         }
 
         public void AddToPickups(PlayerPickUp pickUp, Vector2 playerPosition, int minDistance)
