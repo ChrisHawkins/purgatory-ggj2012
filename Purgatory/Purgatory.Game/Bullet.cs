@@ -65,14 +65,20 @@ using Purgatory.Game.Graphics;
             {
                 if (xPenetrations.Count >= yPenetrations.Count)
                 {
-                    this.direction.X -= xPenetrations[0];
+                    this.direction.X = -this.direction.X;
                 }
                 if (yPenetrations.Count >= xPenetrations.Count)
                 {
-                    this.direction.Y -= yPenetrations[0];
+                    this.direction.Y = -this.direction.Y;
+                    
                 }
 
                 this.bounce--;
+
+                if (this.bounce < 0)
+                {
+                    this.RemoveFromList = true;
+                }
             }
         }
 

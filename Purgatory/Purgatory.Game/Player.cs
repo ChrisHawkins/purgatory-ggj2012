@@ -55,7 +55,7 @@ namespace Purgatory.Game
 
         public Player(PlayerNumber playerNumber)
         {
-            this.bulletBounce = 1;
+            this.bulletBounce = 12;
             dashPath = new List<DashSprite>();
             lastDashSprite = new Vector2(float.PositiveInfinity);
             
@@ -256,10 +256,12 @@ namespace Purgatory.Game
             this.dashPath = tmp;
 
             if(this.DashVelocity != Vector2.Zero)
-            {   
-                if(Vector2.DistanceSquared(lastDashSprite, this.position) > 255)
+            {   float distanceCheck = 15;
+                if(Vector2.DistanceSquared(lastDashSprite, this.position) > distanceCheck * distanceCheck)
                 {
-                    lastDashSprite = this.position;
+                    Vector2 posChange = (this.position - lastDashSprite);
+                    posChange.Normalize();
+                    lastDashSprite += posChange * distanceCheck;
                     DashSprite dashSprite = new DashSprite(this.sprite.CreateSprite(this.movementDirection), this.position);
                     this.dashPath.Add(dashSprite);
                 }

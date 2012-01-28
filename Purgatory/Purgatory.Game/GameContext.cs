@@ -15,6 +15,7 @@ namespace Purgatory.Game
     {
         private const int RandomChanceForEnergyDrop = 1000;
 
+        private float timeSinceLastRandomDrop;
         private Player player1;
         private Player player2;
         private WinScreen winScreen;
@@ -88,6 +89,7 @@ namespace Purgatory.Game
         public void UpdateGameLogic(GameTime time)
         {
             this.Time -= (float)time.ElapsedGameTime.TotalSeconds;
+            this.timeSinceLastRandomDrop += (float)time.ElapsedGameTime.TotalSeconds;
 
             this.player1.SetBulletDirection(player2.Position);
             this.player2.SetBulletDirection(player1.Position);
@@ -101,8 +103,10 @@ namespace Purgatory.Game
             }
 
             // Random Energy Drops
-            if (rng.Next(RandomChanceForEnergyDrop) == 1)
+            
+            if (timeSinceLastRandomDrop > 1)
             {
+                timeSinceLastRandomDrop -= 1;
                 player1Level.AddToPickups(new AmmoPickUp());
                 player2Level.AddToPickups(new AmmoPickUp());
             }
