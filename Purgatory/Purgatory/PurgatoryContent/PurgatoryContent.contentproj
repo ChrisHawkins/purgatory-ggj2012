@@ -569,8 +569,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="hud.png">
-      <Name>hud</Name>
+    <Compile Include="hudLeft.png">
+      <Name>hudLeft</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="hudRight.png">
+      <Name>hudRight</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
