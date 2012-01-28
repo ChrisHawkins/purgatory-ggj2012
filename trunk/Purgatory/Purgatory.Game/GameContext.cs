@@ -9,6 +9,7 @@ namespace Purgatory.Game
     using Purgatory.Game.Physics;
     using System;
     using Purgatory.Game.Graphics;
+    using Microsoft.Xna.Framework.Audio;
 
     public class GameContext
     {
@@ -21,9 +22,12 @@ namespace Purgatory.Game
         private Level player2Level;
         private PurgatoryLevel purgatory;
         private Random rng;
+        private DualScreen ds;
+        private Cue purgatoryMusic;
 
-        public GameContext(WinScreen winScreen)
+        public GameContext(DualScreen ds, WinScreen winScreen)
         {
+            this.ds = ds;
             this.Time = 100;
 
             this.winScreen = winScreen;
@@ -38,6 +42,7 @@ namespace Purgatory.Game
             player2.Level = player2Level;
 
             rng = new Random();
+            this.purgatoryMusic = AudioManager.Instance.LoadCue("Purgatory_PurgatoryChase");
         }
 
         public Player GetPlayer(PlayerNumber playerNumber)
@@ -114,7 +119,9 @@ namespace Purgatory.Game
                 else
                 {
                     this.player1.Level = purgatory;
+                    AudioManager.Instance.CrossFade(ds.BackgroundMusic, this.purgatoryMusic, 1.5f, false);
                     this.player1.Health = 10;
+                    
                 }
             }
             
@@ -132,6 +139,7 @@ namespace Purgatory.Game
                 else
                 {
                     this.player2.Level = purgatory;
+                    AudioManager.Instance.CrossFade(ds.BackgroundMusic, this.purgatoryMusic, 1.5f, false);
                     this.player2.Health = 10;
                 }
             }
