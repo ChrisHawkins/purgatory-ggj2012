@@ -112,7 +112,7 @@
     <Compile Include="Physics\IMoveable.cs" />
     <Compile Include="Physics\IStatic.cs" />
     <Compile Include="Physics\Line.cs" />
-    <Compile Include="Physics\Vector2Extensions.cs" />
+    <Compile Include="Physics\Extensions.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerNumber.cs" />
     <Compile Include="Screen.cs" />
@@ -120,6 +120,7 @@
     <Compile Include="ScreenEventArgs.cs" />
     <Compile Include="ScreenManager.cs" />
     <Compile Include="ScreenTypeEventArgs.cs" />
+    <Compile Include="TileType.cs" />
     <Compile Include="UI\Button.cs" />
     <Compile Include="UI\Control.cs" />
     <Compile Include="UI\Form.cs" />

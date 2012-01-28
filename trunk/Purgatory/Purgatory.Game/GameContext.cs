@@ -28,8 +28,8 @@ using System;
             player1 = new Player(PlayerNumber.PlayerOne);
             player2 = new Player(PlayerNumber.PlayerTwo);
 
-            this.player1Level = new Level("LifeMaze00");
-            this.player2Level = new Level("DeathMaze00");
+            this.player1Level = new Level("Life");
+            this.player2Level = new Level("Death");
 
             player1.Level = player1Level;
             player2.Level = player2Level;
@@ -103,7 +103,7 @@ using System;
                     int locX = rng.Next(maxX);
                     int locY = rng.Next(maxY);
 
-                    if (player1Level.WalkableTile[locX][locY])
+                    if (player1Level.WalkableTile[locX][locY] == TileType.Ground)
                     {
                         ammoPlaced = true;
                         this.player1Level.AddToPickups(new AmmoPickUp(new Vector2(locX, locY) * Level.TileWidth));
@@ -120,7 +120,7 @@ using System;
                     int locX = rng.Next(maxX);
                     int locY = rng.Next(maxY);
 
-                    if (player2Level.WalkableTile[locX][locY])
+                    if (player2Level.WalkableTile[locX][locY] == TileType.Ground)
                     {
                         ammoPlaced = true;
                         this.player2Level.AddToPickups(new AmmoPickUp(new Vector2(locX, locY) * Level.TileWidth + new Vector2(Level.TileWidth) / 2));

@@ -153,8 +153,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="deathWalls.png">
-      <Name>deathWalls</Name>
+    <Compile Include="deathWall.png">
+      <Name>deathWall</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -169,6 +169,40 @@
   <ItemGroup>
     <Compile Include="Arrow.png">
       <Name>Arrow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="deathWallTop.png">
+      <Name>deathWallTop</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="lifeWallBottom.png">
+      <Name>lifeWallBottom</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="lifeWallLeft.png">
+      <Name>lifeWallLeft</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="lifeWallRight.png">
+      <Name>lifeWallRight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="lifeWall.png">
+      <Name>lifeWall</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="lifeWallTop.png">
+      <Name>lifeWallTop</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
