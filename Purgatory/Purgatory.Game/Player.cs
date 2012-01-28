@@ -30,6 +30,8 @@ namespace Purgatory.Game
         private const float dashCooldownTime = 1;
         private float timeSinceLastDash = 0;
 
+        private Sprite[] dashPath;
+
         private Sprite bulletSprite;
 
         public int Health { get; set; }
@@ -136,7 +138,7 @@ namespace Purgatory.Game
             if (this.controls.ShootControlPressed() && this.shootTimer > this.shootCooldown && Energy > 0)
             {
                 Vector2 bulletPos = this.Position;
-                Bullet b = new Bullet(bulletPos, this.bulletDirection, 600.0f, new Sprite(bulletSprite), this.Level);
+                Bullet b = new Bullet(bulletPos, this.bulletDirection, 500.0f, new Sprite(bulletSprite), this.Level);
                 this.BulletList.Add(b);
                 --this.Energy;
                 this.shootTimer = 0.0f;

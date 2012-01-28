@@ -68,5 +68,31 @@ namespace Purgatory.Game.Graphics
                 return;
              }
         }
+
+        public Sprite CreateSprite(Vector2 direction)
+        {
+            if (direction.Y > 0)
+            {
+                return new Sprite(downSprite);
+            }
+
+            if (direction.Y < 0)
+            {
+                return new Sprite(upSprite);
+            }
+
+            if (direction.X > 0)
+            {
+                return new Sprite(rightSprite);
+            }
+
+            if (direction.X < 0)
+            {
+                return new Sprite(leftSprite);
+            }
+
+            return null;
+        }
+
     }
 }
