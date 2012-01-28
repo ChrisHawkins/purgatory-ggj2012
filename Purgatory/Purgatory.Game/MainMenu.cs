@@ -49,10 +49,10 @@ using Microsoft.Xna.Framework.Audio;
             if (kb.GetPressedKeys().Length > 0 && timer > 0.5f)
             {
                 this.timer = 0;
-                GameContext context = new GameContext(winscreen);
+                DualScreen ds = new DualScreen(this.Device);
+                GameContext context = new GameContext(ds, winscreen);
                 context.InitializePlayer(BigEvilStatic.CreateControlSchemeWASD(), BigEvilStatic.CreateControlSchemeArrows(), BigEvilStatic.Content);
 
-                DualScreen ds = new DualScreen(this.Device);
                 ds.ContextUpdater = gt => context.UpdateGameLogic(gt);
                 ds.AddScreen(new GameScreen(this.Device, context, PlayerNumber.PlayerOne));
                 ds.AddScreen(new GameScreen(this.Device, context, PlayerNumber.PlayerTwo));
