@@ -24,6 +24,7 @@ namespace Purgatory.Game
         private Random rng;
         private DualScreen ds;
         private Cue purgatoryMusic;
+        bool endFadingMusic = false;
 
         public GameContext(DualScreen ds, WinScreen winScreen)
         {
@@ -106,15 +107,24 @@ namespace Purgatory.Game
                 player2Level.AddToPickups(new AmmoPickUp());
             }
 
-            if (this.player1.Health < 1 && !this.player1.DeathSFX.IsPlaying)
+            if (this.player1.Health < 1)
             {
                 if (this.player1.Level is PurgatoryLevel)
                 {
-                    Player.InputFrozen = false;
-                    winScreen.SetBackground(BigEvilStatic.CreateDeathWinBackground());
-                    winScreen.WinMusic = AudioManager.Instance.LoadCue("Purgatory_DeathWins");
-                    BigEvilStatic.ScreenManager.OpenScreen(winScreen);
-                    AudioManager.Instance.PlayCue(ref winScreen.WinMusic, false);
+                    if (!this.player1.DeathSFX.IsPlaying)
+                    {
+                        Player.InputFrozen = false;
+                        winScreen.SetBackground(BigEvilStatic.CreateDeathWinBackground());
+                        winScreen.WinMusic = AudioManager.Instance.LoadCue("Purgatory_DeathWins");
+                        BigEvilStatic.ScreenManager.OpenScreen(winScreen);
+                        AudioManager.Instance.PlayCue(ref winScreen.WinMusic, false);
+                    }
+                    else if (!endFadingMusic)
+                    {
+                        endFadingMusic = true;
+                        AudioManager.Instance.FadeOut(this.purgatoryMusic, 1, true);
+                        AudioManager.Instance.FadeOut(this.ds.BackgroundMusic, 1, true);
+                    }
                 }
                 else
                 {
@@ -129,12 +139,21 @@ namespace Purgatory.Game
             {
                 if (this.player2.Level is PurgatoryLevel)
                 {
-                    //player1 win code goes here
-                    Player.InputFrozen = false;
-                    winScreen.SetBackground(BigEvilStatic.CreateLifeWinBackground());
-                    winScreen.WinMusic = AudioManager.Instance.LoadCue("Purgatory_LifeWins");
-                    BigEvilStatic.ScreenManager.OpenScreen(winScreen);
-                    AudioManager.Instance.PlayCue(ref winScreen.WinMusic, false);
+                    if (!this.player2.DeathSFX.IsPlaying)
+                    {
+                        //player1 win code goes here
+                        Player.InputFrozen = false;
+                        winScreen.SetBackground(BigEvilStatic.CreateLifeWinBackground());
+                        winScreen.WinMusic = AudioManager.Instance.LoadCue("Purgatory_LifeWins");
+                        BigEvilStatic.ScreenManager.OpenScreen(winScreen);
+                        AudioManager.Instance.PlayCue(ref winScreen.WinMusic, false);
+                    }
+                    else if (!this.endFadingMusic)
+                    {
+                        this.endFadingMusic = true;
+                        AudioManager.Instance.FadeOut(this.purgatoryMusic, 1, true);
+                        AudioManager.Instance.FadeOut(this.ds.BackgroundMusic, 1, true);
+                    }
                 }
                 else
                 {
