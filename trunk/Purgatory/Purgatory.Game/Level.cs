@@ -197,11 +197,11 @@ namespace Purgatory.Game
                         {
                             if (WalkableTile[i][j] == TileType.WallTop)
                             {
-                                WalkableTile[i][j] = TileType.WallOutsideTopLeft;
+                                WalkableTile[i][j] = TileType.WallOutsideTopRight;
                             }
                             else if (WalkableTile[i][j] == TileType.WallBottom)
                             {
-                                WalkableTile[i][j] = TileType.WallOutsideBottomLeft;
+                                WalkableTile[i][j] = TileType.WallOutsideBottomRight;
                             }
                             else
                             {
@@ -212,11 +212,11 @@ namespace Purgatory.Game
                         {
                             if (WalkableTile[i][j] == TileType.WallTop)
                             {
-                                WalkableTile[i][j] = TileType.WallOutsideTopRight;
+                                WalkableTile[i][j] = TileType.WallOutsideTopLeft;
                             }
                             else if (WalkableTile[i][j] == TileType.WallBottom)
                             {
-                                WalkableTile[i][j] = TileType.WallOutsideBottomRight;
+                                WalkableTile[i][j] = TileType.WallOutsideBottomLeft;
                             }
                             else
                             {
