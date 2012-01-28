@@ -130,9 +130,6 @@ namespace Purgatory.Game
         public override void OnControlLost()
         {
             base.OnControlLost();
-
-            AudioManager.Instance.FadeOut(this.BackgroundMusic, 1, true);
-            AudioManager.Instance.FadeOut(this.PurgatoryChaseMusic, 1, true);
         }
     }
 }
