@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Purgatory.Game.Graphics;
-using Purgatory.Game.PowerUps;
-
+﻿
 namespace Purgatory.Game
 {
+    using System;
+    using System.Collections.Generic;
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+    using Purgatory.Game.Graphics;
+    using Purgatory.Game.PowerUps;
+
     public class PurgatoryLevel : Level
     {
         public PurgatoryLevel(string levelType, TileType[][] maze1, TileType[][] maze2) : base()
