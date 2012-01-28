@@ -10,6 +10,7 @@ namespace Purgatory.Game
     using System;
     using Purgatory.Game.Graphics;
     using Microsoft.Xna.Framework.Audio;
+    using Purgatory.Game.PowerUps;
 
     public class GameContext
     {
@@ -104,11 +105,21 @@ namespace Purgatory.Game
 
             // Random Energy Drops
             
-            if (timeSinceLastRandomDrop > 1)
+            if (timeSinceLastRandomDrop > 3)
             {
                 timeSinceLastRandomDrop -= 1;
-                player1Level.AddToPickups(new AmmoPickUp());
-                player2Level.AddToPickups(new AmmoPickUp());
+                int num = rng.Next(10);
+
+                if (num == 1)
+                {
+                    player1Level.AddToPickups(new AmmoPickUp());
+                    player2Level.AddToPickups(new AmmoPickUp());
+                }
+                else if (num == 2)
+                {
+                    player1Level.AddToPickups(new BouncePowerUp());
+                    player2Level.AddToPickups(new BouncePowerUp());
+                }
             }
 
             if (this.player1.Health < 1)

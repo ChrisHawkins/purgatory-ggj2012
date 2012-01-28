@@ -55,7 +55,7 @@ namespace Purgatory.Game
 
         public Player(PlayerNumber playerNumber)
         {
-            this.bulletBounce = 12;
+            this.bulletBounce = 0;
             dashPath = new List<DashSprite>();
             lastDashSprite = new Vector2(float.PositiveInfinity);
             

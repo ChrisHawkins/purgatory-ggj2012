@@ -278,6 +278,27 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HealthPickUp.png">
+      <Name>HealthPickUp</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BouncePickUp.png">
+      <Name>BouncePickUp</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="EnergyPickUp.png">
+      <Name>EnergyPickUp</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="lifeWall.png">
       <Name>lifeWall</Name>
       <Importer>TextureImporter</Importer>
