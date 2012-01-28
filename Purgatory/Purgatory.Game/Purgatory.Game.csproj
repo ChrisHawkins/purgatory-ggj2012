@@ -107,6 +107,7 @@
     <Compile Include="Graphics\Sprite.cs" />
     <Compile Include="PlayerPickUp.cs" />
     <Compile Include="LocatorArrow.cs" />
+    <Compile Include="PurgatoryLevel.cs" />
     <Compile Include="StatusBar.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="MainMenu.cs" />
