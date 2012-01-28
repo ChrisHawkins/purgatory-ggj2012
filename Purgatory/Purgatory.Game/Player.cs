@@ -244,7 +244,7 @@ namespace Purgatory.Game
 
         private void AddDyingBullet(Bullet bullet)
         {
-            bullet.Sprite.Effects.Add(new PopInEffect(250f, 0f, true));
+            bullet.Sprite.Effects.Add(new PopInEffect(150f, 0f, true));
             this.dyingBullets.Add(bullet);
         }
 
