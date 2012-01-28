@@ -54,8 +54,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LifeMaze00.png">
-      <Name>LifeMaze00</Name>
+    <Compile Include="Maze10.png">
+      <Name>Maze10</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -94,8 +94,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeathMaze00.png">
-      <Name>DeathMaze00</Name>
+    <Compile Include="Maze00.png">
+      <Name>Maze00</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -410,29 +410,29 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeathMaze01.png">
-      <Name>DeathMaze01</Name>
+    <Compile Include="Maze01.png">
+      <Name>Maze01</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeathMaze02.png">
-      <Name>DeathMaze02</Name>
+    <Compile Include="Maze02.png">
+      <Name>Maze02</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LifeMaze01.png">
-      <Name>LifeMaze01</Name>
+    <Compile Include="Maze11.png">
+      <Name>Maze11</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LifeMaze02.png">
-      <Name>LifeMaze02</Name>
+    <Compile Include="Maze12.png">
+      <Name>Maze12</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
