@@ -63,10 +63,10 @@ using System.Collections.Generic;
             this.waveBank = new WaveBank(this.audioEngine, "Content\\Wave Bank.xwb");
             this.soundBank = new SoundBank(this.audioEngine, "Content\\Sound Bank.xsb");
 
-            this.SetGlobalVolume(2f);
-            this.SetMusicVolume(1f);
-            this.SetSFXVolume(1.7f);
-            this.SetSoundVolume(1.7f);
+            this.SetGlobalVolume(1f);
+            this.SetMusicVolume(0.5f);
+            this.SetSFXVolume(0.85f);
+            this.SetSoundVolume(0.85f);
             this.AdjustGlobalVolume(this.globalVolume);
 
             this.fadingCues = new List<FadeInfo>();
