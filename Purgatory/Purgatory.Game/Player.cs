@@ -10,6 +10,7 @@ namespace Purgatory.Game
     using Purgatory.Game.Controls;
     using Purgatory.Game.Graphics;
     using Purgatory.Game.Physics;
+    using Purgatory.Game.PowerUps;
 
     public class Player : IMoveable
     {
@@ -62,6 +63,8 @@ namespace Purgatory.Game
         public List<Bullet> BulletList { get; set; }
         private List<Bullet> dyingBullets { get; set; }
 
+        public TimeSpan NoClipTime { get; set; }
+
         private GrowShrinkEffect effect;
 
         private Rectangle collisionRectangle;
@@ -93,6 +96,7 @@ namespace Purgatory.Game
             this.yPenetrations = new List<float>();
 
             this.ShootCooldown = 0.2f;
+            this.NoClipTime = NoClipPowerUp.Duration;
              
             if (this.playerNumber == PlayerNumber.PlayerOne)
             {
@@ -181,6 +185,11 @@ namespace Purgatory.Game
 
         public void Update(GameTime gameTime)
         {
+            if (NoClipTime < NoClipPowerUp.Duration)
+            {
+                NoClipTime += gameTime.ElapsedGameTime;
+            }
+
             this.Level.Update(gameTime);
 
             this.BulletBounce = (int)MathHelper.Clamp(this.BulletBounce, 0, Player.MaxBounce);
@@ -221,7 +230,7 @@ namespace Purgatory.Game
                             for (int i = 0; i < 5; ++i)
                             {
                                 Vector2 bulletPos = this.Position;
-                                Bullet b = new Bullet(bulletPos, Vector2.Normalize(new Vector2((float)Math.Cos(MathHelper.WrapAngle((MathHelper.TwoPi / 5) * (i + 1) + this.TimeSinceSpiralBegan * 2)), (float)Math.Sin(MathHelper.WrapAngle((MathHelper.TwoPi / 5) * (i + 1) + this.TimeSinceSpiralBegan * 2)))), this.BulletBounce, Player.BulletSpeed, new Sprite(this.BulletSprite), this.Level);
+                                Bullet b = new Bullet(bulletPos, Vector2.Normalize(new Vector2((float)Math.Cos(MathHelper.WrapAngle((MathHelper.TwoPi / 5) * (i + 1) + this.TimeSinceSpiralBegan * 2)), (float)Math.Sin(MathHelper.WrapAngle((MathHelper.TwoPi / 5) * (i + 1) + this.TimeSinceSpiralBegan * 2)))), this.BulletBounce, Player.BulletSpeed, new Sprite(this.BulletSprite), this.Level, this.NoClipTime < NoClipPowerUp.Duration);
                                 this.BulletList.Add(b);
                                 this.ShootTimer = 0.0f;
                                 AudioManager.Instance.PlayCue(ref this.ShootSFX, true);
@@ -504,7 +513,5 @@ namespace Purgatory.Game
             this.BulletDirection = targetPosition - this.Position;
             this.BulletDirection.Normalize();
         }
-
-
     }
 }

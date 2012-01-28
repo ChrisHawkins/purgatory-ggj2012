@@ -121,6 +121,7 @@
     <Compile Include="Graphics\Sprite.cs" />
     <Compile Include="LevelGenerator.cs" />
     <Compile Include="PowerUps\HealthPowerUp.cs" />
+    <Compile Include="PowerUps\NoClipPowerUp.cs" />
     <Compile Include="PowerUps\PlayerPickUp.cs" />
     <Compile Include="LocatorArrow.cs" />
     <Compile Include="PowerUps\Portal.cs" />
