@@ -118,7 +118,7 @@ namespace Purgatory.Game.Graphics
 
             for (int i = this.Embellishments.Count - 1; i >= 0; --i)
             {
-                this.Embellishments[i].Draw(spriteBatch, point);
+                this.Embellishments[i].Draw(spriteBatch, point, this.Zoom);
             }
         }
 
