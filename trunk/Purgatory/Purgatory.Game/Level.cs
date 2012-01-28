@@ -41,7 +41,7 @@ namespace Purgatory.Game
             whiteWall = new Sprite(whiteWallTex, TileWidth, TileWidth);
             blackWall = new Sprite(blackWallTex, TileWidth, TileWidth);
 
-            Texture2D backgroundTex = BigEvilStatic.Content.Load<Texture2D>("DeathWalls");
+            Texture2D backgroundTex = BigEvilStatic.Content.Load<Texture2D>("DeathGround");
             backgroundWall = new Sprite(backgroundTex, backgroundTex.Width, backgroundTex.Height);
 
             //Get pixel data as array
@@ -133,14 +133,14 @@ namespace Purgatory.Game
             int left = (int)(bounds.Rectangle.Left - bounds.Camera.X);
             int right = (int)(bounds.Rectangle.Right - bounds.Camera.X);
 
-            top /= backgroundWall.Height;
+            top = (int)(top / backgroundWall.Width) - 1;
             bottom = (int)(bottom / backgroundWall.Height) + 1;
-            left /= backgroundWall.Width;
+            left = (int)(left / backgroundWall.Width) - 1;
             right = (int)(right / backgroundWall.Width) + 1;
 
-            for (int i = left; i <= right; ++i)
+            for (int i = left; i < right; ++i)
             {
-                for (int j = top; j <= bottom; ++j)
+                for (int j = top; j < bottom; ++j)
                 {
                     backgroundWall.Draw(batch, bounds.AdjustPoint(new Vector2(i * backgroundWall.Width, j * backgroundWall.Height)));
                 }

@@ -11,7 +11,7 @@ namespace Purgatory.Game.Physics
             throw new NotImplementedException("Moveable can't hit moveable");
         }
 
-        public static void SolveCollision(IMoveable moveableObject, IStatic staticObject)
+        public static Vector2 SolveCollision(IMoveable moveableObject, IStatic staticObject)
         {
             Rectangle rect1 = GeometryUtility.GetAdjustedRectangle(moveableObject.Position, moveableObject.CollisionRectangle);
             Rectangle rect2 = GeometryUtility.GetAdjustedRectangle(staticObject.Position, staticObject.CollisionRectangle);
@@ -54,11 +54,13 @@ namespace Purgatory.Game.Physics
                     }
                 }
 
-                moveableObject.Position -= penetration;
+                return penetration;
             }
+
+            return Vector2.Zero;
         }
 
-        public static void SolveCollision(IMoveable moveableObject, Rectangle staticObject)
+        public static Vector2 SolveCollision(IMoveable moveableObject, Rectangle staticObject)
         {
             Rectangle rect1 = moveableObject.CollisionRectangle;
 
@@ -100,8 +102,10 @@ namespace Purgatory.Game.Physics
                     }
                 }
 
-                moveableObject.Position -= penetration;
+                return penetration;
             }
+
+            return Vector2.Zero;
         }
     }
 }

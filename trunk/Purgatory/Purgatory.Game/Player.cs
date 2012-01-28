@@ -7,6 +7,7 @@ namespace Purgatory.Game
     using Purgatory.Game.Graphics;
     using Purgatory.Game.Physics;
     using System.Collections.Generic;
+    using System;
 
     public class Player : IMoveable
     {
@@ -19,9 +20,12 @@ namespace Purgatory.Game
         private PlayerNumber playerNumber;
         private Vector2 bulletDirection;
 
+        private List<float> xPenetrations;
+        private List<float> yPenetrations;
+
         private Vector2 DashVelocity;
 
-        private const float dashCooldownTime = 1.5f;
+        private const float dashCooldownTime = 1;
         private float timeSinceLastDash = 0;
 
         private Sprite bulletSprite;
@@ -47,6 +51,9 @@ namespace Purgatory.Game
             this.BulletList = new List<Bullet>();
             this.direction = new Vector2(0, 1);
             this.shootCooldown = 0.2f;
+
+            this.xPenetrations = new List<float>();
+            this.yPenetrations = new List<float>();
         }
 
         public void Initialize(KeyboardManager controlScheme, Sprite sprite, Sprite bulletSprite)
@@ -57,9 +64,17 @@ namespace Purgatory.Game
             this.collisionRectangle = new Rectangle(0, 0, sprite.Width, sprite.Height);
         }
 
-        public Vector2 Position { get; set; }
+        public Vector2 Position
+        {
+            get
+            {
+                return position;
+            }
+        }
 
         public Vector2 LastPosition { get; set; }
+
+        private Vector2 position;
 
         public void Update(GameTime gameTime)
         {
@@ -159,7 +174,7 @@ namespace Purgatory.Game
             if (this.DashVelocity != Vector2.Zero)
             {
                 this.LastPosition = this.Position;
-                this.Position += DashVelocity * (float)time.ElapsedGameTime.TotalSeconds;
+                this.position += DashVelocity * (float)time.ElapsedGameTime.TotalSeconds;
                 this.DashVelocity -= 10 * this.DashVelocity * (float)time.ElapsedGameTime.TotalSeconds;
 
                 if (DashVelocity.LengthSquared() <= speed * speed)
@@ -170,7 +185,7 @@ namespace Purgatory.Game
             else
             {
                 this.LastPosition = this.Position;
-                this.Position += movementDirection * speed * (float)time.ElapsedGameTime.TotalSeconds;
+                this.position += movementDirection * speed * (float)time.ElapsedGameTime.TotalSeconds;
             }
 
             this.CheckForCollisions();
@@ -178,11 +193,36 @@ namespace Purgatory.Game
 
         private void CheckForCollisions()
         {
-            List<Rectangle> possibleRectangles = Level.GetPossibleRectangles(Position, LastPosition);
-
-            foreach (Rectangle r in possibleRectangles)
+            if (this.Position != this.LastPosition)
             {
-                CollisionSolver.SolveCollision(this, r);
+                this.xPenetrations.Clear();
+                this.yPenetrations.Clear();
+                List<Rectangle> possibleRectangles = Level.GetPossibleRectangles(Position, LastPosition);
+
+                foreach (Rectangle r in possibleRectangles)
+                {
+                    Vector2 penetration = CollisionSolver.SolveCollision(this, r);
+                    if (penetration.X != 0)
+                    {
+                        this.xPenetrations.Add(penetration.X);
+                    }
+                    if (penetration.Y != 0)
+                    {
+                        this.yPenetrations.Add(penetration.Y);
+                    }
+                }
+
+                if (xPenetrations.Count != 0 || yPenetrations.Count != 0)
+                {
+                    if (xPenetrations.Count >= yPenetrations.Count)
+                    {
+                        this.position.X -= xPenetrations[0];
+                    }
+                    if (yPenetrations.Count >= xPenetrations.Count)
+                    {
+                        this.position.Y -= yPenetrations[0];
+                    }
+                }
             }
         }
 
