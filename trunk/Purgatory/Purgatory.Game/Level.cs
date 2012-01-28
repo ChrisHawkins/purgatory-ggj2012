@@ -31,7 +31,6 @@ namespace Purgatory.Game
         public Level(string levelType)
         {
             this.pickupSFX = AudioManager.Instance.LoadCue("Purgatory_PickupItem");
-            levelType = "life";
             // Temp list of rectangles to return
             rectangles = new List<Rectangle>();
 
