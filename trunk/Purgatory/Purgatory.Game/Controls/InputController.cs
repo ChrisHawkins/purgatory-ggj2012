@@ -8,6 +8,7 @@ namespace Purgatory.Game.Controls
     using Microsoft.Xna.Framework;
     using Purgatory.Game.Graphics;
     using Purgatory.Game.Animation;
+    using Purgatory.Game.PowerUps;
 
     public abstract class InputController
     {
@@ -38,7 +39,8 @@ namespace Purgatory.Game.Controls
             if (this.FirePressed() && player.ShootTimer > player.ShootCooldown && player.Energy > 0)
             {
                 Vector2 bulletPos = player.Position;
-                Bullet b = new Bullet(bulletPos, Vector2.Normalize(player.BulletDirection), player.BulletBounce, 500.0f, new Sprite(player.BulletSprite), player.Level);
+
+                Bullet b = new Bullet(bulletPos, Vector2.Normalize(player.BulletDirection), player.BulletBounce, 500.0f, new Sprite(player.BulletSprite), player.Level, player.NoClipTime < NoClipPowerUp.Duration);
                 b.Sprite.Effects.Add(new SpinEffect(200));
                 player.BulletList.Add(b);
                 --player.Energy;

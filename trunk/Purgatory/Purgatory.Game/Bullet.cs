@@ -1,14 +1,11 @@
 ﻿
 namespace Purgatory.Game
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using Purgatory.Game.Physics;
     using Microsoft.Xna.Framework;
-using Purgatory.Game.Graphics;
     using Microsoft.Xna.Framework.Graphics;
+    using Purgatory.Game.Graphics;
+    using Purgatory.Game.Physics;
 
     public class Bullet : IMoveable
     {
@@ -19,13 +16,14 @@ using Purgatory.Game.Graphics;
         private Level level;
         private List<float> xPenetrations;
         private List<float> yPenetrations;
+        private bool ignoreWalls;
 
         public Sprite Sprite
         {
             get { return this.sprite; }
         }
 
-        public Bullet(Vector2 position, Vector2 direction, int bounce, float speed, Sprite sprite, Level level)
+        public Bullet(Vector2 position, Vector2 direction, int bounce, float speed, Sprite sprite, Level level, bool ignoreWalls)
         {
             this.Position = position;
             this.Direction = direction;
@@ -33,8 +31,14 @@ using Purgatory.Game.Graphics;
             this.speed = speed;
             this.sprite = sprite;
             this.level = level;
+            this.ignoreWalls = ignoreWalls;
             this.xPenetrations = new List<float>();
             this.yPenetrations = new List<float>();
+
+            if (this.ignoreWalls)
+            {
+                this.sprite.Alpha = 0.5f;
+            }
         }
 
         public void SwitchOwner(Player player)
@@ -51,12 +55,14 @@ using Purgatory.Game.Graphics;
             this.Position += Direction * speed * (float)time.ElapsedGameTime.TotalSeconds;
             this.sprite.UpdateEffects(time);
             this.sprite.UpdateAnimation(time);
-            this.CheckForCollisions();
+            this.CheckForWallCollisions();
 
         }
 
-        private void CheckForCollisions()
+        private void CheckForWallCollisions()
         {
+            if (this.ignoreWalls) return;
+
             this.xPenetrations.Clear();
             this.yPenetrations.Clear();
             List<Rectangle> possibleRectangles = level.GetPossibleRectangles(Position, LastPosition);
