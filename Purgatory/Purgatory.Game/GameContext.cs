@@ -171,7 +171,7 @@ namespace Purgatory.Game
                     this.purgatoryTimer = 0f;
                     Portal p = new Portal(this.player1Level);
                     p.EscapedPurgatory += new EventHandler(this.CrossfadePurgatoryToGameplay);
-                    purgatory.AddToPickups(p, this.player1.Position, 50 * 32);
+                    purgatory.AddToPickups(p, this.player1.Position, 50 * 32, true);
                     this.purgatoryMusic = AudioManager.Instance.CrossFade(this.ds.BackgroundMusic, this.purgatoryMusic, 1.5f, false);
                     this.purgatoryVoice = AudioManager.Instance.LoadCue(this.purgatoryVoice.Name);
                     this.findPortalVoice = AudioManager.Instance.LoadCue(this.findPortalVoice.Name);
@@ -219,7 +219,7 @@ namespace Purgatory.Game
                     this.purgatoryTimer = 0f;
                     Portal p = new Portal(this.player2Level);
                     p.EscapedPurgatory += new EventHandler(this.CrossfadePurgatoryToGameplay);
-                    purgatory.AddToPickups(p, this.player2.Position, 50 * 32);
+                    purgatory.AddToPickups(p, this.player2.Position, 50 * 32, true);
                     this.purgatoryMusic = AudioManager.Instance.CrossFade(this.ds.BackgroundMusic, this.purgatoryMusic, 1.5f, false);
                     this.purgatoryVoice = AudioManager.Instance.LoadCue(this.purgatoryVoice.Name);
                     this.findPortalVoice = AudioManager.Instance.LoadCue(this.findPortalVoice.Name);
