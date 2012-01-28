@@ -10,34 +10,11 @@ namespace Purgatory.Game
     using System;
     using Microsoft.Xna.Framework.Audio;
 
-    public class FadingImage
-    {
-        private Vector2 Position;
-        private Sprite Sprite;
-        private float FadeTime = 0.5f;
-        private float FadeTimer = 0.5f;
-
-        public FadingImage(Vector2 position, Sprite sprite)
-        {
-            this.Position = position;
-            this.Sprite = sprite;
-        }
-
-        public void Update(GameTime gameTime)
-        {
-            float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            this.FadeTimer -= elapsedTime;
-            float lerp = FadeTimer / FadeTime;
-            this.Sprite.Alpha = lerp;
-        }
-    }
-
     public class Player : IMoveable
     {
         public static bool InputFrozen = false;
         private float speed;
         private float dashShadowInterval = 1f;
-        private Dictionary<Vector2, Texture2D> dashPositions;
 
         private KeyboardManager controls;
         private Vector2 direction;
