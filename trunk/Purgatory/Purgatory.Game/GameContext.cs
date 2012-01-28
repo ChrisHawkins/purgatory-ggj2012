@@ -148,9 +148,9 @@ namespace Purgatory.Game
                 else if (num < 35)
                 {
                     if (player1Level.GetItemCount(typeof(SpiralShot)) < 1)
-                        this.player1Level.AddToPickups(new SpiralShot());
+                        this.player1Level.AddToPickups(new SpiralShot(), false);
                     if (player2Level.GetItemCount(typeof(SpiralShot)) < 1)
-                        this.player2Level.AddToPickups(new SpiralShot());
+                        this.player2Level.AddToPickups(new SpiralShot(), false);
                 }
             }
 
