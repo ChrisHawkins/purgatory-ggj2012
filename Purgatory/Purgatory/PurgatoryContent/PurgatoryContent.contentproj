@@ -75,13 +75,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="lifeWallOutsideCorner.bmp">
-      <Name>lifeWallOutsideCorner</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="title.png">
       <Name>title</Name>
       <Importer>TextureImporter</Importer>
@@ -224,13 +217,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="lifeWallBottomLeft.png">
-      <Name>lifeWallBottomLeft</Name>
+    <Compile Include="lifeWallInsideBottomLeft.png">
+      <Name>lifeWallInsideBottomLeft</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="lifeWallBottomRight.png">
-      <Name>lifeWallBottomRight</Name>
+    <Compile Include="lifeWallInsideBottomRight.png">
+      <Name>lifeWallInsideBottomRight</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -264,15 +257,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="lifeWallTopLeft.png">
-      <Name>lifeWallTopLeft</Name>
+    <Compile Include="lifeWallInsideTopLeft.png">
+      <Name>lifeWallInsideTopLeft</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="lifeWallTopRight.png">
-      <Name>lifeWallTopRight</Name>
+    <Compile Include="lifeWallInsideTopRight.png">
+      <Name>lifeWallInsideTopRight</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -306,23 +299,23 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="lifeWallInsideBottomLeft.png">
-      <Name>lifeWallInsideBottomLeft</Name>
+    <Compile Include="lifeWallOutsideBottomLeft.png">
+      <Name>lifeWallOutsideBottomLeft</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="lifeWallInsideBottomRight.png">
-      <Name>lifeWallInsideBottomRight</Name>
+    <Compile Include="lifeWallOutsideBottomRight.png">
+      <Name>lifeWallOutsideBottomRight</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="lifeWallInsideTopLeft.png">
-      <Name>lifeWallInsideTopLeft</Name>
+    <Compile Include="lifeWallOutsideTopLeft.png">
+      <Name>lifeWallOutsideTopLeft</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="lifeWallInsideTopRight.png">
-      <Name>lifeWallInsideTopRight</Name>
+    <Compile Include="lifeWallOutsideTopRight.png">
+      <Name>lifeWallOutsideTopRight</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

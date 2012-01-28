@@ -258,6 +258,11 @@ namespace Purgatory.Game
         {
             if (this.Position != this.LastPosition)
             {
+                Vector2 tempPosition = this.position;
+                int tempHeight = collisionRectangle.Height;
+                collisionRectangle.Height = tempHeight / 2;
+                this.position.Y += (float)tempHeight / 4;
+
                 this.xPenetrations.Clear();
                 this.yPenetrations.Clear();
                 List<Rectangle> possibleRectangles = Level.GetPossibleRectangles(Position, LastPosition);
@@ -275,6 +280,8 @@ namespace Purgatory.Game
                     }
                 }
 
+                this.position = tempPosition;
+
                 if (xPenetrations.Count != 0 || yPenetrations.Count != 0)
                 {
                     if (xPenetrations.Count >= yPenetrations.Count)
@@ -286,6 +293,8 @@ namespace Purgatory.Game
                         this.position.Y -= yPenetrations[0];
                     }
                 }
+
+                collisionRectangle.Height = tempHeight;
             }
         }
 
