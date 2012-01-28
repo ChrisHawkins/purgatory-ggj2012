@@ -118,7 +118,7 @@ namespace Purgatory.Game
 
             // Random Energy Drops
             
-            if (timeSinceLastRandomDrop > 3)
+            if (timeSinceLastRandomDrop > 3 && !(player1.Level is PurgatoryLevel) && !(player2.Level is PurgatoryLevel))
             {
                 timeSinceLastRandomDrop -= 3;
 
@@ -126,24 +126,31 @@ namespace Purgatory.Game
 
                 if (num < 15)
                 {
-                    if (player1Level.GetItemCount(typeof(BouncePowerUp)) < 4 && player1.BulletBounce < Player.MaxBounce && !(player1.Level is PurgatoryLevel))
+                    if (player1Level.GetItemCount(typeof(BouncePowerUp)) < 4 && player1.BulletBounce < Player.MaxBounce)
                         player1Level.AddToPickups(new BouncePowerUp(), false);
-                    if (player2Level.GetItemCount(typeof(BouncePowerUp)) < 4 && player2.BulletBounce < Player.MaxBounce && !(player2.Level is PurgatoryLevel))
+                    if (player2Level.GetItemCount(typeof(BouncePowerUp)) < 4 && player2.BulletBounce < Player.MaxBounce)
                         player2Level.AddToPickups(new BouncePowerUp(), false); 
                 }
                 else if (num < 25)
                 {
-                    if (player1Level.GetItemCount(typeof(HealthPickUp)) < 4 && player1.Health < Player.MaxHealth && !(player1.Level is PurgatoryLevel))
+                    if (player1Level.GetItemCount(typeof(HealthPickUp)) < 4 && player1.Health < Player.MaxHealth)
                         player1Level.AddToPickups(new HealthPickUp(), false);
-                    if (player2Level.GetItemCount(typeof(HealthPickUp)) < 4 && player2.Health < Player.MaxHealth && !(player2.Level is PurgatoryLevel))
+                    if (player2Level.GetItemCount(typeof(HealthPickUp)) < 4 && player2.Health < Player.MaxHealth)
                         player2Level.AddToPickups(new HealthPickUp(), false);
                 }
                 else if (num < 30)
                 {
-                    if (player1Level.GetItemCount(typeof(ShieldPowerUp)) < 1 && !(player1.Level is PurgatoryLevel))
+                    if (player1Level.GetItemCount(typeof(ShieldPowerUp)) < 1)
                         this.player1Level.AddToPickups(new ShieldPowerUp(), false);
-                    if (player2Level.GetItemCount(typeof(ShieldPowerUp)) < 1 && !(player2.Level is PurgatoryLevel))
+                    if (player2Level.GetItemCount(typeof(ShieldPowerUp)) < 1)
                         this.player2Level.AddToPickups(new ShieldPowerUp(), false);
+                }
+                else if (num < 35)
+                {
+                    if (player1Level.GetItemCount(typeof(SpiralShot)) < 1)
+                        this.player1Level.AddToPickups(new SpiralShot());
+                    if (player2Level.GetItemCount(typeof(SpiralShot)) < 1)
+                        this.player2Level.AddToPickups(new SpiralShot());
                 }
             }
 

@@ -42,6 +42,9 @@ namespace Purgatory.Game
         public const float DashCooldownTime = 1;
         public float TimeSinceLastDash { get; set; }
 
+        public const float SpiralShotTime = 5;
+        public float TimeSinceSpiralBegan { get; set; }
+
         private List<DashSprite> dashPath;
         private Vector2 lastDashSprite;
 
@@ -70,6 +73,7 @@ namespace Purgatory.Game
 
         public Player(PlayerNumber playerNumber)
         {
+            this.TimeSinceSpiralBegan = 100;
             this.BulletBounce = 0;
             dashPath = new List<DashSprite>();
             lastDashSprite = new Vector2(float.PositiveInfinity);
@@ -184,6 +188,7 @@ namespace Purgatory.Game
 
             if (!InputFrozen)
             {
+                this.TimeSinceSpiralBegan += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 TimeSinceLastDash += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 this.UpdateMovement(gameTime);
 
@@ -201,8 +206,26 @@ namespace Purgatory.Game
                     this.sprite.PlayAnimation = false;
                 }
 
+                this.RegenEnergy(gameTime);
+
                 if (!(this.Level is PurgatoryLevel))
                 {
+                    if (this.TimeSinceSpiralBegan <= SpiralShotTime)
+                    {
+                        this.Energy = 0;
+                        if (this.ShootTimer > this.ShootCooldown)
+                        {
+                            for (int i = 0; i < 5; ++i)
+                            {
+                                Vector2 bulletPos = this.Position;
+                                Bullet b = new Bullet(bulletPos, Vector2.Normalize(new Vector2((float)Math.Cos(MathHelper.WrapAngle((MathHelper.TwoPi / 5) * (i + 1) + this.TimeSinceSpiralBegan * 2)), (float)Math.Sin(MathHelper.WrapAngle((MathHelper.TwoPi / 5) * (i + 1) + this.TimeSinceSpiralBegan * 2)))), this.BulletBounce, Player.BulletSpeed, new Sprite(this.BulletSprite), this.Level);
+                                this.BulletList.Add(b);
+                                this.ShootTimer = 0.0f;
+                                AudioManager.Instance.PlayCue(ref this.ShootSFX, true);
+                            }
+                        }
+                    }
+
                     this.inputController.UpdateShoot(this, gameTime);
 
                     for (int i = this.BulletList.Count - 1; i >= 0; --i)
@@ -216,8 +239,6 @@ namespace Purgatory.Game
                         }
                     }
                 }
-
-                this.RegenEnergy(gameTime);
             }
 
             if (this.ShieldHealth > 0)

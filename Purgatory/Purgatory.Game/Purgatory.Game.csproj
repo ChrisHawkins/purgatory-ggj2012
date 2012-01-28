@@ -125,6 +125,7 @@
     <Compile Include="LocatorArrow.cs" />
     <Compile Include="PowerUps\Portal.cs" />
     <Compile Include="PowerUps\ShieldPowerUp.cs" />
+    <Compile Include="PowerUps\SpiralShot.cs" />
     <Compile Include="PurgatoryLevel.cs" />
     <Compile Include="Randomiser.cs" />
     <Compile Include="StatusBar.cs" />
