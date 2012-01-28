@@ -123,7 +123,7 @@ namespace Purgatory.Game
                     player1Level.AddToPickups(new HealthPickUp());
                     player2Level.AddToPickups(new HealthPickUp());
                 }
-                else if (num < 100)
+                else if (num < 36)
                 {
                     this.player1Level.AddToPickups(new ShieldPowerUp());
                     this.player2Level.AddToPickups(new ShieldPowerUp());
