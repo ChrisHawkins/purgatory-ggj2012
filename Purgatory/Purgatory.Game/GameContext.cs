@@ -35,8 +35,8 @@ namespace Purgatory.Game
             player1 = new Player(PlayerNumber.PlayerOne);
             player2 = new Player(PlayerNumber.PlayerTwo);
 
-            this.player1Level = new Level("Life");
-            this.player2Level = new Level("Death");
+            this.player1Level = LevelGenerator.GenerateLevel("Life");
+            this.player2Level = LevelGenerator.GenerateLevel("Death");
             this.purgatory = new PurgatoryLevel("Death", this.player1Level.WalkableTile, this.player2Level.WalkableTile);
 
             player1.Level = player1Level;
