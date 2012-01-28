@@ -19,6 +19,8 @@ namespace Purgatory.Game
         public const int TileWidth = 32;
 
         private List<Rectangle> rectangles;
+        private List<PlayerPickUp> pickUps;
+
         private Sprite whiteWall, blackWall;
         private Sprite backgroundWall;
 
@@ -65,6 +67,8 @@ namespace Purgatory.Game
                     }
                 }
             }
+
+            pickUps = new List<PlayerPickUp>();
         }
 
         public List<Rectangle> GetPossibleRectangles(Vector2 position, Vector2 lastPosition)
@@ -99,6 +103,30 @@ namespace Purgatory.Game
             }
 
             return rectangles;
+        }
+
+        public void CheckPickUpCollisions(Player player)
+        {
+            List<PlayerPickUp> tmpList = new List<PlayerPickUp>();
+
+            foreach (var pickUp in this.pickUps)
+            {
+                if (pickUp.CollisionRectangle.Intersects(player.CollisionRectangle))
+                {
+                    pickUp.PlayerEffect(player);
+                }
+                else
+                {
+                    tmpList.Add(pickUp);
+                }
+            }
+
+            this.pickUps = tmpList;
+        }
+
+        public void AddToPickups(PlayerPickUp pickUp)
+        {
+            this.pickUps.Add(pickUp);
         }
 
         public void Draw(SpriteBatch batch, Bounds bounds)
@@ -159,6 +187,11 @@ namespace Purgatory.Game
                         //this.blackWall.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                     }
                 }
+            }
+
+            foreach (var pickup in pickUps)
+            {
+                pickup.Draw(batch, bounds);
             }
         }
     }

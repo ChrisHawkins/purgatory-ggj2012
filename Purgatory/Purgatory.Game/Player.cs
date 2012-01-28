@@ -30,8 +30,8 @@ namespace Purgatory.Game
 
         private Sprite bulletSprite;
 
-        public int Health { get; private set; }
-        public int Energy { get; private set; }
+        public int Health { get; set; }
+        public int Energy { get; set; }
 
         public List<Bullet> BulletList { get; private set; }
 
@@ -62,6 +62,18 @@ namespace Purgatory.Game
             this.sprite = sprite;
             this.bulletSprite = bulletSprite;
             this.collisionRectangle = new Rectangle(0, 0, sprite.Width, sprite.Height);
+            if (this.playerNumber == PlayerNumber.PlayerOne)
+            {
+                this.position = new Vector2(Level.TileWidth) * 55;
+            }
+            else if (this.playerNumber == PlayerNumber.PlayerTwo)
+            {
+                int width = this.Level.WalkableTile.Length - 19;
+                int height = this.Level.WalkableTile[0].Length - 5;
+
+                this.position = new Vector2(Level.TileWidth * 120, Level.TileWidth * 144);
+            }
+
         }
 
         public Vector2 Position
@@ -95,17 +107,19 @@ namespace Purgatory.Game
 
             this.UpdateShoot(gameTime);
             this.sprite.UpdateAnimation(gameTime);
+            this.Level.CheckPickUpCollisions(this);
 
         }
 
         private void UpdateShoot(GameTime time)
         {
             this.shootTimer += (float)time.ElapsedGameTime.TotalSeconds;
-            if (this.controls.ShootControlPressed() && this.shootTimer > this.shootCooldown)
+            if (this.controls.ShootControlPressed() && this.shootTimer > this.shootCooldown && Energy > 0)
             {
                 Vector2 bulletPos = this.Position;
-                Bullet b = new Bullet(bulletPos, this.bulletDirection, this.speed * 7f, bulletSprite, this.Level);
+                Bullet b = new Bullet(bulletPos, this.bulletDirection, this.speed * 3f, bulletSprite, this.Level);
                 this.BulletList.Add(b);
+                --this.Energy;
                 this.shootTimer = 0.0f;
             }
 

@@ -11,9 +11,10 @@ using System;
 
     public class GameContext
     {
+        private const int RandomChanceForEnergyDrop = 1000;
+
         private Player player1;
         private Player player2;
-        private ScreenManager screenManager;
         private WinScreen winScreen;
         private Level player1Level;
         private Level player2Level;
@@ -29,6 +30,9 @@ using System;
 
             this.player1Level = new Level("LifeMaze00");
             this.player2Level = new Level("DeathMaze00");
+
+            player1.Level = player1Level;
+            player2.Level = player2Level;
 
             rng = new Random();
         }
@@ -71,8 +75,7 @@ using System;
             this.player1.Initialize(playerOneControlScheme, new Graphics.Sprite(lifeTexture, lifeTexture.Height, lifeTexture.Height), new Graphics.Sprite(lifeBulletTexture, lifeBulletTexture.Height, lifeBulletTexture.Height));
             this.player2.Initialize(playerTwoControlScheme, new Graphics.Sprite(deathTexture, deathTexture.Height, deathTexture.Height), new Graphics.Sprite(deathBulletTexture, deathBulletTexture.Height, deathBulletTexture.Height));
 
-            player1.Level = player1Level;
-            player2.Level = player2Level;
+
         }
 
         public void UpdateGameLogic(GameTime time)
@@ -88,12 +91,12 @@ using System;
             this.player2.CheckBulletCollisions(player1.BulletList);
 
             // Random Ammo Drops
-            if (rng.Next(100) == 1)
+            if (rng.Next(RandomChanceForEnergyDrop) == 1)
             {
                 //create ammo pack in life level
                 int maxX = player1Level.WalkableTile.Length;
                 int maxY = player1Level.WalkableTile[0].Length;
-
+                
                 bool ammoPlaced = false;
                 while (!ammoPlaced)
                 {
@@ -103,6 +106,7 @@ using System;
                     if (player1Level.WalkableTile[locX][locY])
                     {
                         ammoPlaced = true;
+                        this.player1Level.AddToPickups(new AmmoPickUp(new Vector2(locX, locY) * Level.TileWidth));
                     }
                 }
 
@@ -119,6 +123,7 @@ using System;
                     if (player2Level.WalkableTile[locX][locY])
                     {
                         ammoPlaced = true;
+                        this.player2Level.AddToPickups(new AmmoPickUp(new Vector2(locX, locY) * Level.TileWidth + new Vector2(Level.TileWidth) / 2));
                     }
                 }
             }
