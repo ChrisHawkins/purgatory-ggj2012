@@ -26,6 +26,7 @@ namespace Purgatory.Game
         protected Sprite wall, wallTop, wallBottom, wallLeft, wallRight, wallOutsideTopLeft, wallOutsideTopRight, wallOutsideBottomLeft, wallOutsideBottomRight, wallInsideTopLeft, wallInsideTopRight, wallInsideBottomLeft, wallInsideBottomRight;
         protected Sprite backgroundGround;
         protected List<PlayerPickUp> pickUps;
+        protected List<PlayerPickUp> removedPickUps;
         protected Cue pickupSFX;
         private const int MaxPickups = 30;
 
@@ -102,6 +103,7 @@ namespace Purgatory.Game
             //}
 
             pickUps = new List<PlayerPickUp>();
+            this.removedPickUps = new List<PlayerPickUp>();
         }
 
         internal void PlayPurgatoryAnimation()
@@ -112,6 +114,28 @@ namespace Purgatory.Game
         public virtual void Update(GameTime gameTime)
         {
             this.purgatoryOverlay.UpdateEffects(gameTime);
+
+            foreach (var item in this.pickUps)
+            {
+                item.Sprite.UpdateEffects(gameTime);
+            }
+
+            List<PlayerPickUp> toRemove = new List<PlayerPickUp>();
+
+            foreach (var item in this.removedPickUps)
+            {
+                item.Sprite.UpdateEffects(gameTime);
+
+                if (item.Sprite.Effects.Count == 0)
+                {
+                    toRemove.Add(item);
+                }
+            }
+
+            foreach (var item in toRemove)
+            {
+                this.removedPickUps.Remove(item);
+            }
         }
 
         public bool ItemAtLocation(Vector2 location)
@@ -334,6 +358,8 @@ namespace Purgatory.Game
                 {
                     pickUps[i].PlayerEffect(player);
                     AudioManager.Instance.PlayCue(ref this.pickupSFX, true);
+                    this.removedPickUps.Add(pickUps[i]);
+                    pickUps[i].Sprite.Effects.Add(new PopInEffect(150f, 0.2f, true));
                     pickUps.RemoveAt(i);
                 }
             }
@@ -346,6 +372,7 @@ namespace Purgatory.Game
                 Vector2 loc = FindSpawnPoint(false);
                 this.pickUps.Add(pickUp);
                 pickUp.SetPosition(loc);
+                pickUp.Sprite.Effects.Add(new PopInEffect(400f, 0.2f));
             }
         }
 
@@ -441,6 +468,11 @@ namespace Purgatory.Game
             }
 
             foreach (var pickup in pickUps)
+            {
+                pickup.Draw(batch, bounds);
+            }
+
+            foreach (var pickup in this.removedPickUps)
             {
                 pickup.Draw(batch, bounds);
             }
