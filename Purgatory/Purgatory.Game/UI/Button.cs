@@ -31,6 +31,8 @@ namespace Purgatory.Game.UI
 
         public override void Draw(SpriteBatch batch)
         {
+            if (!this.Visible) return;
+
             if (this.HasFocus)
             {
                 this.HoverState.Draw(batch, this.Position);

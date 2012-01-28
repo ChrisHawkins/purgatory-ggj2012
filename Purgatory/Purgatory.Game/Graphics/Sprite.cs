@@ -17,6 +17,7 @@ namespace Purgatory.Game.Graphics
         public float Alpha { get; set; }
         public float Rotation { get; set; }
         public List<SpriteEffect> Effects { get; private set; }
+        public List<Embellishment> Embellishments { get; private set; }
         public float Zoom { get; set; }
         public Texture2D Texture2D { get; private set; }
         public int Width { get; set; }
@@ -32,6 +33,7 @@ namespace Purgatory.Game.Graphics
             this.Height = height;
             this.Tint = Color.White;
             this.Effects = new List<SpriteEffect>();
+            this.Embellishments = new List<Embellishment>();
             this.Zoom = 1.0f;
 
             this.Alpha = 1f;
@@ -59,6 +61,16 @@ namespace Purgatory.Game.Graphics
                 if (Effects[i].HasFinished())
                 {
                     Effects.RemoveAt(i);
+                }
+            }
+
+            for (int i = this.Embellishments.Count - 1; i >= 0; --i)
+            {
+                this.Embellishments[i].Update(time);
+
+                if (this.Embellishments[i].HasFinished())
+                {
+                    this.Embellishments.RemoveAt(i);
                 }
             }
         }
@@ -103,6 +115,11 @@ namespace Purgatory.Game.Graphics
                 this.Zoom,
                 SpriteEffects.None,
                 0f);
+
+            for (int i = this.Embellishments.Count - 1; i >= 0; --i)
+            {
+                this.Embellishments[i].Draw(spriteBatch, point);
+            }
         }
 
         private Vector2 GetOrigin(bool fromTopLeft)

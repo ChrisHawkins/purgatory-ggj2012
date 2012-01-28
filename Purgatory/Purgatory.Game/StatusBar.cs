@@ -38,6 +38,8 @@ namespace Purgatory.Game
 
         public override void Draw(SpriteBatch batch)
         {
+            if (!this.Visible) return;
+
             if (this.RightToLeft)
             {
                 this.sprite.Draw(batch, new Vector2(batch.GraphicsDevice.Viewport.Width - Right - sprite.Width, 0f) + Position, true);

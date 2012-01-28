@@ -49,8 +49,10 @@ namespace Purgatory.Game
 
             this.timeBar = new StatusBar(
                 new Vector2(0f, 10f),
-                this.context.Time,
+                this.context.PurgatoryCountdown,
                 BigEvilStatic.Content.Load<Texture2D>("EnergyBar"));
+
+            this.timeBar.Visible = false;
 
             if (this.playerNumber == PlayerNumber.PlayerOne) this.timeBar.RightToLeft = true;
 
@@ -109,7 +111,10 @@ namespace Purgatory.Game
 
             this.healthBar.Value = this.context.GetPlayer(this.playerNumber).Health;
             this.energyBar.Value = this.context.GetPlayer(this.playerNumber).Energy;
-            this.timeBar.Value = this.context.Time;
+
+            this.timeBar.Value = this.context.PurgatoryCountdown;
+            this.timeBar.Visible = this.context.InPurgatory;
+
             this.hud.Update(time);
         }
     }

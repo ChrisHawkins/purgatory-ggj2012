@@ -1,15 +1,13 @@
 ﻿
 namespace Purgatory.Game
 {
+    using System;
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Audio;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
     using Purgatory.Game.Controls;
-    using System.Collections.Generic;
-    using Purgatory.Game.Physics;
-    using System;
     using Purgatory.Game.Graphics;
-    using Microsoft.Xna.Framework.Audio;
     using Purgatory.Game.PowerUps;
 
     public class GameContext
@@ -27,14 +25,17 @@ namespace Purgatory.Game
         private Random rng;
         private DualScreen ds;
         private Cue purgatoryMusic;
-        bool endFadingMusic = false;
-        private float purgatoryTimer = 0f;
+        private bool endFadingMusic = false;
+        private float purgatoryTimer;
 
+        public float PurgatoryCountdown
+        {
+            get { return PurgatoryTime - this.purgatoryTimer; }
+        }
 
         public GameContext(DualScreen ds, WinScreen winScreen)
         {
             this.ds = ds;
-            this.Time = 100;
 
             this.winScreen = winScreen;
             player1 = new Player(PlayerNumber.PlayerOne);
@@ -91,7 +92,7 @@ namespace Purgatory.Game
         public void UpdateGameLogic(GameTime gameTime)
         {
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            this.Time -= elapsedTime;
+
             this.timeSinceLastRandomDrop += elapsedTime;
 
             this.player1.SetBulletDirection(player2.Position);
@@ -214,6 +215,12 @@ namespace Purgatory.Game
             }
         }
 
-        public float Time { get; private set; }
+        public bool InPurgatory
+        {
+            get
+            {
+                return this.player1.Level is PurgatoryLevel || this.player2.Level is PurgatoryLevel;
+            }
+        }
     }
 }

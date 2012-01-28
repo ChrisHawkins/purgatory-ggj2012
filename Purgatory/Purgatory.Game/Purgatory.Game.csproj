@@ -98,6 +98,7 @@
     <Compile Include="Animation\SpriteEffect.cs" />
     <Compile Include="AudioManager.cs" />
     <Compile Include="Controls\XboxUtility.cs" />
+    <Compile Include="Graphics\Embellishment.cs" />
     <Compile Include="PowerUps\AmmoPickUp.cs" />
     <Compile Include="BigEvilStatic.cs" />
     <Compile Include="PowerUps\BouncePowerUp.cs" />
