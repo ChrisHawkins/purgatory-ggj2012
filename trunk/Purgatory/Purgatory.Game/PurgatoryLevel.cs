@@ -26,7 +26,7 @@ namespace Purgatory.Game
             wall = new Sprite(wallTex, TileWidth, TileWidth);
             wallTop = new Sprite(wallTopTex, TileWidth, TileWidth);
 
-            Texture2D backgroundTex = BigEvilStatic.Content.Load<Texture2D>("WhiteWall");
+            Texture2D backgroundTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "Ground");
             backgroundGround = new Sprite(backgroundTex, backgroundTex.Width, backgroundTex.Height);
 
             //Fill tile array from pixel data
