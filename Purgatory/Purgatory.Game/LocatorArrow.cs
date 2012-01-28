@@ -1,10 +1,10 @@
 ﻿
 namespace Purgatory.Game
 {
+    using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Purgatory.Game.Graphics;
-    using System;
 
     public class LocatorArrow
     {
