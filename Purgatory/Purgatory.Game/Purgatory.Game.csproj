@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation\PainEffect.cs" />
+    <Compile Include="Animation\PopInEffect.cs" />
     <Compile Include="Animation\SpriteEffect.cs" />
     <Compile Include="AudioManager.cs" />
     <Compile Include="Controls\XboxUtility.cs" />

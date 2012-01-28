@@ -16,6 +16,7 @@ namespace Purgatory.Game.Graphics
         public Color Tint { get; set; }
         public float Alpha { get; set; }
         public float Rotation { get; set; }
+        public float Zoom { get; set; }
         public LinkedList<SpriteEffect> Effects { get; private set; }
 
         public Texture2D Texture2D { get; private set; }
@@ -31,6 +32,7 @@ namespace Purgatory.Game.Graphics
             this.Width = width;
             this.Height = height;
             this.Tint = Color.White;
+            this.Zoom = 1.0f;
             this.Effects = new LinkedList<SpriteEffect>();
 
             this.Alpha = 1f;
@@ -106,7 +108,7 @@ namespace Purgatory.Game.Graphics
                 multipliedTint,
                 this.Rotation,
                 this.GetOrigin(fromTopLeft),
-                1.0f,
+                this.Zoom,
                 SpriteEffects.None,
                 0f);
         }

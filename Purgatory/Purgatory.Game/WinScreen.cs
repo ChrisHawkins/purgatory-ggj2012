@@ -44,7 +44,7 @@ namespace Purgatory.Game
             if (this.timer > 1.0f)
             {
                 kb = Keyboard.GetState();
-                if (kb.GetPressedKeys().Length > 0 || XboxUtility.ButtonDown(true))
+                if (kb.GetPressedKeys().Length > 0 || XboxUtility.ButtonPressed(true))
                 {
                     this.CloseUntil(typeof(MainMenu));
                     Cue buttonPress = AudioManager.Instance.LoadCue("Purgatory_ButtonPress");

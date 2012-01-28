@@ -1,15 +1,15 @@
 ﻿
 namespace Purgatory.Game
 {
+    using System;
+    using System.Collections.Generic;
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Audio;
     using Microsoft.Xna.Framework.Graphics;
+    using Purgatory.Game.Animation;
     using Purgatory.Game.Controls;
     using Purgatory.Game.Graphics;
     using Purgatory.Game.Physics;
-    using System.Collections.Generic;
-    using System;
-    using Microsoft.Xna.Framework.Audio;
-    using Purgatory.Game.Animation;
 
     public class Player : IMoveable
     {
@@ -21,7 +21,6 @@ namespace Purgatory.Game
         private const float MaxEnergyPerSecond = 10f;
         private const float EnergyPerShot = 1f;
         public float Speed { get; set; }
-        private float dashShadowInterval = 1f;
 
         private Vector2 direction;
         public Vector2 MovementDirection { get; set; }
@@ -158,6 +157,11 @@ namespace Purgatory.Game
 
             this.sprite.UpdateAnimation(gameTime);
             this.Level.CheckPickUpCollisions(this);
+
+            if (Microsoft.Xna.Framework.Input.Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.K))
+            {
+                this.sprite.AddEffect(new PopInEffect(1000f, 0.25f));
+            }
         }
 
         private void RegenEnergy(GameTime gameTime)
