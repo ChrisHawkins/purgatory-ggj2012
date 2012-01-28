@@ -159,12 +159,8 @@ namespace Purgatory.Game
                     this.player1.Level = purgatory;
                     this.purgatoryTimer = 0f;
                     AudioManager.Instance.CrossFade(ds.BackgroundMusic, this.purgatoryMusic, 1.5f, false);
-                    this.player1.Health = Player.MaxHealth;
-                    this.player1.Energy = 0;
-                    this.player1.BulletBounce = 0;
-                    this.player1.Speed = player1.Speed * 3.0f / 4.0f;
-                    this.player1.BulletList.Clear();
-                    this.player2.BulletList.Clear();
+                    this.player1.EnterPurgatory(PlayerNumber.PlayerOne);
+                    this.player2.EnterPurgatory(PlayerNumber.PlayerOne);
                     
                 }
             }
@@ -208,12 +204,8 @@ namespace Purgatory.Game
                     this.player2.Level = purgatory;
                     this.purgatoryTimer = 0f;
                     AudioManager.Instance.CrossFade(ds.BackgroundMusic, this.purgatoryMusic, 1.5f, false);
-                    this.player2.Health = Player.MaxHealth;
-                    this.player2.Energy = 0;
-                    this.player2.BulletBounce = 0;
-                    this.player2.Speed = player2.Speed * 3.0f / 4.0f;
-                    this.player1.BulletList.Clear();
-                    this.player2.BulletList.Clear();
+                    this.player1.EnterPurgatory(PlayerNumber.PlayerTwo);
+                    this.player2.EnterPurgatory(PlayerNumber.PlayerTwo);
                 }
             }
 

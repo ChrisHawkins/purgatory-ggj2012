@@ -24,7 +24,12 @@ using Purgatory.Game.Graphics;
             : base(device)
         {
             this.screens = new List<ScreenToDraw>();
+            
             this.menu = new Form(device);
+            Texture2D texture = BigEvilStatic.Content.Load<Texture2D>("PausedBox");
+            SpriteControl pausedBox = new SpriteControl(new Sprite(texture, texture.Width, texture.Height), new Vector2(device.Viewport.Width / 2, device.Viewport.Height / 2));
+            menu.Controls.Add(pausedBox);
+            
             this.BackgroundMusic = AudioManager.Instance.LoadCue("Purgatory_Gameplay_Joined");
             this.PurgatoryChaseMusic = AudioManager.Instance.LoadCue("Purgatory_PurgatoryChase");
             this.menu.Visible = false;
