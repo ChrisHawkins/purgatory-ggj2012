@@ -92,6 +92,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AmmoPickUp.cs" />
     <Compile Include="BigEvilStatic.cs" />
     <Compile Include="Bounds.cs" />
     <Compile Include="Bullet.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="GeometryUtility.cs" />
     <Compile Include="Graphics\DirectionalSprite.cs" />
     <Compile Include="Graphics\Sprite.cs" />
+    <Compile Include="PlayerPickUp.cs" />
     <Compile Include="LocatorArrow.cs" />
     <Compile Include="StatusBar.cs" />
     <Compile Include="Level.cs" />
