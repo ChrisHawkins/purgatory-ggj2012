@@ -290,7 +290,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = Sound::0e0cb248-a77c-442f-9ece-adeb2d6e28e1;
+            Name = Sound::6609c89a-5fe9-4a72-a09a-057a0188e369;
             Property = 0;
             Sound = 1;
             Line Color = 4286287161;
@@ -327,8 +327,8 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Bank Last Revised Low = 440643845;
-    Bank Last Revised High = 30203251;
+    Bank Last Revised Low = 2852045218;
+    Bank Last Revised High = 30203255;
 
     Wave
     {
@@ -626,6 +626,29 @@ Wave Bank
             File Type = 1;
             Last Modified Low = 4219921645;
             Last Modified High = 30203250;
+        }
+    }
+
+    Wave
+    {
+        Name = Purgatory_PickupItem;
+        File = SFX\Purgatory_PickupItem.wav;
+        Build Settings Last Modified Low = 2809052759;
+        Build Settings Last Modified High = 30203255;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 48000;
+            Bits Per Sample = 1;
+            Play Region Offset = 150;
+            Play Region Length = 51256;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2057969799;
+            Last Modified High = 30203255;
         }
     }
 }
@@ -1330,6 +1353,53 @@ Sound Bank
         }
     }
 
+    Sound
+    {
+        Name = Purgatory_PickupItem;
+        Volume = -440;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = SFX;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = Purgatory_PickupItem;
+                    Entry Index = 13;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
     Cue
     {
         Name = Purgatory_DeathDamageScream;
@@ -1585,6 +1655,26 @@ Sound Bank
         {
             Name = Purgatory_PlayerDash;
             Index = 12;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = Purgatory_PickupItem;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Purgatory_PickupItem;
+            Index = 13;
             Weight Min = 0;
             Weight Max = 255;
         }
