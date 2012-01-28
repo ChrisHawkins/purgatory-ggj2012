@@ -35,6 +35,8 @@ namespace Purgatory.Game
             this.purgatoryOverlay = new Sprite(BigEvilStatic.Content.Load<Texture2D>("WhiteOut"), 48, 48);
             this.purgatoryOverlay.Zoom = 100f;
             this.purgatoryOverlay.Alpha = 0f;
+
+            this.removedPickUps = new List<PlayerPickUp>();
         }
 
         public Level(string levelType) : this()
@@ -103,7 +105,6 @@ namespace Purgatory.Game
             //}
 
             pickUps = new List<PlayerPickUp>();
-            this.removedPickUps = new List<PlayerPickUp>();
         }
 
         internal void PlayPurgatoryAnimation()
