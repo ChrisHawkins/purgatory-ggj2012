@@ -5,7 +5,7 @@ namespace Purgatory.Game.Physics
 
     public interface IMoveable : IStatic
     {
-        Vector2 Position { get; set; }
+        Vector2 Position { get; }
         Vector2 LastPosition { get; }
     }
 }
