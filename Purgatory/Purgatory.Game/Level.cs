@@ -8,10 +8,11 @@ namespace Purgatory.Game
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Purgatory.Game.Graphics;
+    using Physics;
 
     public class Level
     {
-        public bool[][] WalkableTile;
+        public TileType[][] WalkableTile;
 
         private int HalfTilesWideOnScreen;
         private int HalfTilesLongOnScreen;
@@ -19,12 +20,11 @@ namespace Purgatory.Game
         public const int TileWidth = 32;
 
         private List<Rectangle> rectangles;
+        private Sprite wall, wallTop;
+        private Sprite backgroundGround;
         private List<PlayerPickUp> pickUps;
 
-        private Sprite whiteWall, blackWall;
-        private Sprite backgroundWall;
-
-        public Level(string levelTextureString)
+        public Level(string levelType)
         {
             // Temp list of rectangles to return
             rectangles = new List<Rectangle>();
@@ -34,36 +34,45 @@ namespace Purgatory.Game
             HalfTilesLongOnScreen = (int)Math.Ceiling((double)BigEvilStatic.Viewport.Height / 2 / TileWidth);
 
             // Load level texture;
-            Texture2D levelTexture = BigEvilStatic.Content.Load<Texture2D>(levelTextureString);
+            Texture2D levelTexture = BigEvilStatic.Content.Load<Texture2D>(levelType + "Maze00");
 
             //Debug textures
-            Texture2D whiteWallTex = BigEvilStatic.Content.Load<Texture2D>("WhiteWall");
-            Texture2D blackWallTex = BigEvilStatic.Content.Load<Texture2D>("BlackWall");
+            Texture2D wallTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "Wall");
+            Texture2D wallTopTex = BigEvilStatic.Content.Load<Texture2D>(levelType + "WallTop");
 
-            whiteWall = new Sprite(whiteWallTex, TileWidth, TileWidth);
-            blackWall = new Sprite(blackWallTex, TileWidth, TileWidth);
+            wall = new Sprite(wallTex, TileWidth, TileWidth);
+            wallTop = new Sprite(wallTopTex, TileWidth, TileWidth);
 
-            Texture2D backgroundTex = BigEvilStatic.Content.Load<Texture2D>("DeathGround");
-            backgroundWall = new Sprite(backgroundTex, backgroundTex.Width, backgroundTex.Height);
+            Texture2D backgroundTex = BigEvilStatic.Content.Load<Texture2D>("WhiteWall");
+            backgroundGround = new Sprite(backgroundTex, backgroundTex.Width, backgroundTex.Height);
 
             //Get pixel data as array
             Color[] pixelData = new Color[levelTexture.Width * levelTexture.Height];
             levelTexture.GetData<Color>(pixelData);
 
             //Fill tile array from pixel data
-            WalkableTile = new bool[levelTexture.Width][];
+            WalkableTile = new TileType[levelTexture.Width][];
             for (int i = 0; i < levelTexture.Height; ++i)
             {
-                WalkableTile[i] = new bool[levelTexture.Height];
+                WalkableTile[i] = new TileType[levelTexture.Height];
             }
 
             for (int i = 0; i < levelTexture.Height; ++i)
             {
                 for (int j = 0; j < levelTexture.Width; ++j)
                 {
-                    if (pixelData[i * levelTexture.Width + j] != Color.Black)
+                    Color pixelColor = pixelData[i * levelTexture.Width + j];
+                    if (pixelColor == Color.Black)
                     {
-                        WalkableTile[j][i] = true;
+                        WalkableTile[j][i] = TileType.Wall;
+                    }
+                    else if (pixelColor == Color.Red)
+                    {
+                        WalkableTile[j][i] = TileType.WallTop;
+                    }
+                    else
+                    {
+                        WalkableTile[j][i] = TileType.Ground;
                     }
                 }
             }
@@ -90,7 +99,7 @@ namespace Purgatory.Game
                 {
                     if (i >= 0 && i < WalkableTile.Length && j >= 0 && j < WalkableTile[i].Length)
                     {
-                        if (!WalkableTile[i][j])
+                        if (WalkableTile[i][j] != TileType.Ground)
                         {
                             rectangles.Add(new Rectangle(i * TileWidth - TileWidth / 2, j * TileWidth - TileWidth / 2, TileWidth, TileWidth));
                         }
@@ -156,21 +165,20 @@ namespace Purgatory.Game
             //    }
             //}
 
-            int top = (int)(bounds.Rectangle.Top - bounds.Camera.Y);
-            int bottom = (int)(bounds.Rectangle.Bottom - bounds.Camera.Y);
-            int left = (int)(bounds.Rectangle.Left - bounds.Camera.X);
-            int right = (int)(bounds.Rectangle.Right - bounds.Camera.X);
+            int left = -(int)bounds.Camera.X - bounds.Rectangle.Width / 2;
+            left = left - left.Mod(TileWidth);
+            int right = -(int)bounds.Camera.X + bounds.Rectangle.Width / 2;
+            right = right + right.Mod(TileWidth);
+            int top = -(int)bounds.Camera.Y - bounds.Rectangle.Height / 2;
+            top = top - top.Mod(TileWidth);
+            int bottom = -(int)bounds.Camera.Y + bounds.Rectangle.Height / 2;
+            bottom = bottom + bottom.Mod(TileWidth);
 
-            top = (int)(top / backgroundWall.Width) - 1;
-            bottom = (int)(bottom / backgroundWall.Height) + 1;
-            left = (int)(left / backgroundWall.Width) - 1;
-            right = (int)(right / backgroundWall.Width) + 1;
-
-            for (int i = left; i < right; ++i)
+            for (int i = left; i <= right; i += backgroundGround.Width)
             {
-                for (int j = top; j < bottom; ++j)
+                for (int j = top; j <= bottom; j += backgroundGround.Height)
                 {
-                    backgroundWall.Draw(batch, bounds.AdjustPoint(new Vector2(i * backgroundWall.Width, j * backgroundWall.Height)));
+                    backgroundGround.Draw(batch, bounds.AdjustPoint(new Vector2(i, j)));
                 }
             }
 
@@ -178,13 +186,13 @@ namespace Purgatory.Game
             {
                 for (int j = 0; j < WalkableTile[i].Length; ++j)
                 {
-                    if (WalkableTile[i][j])
+                    if (WalkableTile[i][j] == TileType.Wall)
                     {
-                        this.whiteWall.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
+                        this.wall.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                     }
-                    else
+                    else if (WalkableTile[i][j] == TileType.WallTop)
                     {
-                        //this.blackWall.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
+                        this.wallTop.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                     }
                 }
             }
