@@ -15,8 +15,10 @@ namespace Purgatory.Game
         private Form hud;
         private StatusBar healthBar;
         private StatusBar energyBar;
+        private LocatorArrow arrow;
 
-        public GameScreen(GraphicsDevice device, GameContext context, PlayerNumber playerNumber) : base(device)
+        public GameScreen(GraphicsDevice device, GameContext context, PlayerNumber playerNumber)
+            : base(device)
         {
             this.playerNumber = playerNumber;
             this.context = context;
@@ -44,6 +46,8 @@ namespace Purgatory.Game
                 this.context.GetPlayer(this.playerNumber).Energy,
                 BigEvilStatic.Content.Load<Texture2D>("EnergyBar"));
 
+            this.arrow = new LocatorArrow(BigEvilStatic.Content.Load<Texture2D>("Arrow"));
+
             this.hud.Controls.Add(this.healthBar);
             this.hud.Controls.Add(this.energyBar);
         }
@@ -67,6 +71,8 @@ namespace Purgatory.Game
             this.context.GetPlayer(PlayerNumber.PlayerOne).Draw(batch, bounds);
             this.context.GetPlayer(PlayerNumber.PlayerTwo).Draw(batch, bounds);
 
+            this.arrow.Draw(this.batch, this.context.GetPlayer(this.playerNumber).Position, bounds);
+
             this.batch.End();
 
             this.healthBar.Left = bounds.Rectangle.Left;
@@ -76,6 +82,18 @@ namespace Purgatory.Game
 
         public override void Update(GameTime time)
         {
+            Vector2 pos1 = this.context.GetPlayer(PlayerNumber.PlayerOne).Position;
+            Vector2 pos2 = this.context.GetPlayer(PlayerNumber.PlayerTwo).Position;
+
+            if (this.playerNumber == PlayerNumber.PlayerOne)
+            {
+                this.arrow.Locate(pos1, pos2);
+            }
+            else
+            {
+                this.arrow.Locate(pos2, pos1);
+            }
+
             this.healthBar.Value = this.context.GetPlayer(this.playerNumber).Health;
             this.energyBar.Value = this.context.GetPlayer(this.playerNumber).Energy;
             this.hud.Update(time);
