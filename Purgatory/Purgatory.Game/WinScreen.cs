@@ -2,10 +2,11 @@
 namespace Purgatory.Game
 {
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Audio;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     using Purgatory.Game.Graphics;
-    using Microsoft.Xna.Framework.Audio;
+    using Purgatory.Game.Controls;
 
     public class WinScreen: Screen
     {
@@ -43,7 +44,7 @@ namespace Purgatory.Game
             if (this.timer > 1.0f)
             {
                 kb = Keyboard.GetState();
-                if (kb.GetPressedKeys().Length > 0)
+                if (kb.GetPressedKeys().Length > 0 || XboxUtility.ButtonDown(true))
                 {
                     this.CloseUntil(typeof(MainMenu));
                     Cue buttonPress = AudioManager.Instance.LoadCue("Purgatory_ButtonPress");
