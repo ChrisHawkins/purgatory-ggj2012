@@ -438,6 +438,78 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="purgatoryGround.png">
+      <Name>purgatoryGround</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="purgatoryWall.png">
+      <Name>purgatoryWall</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="purgatoryWallBottom.png">
+      <Name>purgatoryWallBottom</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="purgatoryWallInsideBottomLeft.png">
+      <Name>purgatoryWallInsideBottomLeft</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="purgatoryWallInsideBottomRight.png">
+      <Name>purgatoryWallInsideBottomRight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="purgatoryWallInsideTopLeft.png">
+      <Name>purgatoryWallInsideTopLeft</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="purgatoryWallInsideTopRight.png">
+      <Name>purgatoryWallInsideTopRight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="purgatoryWallLeft.png">
+      <Name>purgatoryWallLeft</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="purgatoryWallOutsideBottomLeft.png">
+      <Name>purgatoryWallOutsideBottomLeft</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="purgatoryWallOutsideBottomRight.png">
+      <Name>purgatoryWallOutsideBottomRight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="purgatoryWallOutsideTopLeft.png">
+      <Name>purgatoryWallOutsideTopLeft</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="purgatoryWallOutsideTopRight.png">
+      <Name>purgatoryWallOutsideTopRight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="purgatoryWallRight.png">
+      <Name>purgatoryWallRight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="purgatoryWallTop.png">
+      <Name>purgatoryWallTop</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="PurgMapOverlay.png">
       <Name>PurgMapOverlay</Name>
       <Importer>TextureImporter</Importer>
