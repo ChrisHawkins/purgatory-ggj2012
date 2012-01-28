@@ -331,6 +331,20 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Shield.png">
+      <Name>Shield</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ShieldPickUp.png">
+      <Name>ShieldPickUp</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="deathWallInsideBottomLeft.png">
       <Name>deathWallInsideBottomLeft</Name>
       <Importer>TextureImporter</Importer>

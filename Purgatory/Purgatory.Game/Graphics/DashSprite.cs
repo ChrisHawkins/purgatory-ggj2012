@@ -27,7 +27,7 @@ namespace Purgatory.Game.Graphics
 
         public void update(GameTime time)
         {
-            this.sprite.Alpha -= 2.0f * (float)time.ElapsedGameTime.TotalSeconds;
+            this.sprite.Alpha -= 4.0f * (float)time.ElapsedGameTime.TotalSeconds;
         }
     }
 }
