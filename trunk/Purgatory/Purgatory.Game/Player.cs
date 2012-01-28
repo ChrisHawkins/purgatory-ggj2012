@@ -232,17 +232,21 @@ namespace Purgatory.Game
 
             if (Microsoft.Xna.Framework.Input.Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.K))
             {
-                this.ShieldHealth = 10;
+                //this.ShieldHealth = 10;
                 //this.sprite.AddEffect(new PopInEffect(1000f, 0.25f));
                 //this.sprite.AddEffect(new PurgatoryEffect());
                 //PlayPurgatoryAnimation();
                 //this.sprite.AddEffect(new PopInEffect(1000f, 0.25f, true));
+
+                this.sprite.AddEffect(new SpinEffect(1250f));
+                this.sprite.AddEffect(new PopInEffect(3000f, 0.2f, true));
             }
 
             List<Bullet> finallyDeleteAlltogether = new List<Bullet>();
 
             foreach (var bullet in this.dyingBullets)
             {
+                bullet.Sprite.UpdateAnimation(gameTime);
                 bullet.Sprite.UpdateEffects(gameTime);
 
                 if (bullet.Sprite.Effects.Count == 0)
@@ -346,7 +350,6 @@ namespace Purgatory.Game
                     if (float.IsInfinity(this.lastDashSprite.X))
                     {
                         this.lastDashSprite = this.position;
-
                     }
                     else
                     {
@@ -447,6 +450,9 @@ namespace Purgatory.Game
                         }
                         else if (Level is PurgatoryLevel)
                         {
+                            this.sprite.AddEffect(new SpinEffect(1250f));
+                            this.sprite.AddEffect(new PopInEffect(3000f, 0.2f, true));
+
                             AudioManager.Instance.PlayCue(ref this.DeathSFX, false);
                             Player.InputFrozen = true;
                         }
