@@ -28,6 +28,7 @@ using Purgatory.Game.Graphics;
 
         public void Update(GameTime time)
         {
+            sprite.UpdateAnimation(time);
             this.LastPosition = this.Position;
             this.Position += direction * speed * (float)time.ElapsedGameTime.TotalSeconds;
             this.CheckForCollisions();
