@@ -6,6 +6,7 @@ namespace Purgatory.Game
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Purgatory.Game.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
     public class Level
     {
@@ -21,11 +22,13 @@ namespace Purgatory.Game
         protected Sprite wall, wallTop, wallBottom, wallLeft, wallRight;
         protected Sprite backgroundGround;
         protected List<PlayerPickUp> pickUps;
+        private Cue pickupSFX; 
 
         protected Level() { }
 
         public Level(string levelType)
         {
+            this.pickupSFX = AudioManager.Instance.LoadCue("Purgatory_PickupItem");
             levelType = "life";
             // Temp list of rectangles to return
             rectangles = new List<Rectangle>();
@@ -169,6 +172,7 @@ namespace Purgatory.Game
                 if (pickUp.CollisionRectangle.Intersects(player.CollisionRectangle))
                 {
                     pickUp.PlayerEffect(player);
+                    AudioManager.Instance.PlayCue(ref this.pickupSFX, true);
                 }
                 else
                 {

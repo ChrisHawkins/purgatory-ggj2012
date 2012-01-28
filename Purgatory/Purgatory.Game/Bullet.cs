@@ -13,17 +13,23 @@ using Purgatory.Game.Graphics;
     public class Bullet : IMoveable
     {
         private Vector2 direction;
+        private int bounce;
         private float speed;
         private Sprite sprite;
         private Level level;
+        private List<float> xPenetrations;
+        private List<float> yPenetrations;
 
-        public Bullet(Vector2 position, Vector2 direction, float speed, Sprite sprite, Level level)
+        public Bullet(Vector2 position, Vector2 direction, int bounce, float speed, Sprite sprite, Level level)
         {
             this.Position = position;
             this.direction = direction;
+            this.bounce = bounce;
             this.speed = speed;
             this.sprite = sprite;
             this.level = level;
+            this.xPenetrations = new List<float>();
+            this.yPenetrations = new List<float>();
         }
 
         public void Update(GameTime time)
@@ -38,15 +44,35 @@ using Purgatory.Game.Graphics;
 
         private void CheckForCollisions()
         {
+            this.xPenetrations.Clear();
+            this.yPenetrations.Clear();
             List<Rectangle> possibleRectangles = level.GetPossibleRectangles(Position, LastPosition);
 
             foreach (Rectangle r in possibleRectangles)
             {
-                if (this.CollisionRectangle.Intersects(r))
+                Vector2 penetration = CollisionSolver.SolveCollision(this, r);
+                if (penetration.X != 0)
                 {
-                    this.RemoveFromList = true;
-                    return;
+                    this.xPenetrations.Add(penetration.X);
                 }
+                if (penetration.Y != 0)
+                {
+                    this.yPenetrations.Add(penetration.Y);
+                }
+            }
+
+            if (xPenetrations.Count != 0 || yPenetrations.Count != 0)
+            {
+                if (xPenetrations.Count >= yPenetrations.Count)
+                {
+                    this.direction.X -= xPenetrations[0];
+                }
+                if (yPenetrations.Count >= xPenetrations.Count)
+                {
+                    this.direction.Y -= yPenetrations[0];
+                }
+
+                this.bounce--;
             }
         }
 

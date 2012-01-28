@@ -75,23 +75,18 @@ namespace Purgatory.Game.Graphics
             {
                 return new Sprite(downSprite);
             }
-
-            if (direction.Y < 0)
+            else if (direction.Y < 0)
             {
                 return new Sprite(upSprite);
             }
-
-            if (direction.X > 0)
+            else if (direction.X > 0)
             {
                 return new Sprite(rightSprite);
             }
-
-            if (direction.X < 0)
+            else
             {
                 return new Sprite(leftSprite);
             }
-
-            return null;
         }
 
     }
