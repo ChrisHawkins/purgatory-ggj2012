@@ -203,11 +203,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="lifeWall.png">
-      <Name>lifeWall</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="lifeWallTop.png">
       <Name>lifeWallTop</Name>
       <Importer>TextureImporter</Importer>
@@ -278,6 +273,13 @@
   <ItemGroup>
     <Compile Include="lifeWallTopRight.png">
       <Name>lifeWallTopRight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="lifeWalls.png">
+      <Name>lifeWalls</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
