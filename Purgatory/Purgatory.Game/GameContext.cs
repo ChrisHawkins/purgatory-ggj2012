@@ -108,7 +108,7 @@ namespace Purgatory.Game
             if (timeSinceLastRandomDrop > 3)
             {
                 timeSinceLastRandomDrop -= 1;
-                int num = rng.Next(10);
+                int num = rng.Next(12);
 
                 if (num == 1)
                 {
@@ -119,6 +119,11 @@ namespace Purgatory.Game
                 {
                     player1Level.AddToPickups(new BouncePowerUp());
                     player2Level.AddToPickups(new BouncePowerUp());
+                }
+                else if (num == 3)
+                {
+                    player1Level.AddToPickups(new HealthPickUp());
+                    player2Level.AddToPickups(new HealthPickUp());
                 }
             }
 

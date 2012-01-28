@@ -161,7 +161,7 @@ namespace Purgatory.Game
             {
                 this.LastPosition = this.Position;
                 this.position += DashVelocity * (float)time.ElapsedGameTime.TotalSeconds;
-                this.DashVelocity -= 10 * this.DashVelocity * (float)time.ElapsedGameTime.TotalSeconds;
+                this.DashVelocity -= 30 * this.Speed * this.MovementDirection * (float)time.ElapsedGameTime.TotalSeconds;
 
                 if (DashVelocity.LengthSquared() <= Speed * Speed)
                 {
@@ -189,15 +189,24 @@ namespace Purgatory.Game
             }
             this.dashPath = tmp;
 
-            if (this.DashVelocity != Vector2.Zero)
-            {
+            if(this.DashVelocity != Vector2.Zero)
+            {   
                 float distanceCheck = 15;
-                if (Vector2.DistanceSquared(lastDashSprite, this.position) > distanceCheck * distanceCheck)
+                if(Vector2.DistanceSquared(lastDashSprite, this.position) > distanceCheck * distanceCheck)
                 {
-                    Vector2 posChange = (this.position - lastDashSprite);
-                    posChange.Normalize();
-                    lastDashSprite += posChange * distanceCheck;
-                    DashSprite dashSprite = new DashSprite(this.sprite.CreateSprite(this.MovementDirection), this.position);
+                    if (float.IsInfinity(this.lastDashSprite.X))
+                    {
+                        this.lastDashSprite = this.position;
+
+                    }
+                    else
+                    {
+                        Vector2 posChange = (this.position - lastDashSprite);
+                        posChange.Normalize();
+                        lastDashSprite += (posChange * distanceCheck);
+                    }
+
+                    DashSprite dashSprite = new DashSprite(this.sprite.CreateSprite(this.MovementDirection), lastDashSprite);
                     this.dashPath.Add(dashSprite);
                 }
             }
