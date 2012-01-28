@@ -366,7 +366,7 @@ namespace Purgatory.Game
             }
         }
 
-        public void AddToPickups(PlayerPickUp pickUp, bool safe4 = false)
+        public virtual void AddToPickups(PlayerPickUp pickUp, bool safe4)
         {
             if (this.pickUps.Count < Level.MaxPickups)
             {
@@ -377,13 +377,12 @@ namespace Purgatory.Game
             }
         }
 
-
         public void ClearPickups()
         {
             this.pickUps.Clear();
         }
 
-        public void AddToPickups(PlayerPickUp pickUp, Vector2 playerPosition, int minDistance, bool safe4 = false)
+        public virtual void AddToPickups(PlayerPickUp pickUp, Vector2 playerPosition, int minDistance, bool safe4)
         {
             if (this.pickUps.Count < Level.MaxPickups)
             {

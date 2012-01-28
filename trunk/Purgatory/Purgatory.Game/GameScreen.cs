@@ -53,7 +53,7 @@ namespace Purgatory.Game
 
             if (this.playerNumber == PlayerNumber.PlayerOne) this.timeBar.RightToLeft = true;
 
-            this.arrow = new LocatorArrow(BigEvilStatic.Content.Load<Texture2D>("Arrow"));
+            this.arrow = new LocatorArrow(BigEvilStatic.Content.Load<Texture2D>("ArrowRed"), BigEvilStatic.Content.Load<Texture2D>("ArrowGreen"));
 
             this.Hud.Controls.Add(this.healthBar);
             this.Hud.Controls.Add(this.energyBar);
@@ -97,7 +97,16 @@ namespace Purgatory.Game
             Vector2 pos1 = this.context.GetPlayer(PlayerNumber.PlayerOne).Position;
             Vector2 pos2 = this.context.GetPlayer(PlayerNumber.PlayerTwo).Position;
 
-            if (this.playerNumber == PlayerNumber.PlayerOne)
+            Player player = this.context.GetPlayer(this.playerNumber);
+
+            this.arrow.Purgatory = false;
+
+            if (player.Level is PurgatoryLevel)
+            {
+                this.arrow.Purgatory = true;
+                this.arrow.Locate(player.Position, (player.Level as PurgatoryLevel).Portal.Position);
+            }
+            else if (this.playerNumber == PlayerNumber.PlayerOne)
             {
                 this.arrow.Locate(pos1, pos2);
             }
