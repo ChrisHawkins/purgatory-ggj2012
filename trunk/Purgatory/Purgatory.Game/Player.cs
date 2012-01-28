@@ -22,6 +22,7 @@ namespace Purgatory.Game
         private DirectionalSprite sprite;
         private PlayerNumber playerNumber;
         private Vector2 bulletDirection;
+        
 
         private List<float> xPenetrations;
         private List<float> yPenetrations;
@@ -31,13 +32,15 @@ namespace Purgatory.Game
         private const float dashCooldownTime = 1;
         private float timeSinceLastDash = 0;
 
-        private Sprite[] dashPath;
+        private List<DashSprite> dashPath;
+        private Vector2 lastDashSprite;
 
         private Sprite bulletSprite;
 
         public int Health { get; set; }
         public int Energy { get; set; }
 
+        public int bulletBounce { get; set; }
         public List<Bullet> BulletList { get; private set; }
 
         private float shootCooldown;
@@ -52,6 +55,10 @@ namespace Purgatory.Game
 
         public Player(PlayerNumber playerNumber)
         {
+            this.bulletBounce = 1;
+            dashPath = new List<DashSprite>();
+            lastDashSprite = new Vector2(float.PositiveInfinity);
+            
             this.timeSinceLastDash = 100;
             this.speed = 350;
             this.playerNumber = playerNumber;
@@ -141,7 +148,7 @@ namespace Purgatory.Game
             if (this.controls.ShootControlPressed() && this.shootTimer > this.shootCooldown && Energy > 0)
             {
                 Vector2 bulletPos = this.Position;
-                Bullet b = new Bullet(bulletPos, this.bulletDirection, 500.0f, new Sprite(bulletSprite), this.Level);
+                Bullet b = new Bullet(bulletPos, this.bulletDirection, this.bulletBounce, 500.0f, new Sprite(bulletSprite), this.Level);
                 this.BulletList.Add(b);
                 --this.Energy;
                 this.shootTimer = 0.0f;
@@ -169,6 +176,11 @@ namespace Purgatory.Game
             foreach (var bullet in BulletList)
             {
                 bullet.Draw(batch, bounds);
+            }
+
+            foreach (var dash in dashPath)
+            {
+                dash.Draw(batch, bounds);
             }
         }
 
@@ -224,11 +236,34 @@ namespace Purgatory.Game
             }
             else
             {
+                this.lastDashSprite = new Vector2(float.PositiveInfinity);
                 this.LastPosition = this.Position;
                 this.position += movementDirection * speed * (float)time.ElapsedGameTime.TotalSeconds;
             }
 
             this.CheckForCollisions();
+
+            // Update dash path transparency.
+            List<DashSprite> tmp = new List<DashSprite>();
+            foreach(var dashSprite in this.dashPath)
+            {
+                dashSprite.update(time);
+                if (!dashSprite.RemoveFromList)
+                {
+                    tmp.Add(dashSprite);
+                }
+            }
+            this.dashPath = tmp;
+
+            if(this.DashVelocity != Vector2.Zero)
+            {   
+                if(Vector2.DistanceSquared(lastDashSprite, this.position) > 255)
+                {
+                    lastDashSprite = this.position;
+                    DashSprite dashSprite = new DashSprite(this.sprite.CreateSprite(this.movementDirection), this.position);
+                    this.dashPath.Add(dashSprite);
+                }
+            }
         }
 
         private void CheckForCollisions()
