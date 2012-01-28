@@ -15,6 +15,7 @@ namespace Purgatory.Game
     public class GameContext
     {
         private const int RandomChanceForEnergyDrop = 1000;
+        private const float PurgatoryTime = 20f;
 
         private float timeSinceLastRandomDrop;
         private Player player1;
@@ -27,6 +28,8 @@ namespace Purgatory.Game
         private DualScreen ds;
         private Cue purgatoryMusic;
         bool endFadingMusic = false;
+        private float purgatoryTimer = 0f;
+
 
         public GameContext(DualScreen ds, WinScreen winScreen)
         {
@@ -83,19 +86,18 @@ namespace Purgatory.Game
 
             this.player1.Initialize(playerOneControlScheme, new DirectionalSprite("life"), new Graphics.Sprite(lifeBulletTexture, lifeBulletTexture.Height, lifeBulletTexture.Height));
             this.player2.Initialize(playerTwoControlScheme, new DirectionalSprite("death"), new Graphics.Sprite(deathBulletTexture, deathBulletTexture.Height, deathBulletTexture.Height));
-
-
         }
 
-        public void UpdateGameLogic(GameTime time)
+        public void UpdateGameLogic(GameTime gameTime)
         {
-            this.Time -= (float)time.ElapsedGameTime.TotalSeconds;
-            this.timeSinceLastRandomDrop += (float)time.ElapsedGameTime.TotalSeconds;
+            float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            this.Time -= elapsedTime;
+            this.timeSinceLastRandomDrop += elapsedTime;
 
             this.player1.SetBulletDirection(player2.Position);
             this.player2.SetBulletDirection(player1.Position);
-            this.player1.Update(time);
-            this.player2.Update(time);
+            this.player1.Update(gameTime);
+            this.player2.Update(gameTime);
 
             if (!Player.InputFrozen)
             {
@@ -149,9 +151,22 @@ namespace Purgatory.Game
                 else
                 {
                     this.player1.Level = purgatory;
+                    this.purgatoryTimer = 0f;
                     AudioManager.Instance.CrossFade(ds.BackgroundMusic, this.purgatoryMusic, 1.5f, false);
                     this.player1.Health = 10;
-                    
+                }
+            }
+
+            // Check for purgatory and update the timer. Revive player if timer is up
+            if (this.player1.Level is PurgatoryLevel)
+            {
+                this.purgatoryTimer += elapsedTime;
+
+                if (purgatoryTimer >= GameContext.PurgatoryTime)
+                {
+                    this.player1.Level = this.player1Level;
+                    this.player1.Spawn();
+                    AudioManager.Instance.CrossFade(this.purgatoryMusic, this.ds.BackgroundMusic, 1.5f, true);
                 }
             }
             
@@ -177,8 +192,22 @@ namespace Purgatory.Game
                 else
                 {
                     this.player2.Level = purgatory;
+                    this.purgatoryTimer = 0f;
                     AudioManager.Instance.CrossFade(ds.BackgroundMusic, this.purgatoryMusic, 1.5f, false);
                     this.player2.Health = 10;
+                }
+            }
+
+            // Check for purgatory and update the timer. Revive player if timer is up
+            if (this.player2.Level is PurgatoryLevel)
+            {
+                this.purgatoryTimer += elapsedTime;
+
+                if (purgatoryTimer >= GameContext.PurgatoryTime)
+                {
+                    this.player2.Level = this.player2Level;
+                    this.player2.Spawn();
+                    AudioManager.Instance.CrossFade(this.purgatoryMusic, this.ds.BackgroundMusic, 1.5f, true);
                 }
             }
         }

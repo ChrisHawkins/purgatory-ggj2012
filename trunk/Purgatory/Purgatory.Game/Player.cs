@@ -13,6 +13,12 @@ namespace Purgatory.Game
     public class Player : IMoveable
     {
         public static bool InputFrozen = false;
+        public const int MaxHealth = 20;
+        public const float MaxEnergy = 10;
+        private const float EnergyRegenChargeTime = 3f;
+        private const float MinEnergyPerSecond = 2f;
+        private const float MaxEnergyPerSecond = 10f;
+        private const float EnergyPerShot = 1f;
         public float Speed { get; set; }
         private float dashShadowInterval = 1f;
 
@@ -21,9 +27,10 @@ namespace Purgatory.Game
         private DirectionalSprite sprite;
         private PlayerNumber playerNumber;
         public Vector2 BulletDirection { get; set; }
-
         private List<float> xPenetrations;
         private List<float> yPenetrations;
+        public float ShootCooldown { get; set; }
+        public float ShootTimer { get; set; }
 
         public Vector2 DashVelocity { get; set; }
 
@@ -37,7 +44,7 @@ namespace Purgatory.Game
         private IInputController inputController;
 
         public int Health { get; set; }
-        public int Energy { get; set; }
+        public float Energy { get; set; }
 
         public int BulletBounce { get; set; }
         public List<Bullet> BulletList { get; set; }
@@ -58,13 +65,15 @@ namespace Purgatory.Game
             this.TimeSinceLastDash = 100;
             this.Speed = 350;
             this.playerNumber = playerNumber;
-            this.Health = 20;
-            this.Energy = 100;
+            this.Health = Player.MaxHealth;
+            this.Energy = Player.MaxEnergy;
             this.BulletList = new List<Bullet>();
             this.direction = new Vector2(0, 1);
 
             this.xPenetrations = new List<float>();
             this.yPenetrations = new List<float>();
+
+            this.ShootCooldown = 0.2f;
 
             if (this.playerNumber == PlayerNumber.PlayerOne)
             {
@@ -88,8 +97,7 @@ namespace Purgatory.Game
             this.sprite = sprite;
             this.BulletSprite = bulletSprite;
             this.collisionRectangle = new Rectangle(0, 0, sprite.Width, sprite.Height);
-            
-            this.position = Level.FindSpawnPoint(true);
+            this.Spawn();
             
             //if (this.playerNumber == PlayerNumber.PlayerOne)
             //{
@@ -113,6 +121,14 @@ namespace Purgatory.Game
 
         private Vector2 position;
 
+        public void Spawn()
+        {
+            this.position = this.Level.FindSpawnPoint(true);
+            this.LastPosition = this.position;
+            this.Health = Player.MaxHealth;
+            this.Energy = Player.MaxEnergy;
+        }
+
         public void Update(GameTime gameTime)
         {
             if (!InputFrozen)
@@ -132,10 +148,32 @@ namespace Purgatory.Game
                 }
 
                 this.inputController.UpdateShoot(this, gameTime);
+                this.RegenEnergy(gameTime);
             }
 
             this.sprite.UpdateAnimation(gameTime);
             this.Level.CheckPickUpCollisions(this);
+        }
+
+        private void RegenEnergy(GameTime gameTime)
+        {
+            if (this.Energy < Player.MaxEnergy)
+            {
+                float regenRate;
+
+                if (this.ShootTimer <= this.ShootCooldown)
+                {
+                    regenRate = Player.MinEnergyPerSecond;
+                }
+                else
+                {
+                    float lerp = (ShootTimer - this.ShootCooldown) / Player.EnergyRegenChargeTime;
+                    regenRate = Player.MinEnergyPerSecond + lerp * (Player.MaxEnergyPerSecond - Player.MinEnergyPerSecond);
+                }
+                
+                this.Energy += regenRate * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                this.Energy = Math.Min(this.Energy, Player.MaxEnergy);
+            }
         }
 
         public void Draw(SpriteBatch batch, Bounds bounds)
@@ -153,15 +191,15 @@ namespace Purgatory.Game
             }
         }
 
-        private void UpdateMovement(GameTime time)
+        private void UpdateMovement(GameTime gameTime)
         {
-            this.inputController.UpdateMovement(this, time);
+            this.inputController.UpdateMovement(this, gameTime);
 
             if (this.DashVelocity != Vector2.Zero)
             {
                 this.LastPosition = this.Position;
-                this.position += DashVelocity * (float)time.ElapsedGameTime.TotalSeconds;
-                this.DashVelocity -= 30 * this.Speed * this.MovementDirection * (float)time.ElapsedGameTime.TotalSeconds;
+                this.position += DashVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                this.DashVelocity -= 30 * this.Speed * this.MovementDirection * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                 if (DashVelocity.LengthSquared() <= Speed * Speed)
                 {
@@ -172,7 +210,7 @@ namespace Purgatory.Game
             {
                 this.lastDashSprite = new Vector2(float.PositiveInfinity);
                 this.LastPosition = this.Position;
-                this.position += MovementDirection * Speed * (float)time.ElapsedGameTime.TotalSeconds;
+                this.position += MovementDirection * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
             this.CheckForCollisions();
@@ -181,7 +219,7 @@ namespace Purgatory.Game
             List<DashSprite> tmp = new List<DashSprite>();
             foreach (var dashSprite in this.dashPath)
             {
-                dashSprite.update(time);
+                dashSprite.update(gameTime);
                 if (!dashSprite.RemoveFromList)
                 {
                     tmp.Add(dashSprite);
