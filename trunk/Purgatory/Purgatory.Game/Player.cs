@@ -49,7 +49,7 @@ namespace Purgatory.Game
         private Vector2 lastDashSprite;
 
         public Sprite BulletSprite { get; set; }
-        private IInputController inputController;
+        private InputController inputController;
 
         public int Health { get; set; }
         public float Energy { get; set; }
@@ -126,7 +126,7 @@ namespace Purgatory.Game
             this.sprite.AddEmbellishment(this.shield);
         }
 
-        public void Initialize(IInputController controller, DirectionalSprite sprite, Sprite bulletSprite)
+        public void Initialize(InputController controller, DirectionalSprite sprite, Sprite bulletSprite)
         {
             this.inputController = controller;
             this.sprite = sprite;
@@ -198,7 +198,10 @@ namespace Purgatory.Game
                     this.direction = MovementDirection;
                     this.sprite.PlayAnimation = true;
 
-                    this.sprite.AddEffect(this.effect);
+                    if (this.Health > 0)
+                    {
+                        this.sprite.AddEffect(this.effect);
+                    }
                 }
                 else
                 {
