@@ -22,10 +22,10 @@ namespace Purgatory.Game.Graphics
 
         public void AddEffect(SpriteEffect effect)
         {
-            upSprite.Effects.AddLast(effect);
-            downSprite.Effects.AddLast(effect);
-            leftSprite.Effects.AddLast(effect);
-            rightSprite.Effects.AddLast(effect);
+            upSprite.Effects.Add(effect);
+            downSprite.Effects.Add(effect);
+            leftSprite.Effects.Add(effect);
+            rightSprite.Effects.Add(effect);
         }
 
         public void UpdateAnimation(GameTime time)
