@@ -5,20 +5,13 @@ namespace Purgatory.Game
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Purgatory.Game.Animation;
     using Purgatory.Game.Graphics;
     using Purgatory.Game.PowerUps;
 
     public class PurgatoryLevel : Level
     {
-        private Sprite purgatoryOverlay;
-
         public PurgatoryLevel(string levelType, TileType[][] maze1, TileType[][] maze2) : base()
         {
-            this.purgatoryOverlay = new Sprite(BigEvilStatic.Content.Load<Texture2D>("WhiteOut"), 48, 48);
-            this.purgatoryOverlay.Zoom = 100f;
-            this.purgatoryOverlay.Alpha = 0f;
-
             // Temp list of rectangles to return
             rectangles = new List<Rectangle>();
 
@@ -77,23 +70,6 @@ namespace Purgatory.Game
             //}
 
             pickUps = new List<PlayerPickUp>();
-        }
-
-        internal void PlayPurgatoryAnimation()
-        {
-            this.purgatoryOverlay.Effects.Add(new PurgatoryEffect());
-        }
-
-        public override void Draw(SpriteBatch batch, Bounds bounds)
-        {
-            base.Draw(batch, bounds);
-            this.purgatoryOverlay.Draw(batch, new Vector2(0f, 0f), false);
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-            this.purgatoryOverlay.UpdateEffects(gameTime);
         }
     }
 }

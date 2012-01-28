@@ -3,8 +3,8 @@ namespace Purgatory.Game.Graphics
 {
     using System;
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
     using Purgatory.Game.Animation;
-using Microsoft.Xna.Framework.Graphics;
 
     public class Embellishment
     {
@@ -14,11 +14,15 @@ using Microsoft.Xna.Framework.Graphics;
         public TimeSpan Lifespan { get; set; }
         public Sprite EmbellishmentSprite { get; set; }
         public Vector2 Offset { get; set; }
+        private bool destroyed;
 
         private TimeSpan lifeSoFar;
 
         public void Update(GameTime gameTime)
         {
+            this.EmbellishmentSprite.UpdateEffects(gameTime);
+            this.EmbellishmentSprite.UpdateAnimation(gameTime);
+
             lifeSoFar += gameTime.ElapsedGameTime;
 
             if (lifeSoFar < Entrance.Duration)
@@ -26,9 +30,9 @@ using Microsoft.Xna.Framework.Graphics;
                 this.Entrance.Update(EmbellishmentSprite, gameTime);
             }
 
-            if (Persists) return;
+            if (Persists & !destroyed) return;
 
-            if (lifeSoFar > Lifespan - Exit.Duration)
+            if (destroyed || (lifeSoFar > Lifespan - Exit.Duration))
             {
                 this.Exit.Update(EmbellishmentSprite, gameTime);
             }
@@ -41,7 +45,12 @@ using Microsoft.Xna.Framework.Graphics;
 
         public bool HasFinished()
         {
-            return this.lifeSoFar > this.Lifespan;
+            return !Persists && this.lifeSoFar > this.Lifespan;
+        }
+
+        public void Destroy()
+        {
+            this.destroyed = true;
         }
     }
 }

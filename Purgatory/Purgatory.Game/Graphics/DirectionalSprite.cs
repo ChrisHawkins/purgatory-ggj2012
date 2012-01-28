@@ -28,6 +28,14 @@ namespace Purgatory.Game.Graphics
             rightSprite.Effects.Add(effect);
         }
 
+        public void AddEmbellishment(Embellishment embellishment)
+        {
+            upSprite.Embellishments.Add(embellishment);
+            downSprite.Embellishments.Add(embellishment);
+            leftSprite.Embellishments.Add(embellishment);
+            rightSprite.Embellishments.Add(embellishment);
+        }
+
         public void UpdateAnimation(GameTime time)
         {
             upSprite.UpdateEffects(time);
@@ -101,6 +109,5 @@ namespace Purgatory.Game.Graphics
                 return new Sprite(leftSprite);
             }
         }
-
     }
 }
