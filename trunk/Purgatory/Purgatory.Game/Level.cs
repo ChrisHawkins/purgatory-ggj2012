@@ -343,45 +343,45 @@ namespace Purgatory.Game
             {
                 for (int j = 0; j < WalkableTile[i].Length; ++j)
                 {
-                    switch (WalkableTile[i][j])
+                    switch ((int)WalkableTile[i][j])
                     {
-                        case TileType.Wall:
+                        case (int)TileType.Wall:
                             this.wall.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                             break;
-                        case TileType.WallTop:
+                        case (int)TileType.WallTop:
                             this.wallTop.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                             break;
-                        case TileType.WallBottom:
+                        case (int)TileType.WallBottom:
                             this.wallBottom.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                             break;
-                        case TileType.WallLeft:
+                        case (int)TileType.WallLeft:
                             this.wallLeft.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                             break;
-                        case TileType.WallRight:
+                        case (int)TileType.WallRight:
                             this.wallRight.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                             break;
-                        case TileType.WallInsideTopLeft:
+                        case (int)TileType.WallInsideTopLeft:
                             this.wallInsideTopLeft.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                             break;
-                        case TileType.WallInsideTopRight:
+                        case (int)TileType.WallInsideTopRight:
                             this.wallInsideTopRight.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                             break;
-                        case TileType.WallInsideBottomLeft:
+                        case (int)TileType.WallInsideBottomLeft:
                             this.wallInsideBottomLeft.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                             break;
-                        case TileType.WallInsideBottomRight:
+                        case (int)TileType.WallInsideBottomRight:
                             this.wallInsideBottomRight.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                             break;
-                        case TileType.WallOutsideTopLeft:
+                        case (int)TileType.WallOutsideTopLeft:
                             this.wallOutsideTopLeft.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                             break;
-                        case TileType.WallOutsideTopRight:
+                        case (int)TileType.WallOutsideTopRight:
                             this.wallOutsideTopRight.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                             break;
-                        case TileType.WallOutsideBottomLeft:
+                        case (int)TileType.WallOutsideBottomLeft:
                             this.wallOutsideBottomLeft.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                             break;
-                        case TileType.WallOutsideBottomRight:
+                        case (int)TileType.WallOutsideBottomRight:
                             this.wallOutsideBottomRight.Draw(batch, bounds.AdjustPoint(new Vector2(i * TileWidth, j * TileWidth)));
                             break;
                     }
