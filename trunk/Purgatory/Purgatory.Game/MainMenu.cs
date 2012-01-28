@@ -52,8 +52,8 @@ namespace Purgatory.Game
                 DualScreen ds = new DualScreen(this.Device);
                 GameContext context = new GameContext(ds, winscreen);
 
-                //context.InitializePlayer(BigEvilStatic.CreateControlSchemeWASD(), BigEvilStatic.CreateControlSchemeArrows(), BigEvilStatic.Content);
-                context.InitializePlayer(BigEvilStatic.CreateControlXboxPlayerOne(), BigEvilStatic.CreateControlXboxPlayerTwo(), BigEvilStatic.Content);
+                context.InitializePlayer(BigEvilStatic.CreateControlSchemeWASD(), BigEvilStatic.CreateControlSchemeArrows(), BigEvilStatic.Content);
+                //context.InitializePlayer(BigEvilStatic.CreateControlXboxPlayerOne(), BigEvilStatic.CreateControlXboxPlayerTwo(), BigEvilStatic.Content);
 
                 ds.ContextUpdater = gt => context.UpdateGameLogic(gt);
                 ds.AddScreen(new GameScreen(this.Device, context, PlayerNumber.PlayerOne));
