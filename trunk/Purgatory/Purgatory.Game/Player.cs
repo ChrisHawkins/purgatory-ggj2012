@@ -14,6 +14,7 @@ namespace Purgatory.Game
     public class Player : IMoveable
     {
         public static bool InputFrozen = false;
+        private const int ShieldMaxHealth = 10;
         public const int MaxHealth = 20;
         public const float MaxEnergy = 10;
         private const float EnergyRegenChargeTime = 3f;
@@ -49,7 +50,7 @@ namespace Purgatory.Game
         public int BulletBounce { get; set; }
         
         public int ShieldHealth { get; set; }
-        private Sprite shieldSprite;
+        private Embellishment shield;
 
         public List<Bullet> BulletList { get; set; }
 
@@ -91,10 +92,24 @@ namespace Purgatory.Game
                 this.DamageSFX = AudioManager.Instance.LoadCue("Purgatory_DeathDamageScream");
                 this.DeathSFX = AudioManager.Instance.LoadCue("Purgatory_DeathDyingScream");
             }
-
-            String asset = this.playerNumber == PlayerNumber.PlayerOne ? "LifeShield" : "DeathShield";
-            this.shieldSprite = new Sprite(BigEvilStatic.Content.Load<Texture2D>(asset), 64, 64);
+            
             this.DashSFX = AudioManager.Instance.LoadCue("Purgatory_PlayerDash");
+        }
+
+        private void MakeShield()
+        {
+            string asset = this.playerNumber == PlayerNumber.PlayerOne ? "LifeShield" : "DeathShield";
+
+            this.shield = new Embellishment()
+            {
+                EmbellishmentSprite = new Sprite(BigEvilStatic.Content.Load<Texture2D>(asset), 64, 64),
+                Entrance = new PopInEffect(750f, 0.2f),
+                Exit = new PopInEffect(750f, 0.2f, true),
+                Persists = true
+            };
+
+            this.shield.EmbellishmentSprite.Effects.Add(new PulsateEffect(0.10f));
+            this.sprite.AddEmbellishment(this.shield);
         }
 
         public void Initialize(IInputController controller, DirectionalSprite sprite, Sprite bulletSprite)
@@ -163,12 +178,31 @@ namespace Purgatory.Game
                 this.RegenEnergy(gameTime);
             }
 
+            if (this.ShieldHealth > 0)
+            {
+                if (this.shield == null)
+                {
+                    this.MakeShield();
+                }
+
+                this.shield.EmbellishmentSprite.Alpha = (float)this.ShieldHealth / (float)ShieldMaxHealth;
+            }
+            else
+            {
+                if (this.shield != null)
+                {
+                    this.shield.Destroy();
+                    this.shield = null;
+                }
+            }
+
             this.sprite.UpdateAnimation(gameTime);
             this.Level.CheckPickUpCollisions(this);
 
             if (Microsoft.Xna.Framework.Input.Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.K))
             {
-                this.sprite.AddEffect(new PopInEffect(1000f, 0.25f));
+                this.ShieldHealth = 10;
+                //this.sprite.AddEffect(new PopInEffect(1000f, 0.25f));
                 //this.sprite.AddEffect(new PurgatoryEffect());
                 //PlayPurgatoryAnimation();
                 //this.sprite.AddEffect(new PopInEffect(1000f, 0.25f, true));
@@ -209,10 +243,6 @@ namespace Purgatory.Game
             {
                 dash.Draw(batch, bounds);
             }
-
-            this.shieldSprite.Alpha = MathHelper.Clamp(this.ShieldHealth, 0, 5 / 5);
-            this.shieldSprite.Draw(batch, bounds.AdjustPoint(this.position));
-
         }
 
         private void UpdateMovement(GameTime gameTime)

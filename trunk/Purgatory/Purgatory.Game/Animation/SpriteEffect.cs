@@ -9,6 +9,7 @@ namespace Purgatory.Game.Animation
     {
         public TimeSpan Duration { get; protected set; }
         protected TimeSpan TimeElapsed { get; private set; }
+        protected bool Permanent { get; set; }
 
         protected abstract void Update(Sprite sprite, float time);
 
@@ -20,7 +21,12 @@ namespace Purgatory.Game.Animation
 
         public bool HasFinished()
         {
-            return this.TimeElapsed > this.Duration;
+            return !Permanent && this.TimeElapsed > this.Duration;
+        }
+
+        protected void ResetTime()
+        {
+            this.TimeElapsed = TimeSpan.Zero;
         }
     }
 }

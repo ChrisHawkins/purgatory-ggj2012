@@ -8,11 +8,14 @@ namespace Purgatory.Game
     using Purgatory.Game.Graphics;
     using Microsoft.Xna.Framework.Audio;
     using Purgatory.Game.PowerUps;
+    using Purgatory.Game.Animation;
 
     public class Level
     {
         private static readonly Random rng = new Random();
         public TileType[][] WalkableTile;
+
+        private Sprite purgatoryOverlay;
 
         protected int HalfTilesWideOnScreen;
         protected int HalfTilesLongOnScreen;
@@ -33,6 +36,10 @@ namespace Purgatory.Game
             this.pickupSFX = AudioManager.Instance.LoadCue("Purgatory_PickupItem");
             // Temp list of rectangles to return
             rectangles = new List<Rectangle>();
+
+            this.purgatoryOverlay = new Sprite(BigEvilStatic.Content.Load<Texture2D>("WhiteOut"), 48, 48);
+            this.purgatoryOverlay.Zoom = 100f;
+            this.purgatoryOverlay.Alpha = 0f;
 
             // Set Tiles Wide
             HalfTilesWideOnScreen = (int)Math.Ceiling((double)BigEvilStatic.Viewport.Width / 4 / TileWidth);
@@ -93,6 +100,16 @@ namespace Purgatory.Game
             //}
 
             pickUps = new List<PlayerPickUp>();
+        }
+
+        internal void PlayPurgatoryAnimation()
+        {
+            this.purgatoryOverlay.Effects.Add(new PurgatoryEffect());
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            this.purgatoryOverlay.UpdateEffects(gameTime);
         }
 
         public bool ItemAtLocation(Vector2 location)
@@ -316,11 +333,7 @@ namespace Purgatory.Game
             }
         }
 
-        public virtual void Update(GameTime gameTime)
-        {
-        }
-
-        public virtual void Draw(SpriteBatch batch, Bounds bounds)
+        public void Draw(SpriteBatch batch, Bounds bounds)
         {
             int numAcross = bounds.Rectangle.Width / backgroundGround.Width + 3;
             int numUp = bounds.Rectangle.Height / backgroundGround.Height + 3;
@@ -393,6 +406,8 @@ namespace Purgatory.Game
             {
                 pickup.Draw(batch, bounds);
             }
+
+            this.purgatoryOverlay.Draw(batch, new Vector2(0f, 0f), false);
         }
     }
 }
