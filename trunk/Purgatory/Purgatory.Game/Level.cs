@@ -15,15 +15,17 @@ namespace Purgatory.Game
         private Random rng;
         public TileType[][] WalkableTile;
 
-        private int HalfTilesWideOnScreen;
-        private int HalfTilesLongOnScreen;
+        protected int HalfTilesWideOnScreen;
+        protected int HalfTilesLongOnScreen;
 
         public const int TileWidth = 32;
 
-        private List<Rectangle> rectangles;
-        private Sprite wall, wallTop;
-        private Sprite backgroundGround;
-        private List<PlayerPickUp> pickUps;
+        protected List<Rectangle> rectangles;
+        protected Sprite wall, wallTop;
+        protected Sprite backgroundGround;
+        protected List<PlayerPickUp> pickUps;
+
+        protected Level() { }
 
         public Level(string levelType)
         {
@@ -64,20 +66,34 @@ namespace Purgatory.Game
                 for (int j = 0; j < levelTexture.Width; ++j)
                 {
                     Color pixelColor = pixelData[i * levelTexture.Width + j];
-                    if (pixelColor == Color.Black)
-                    {
-                        WalkableTile[j][i] = TileType.Wall;
-                    }
-                    else if (pixelColor == Color.Red)
-                    {
-                        WalkableTile[j][i] = TileType.WallTop;
-                    }
-                    else
+                    if (pixelColor != Color.Black)
                     {
                         WalkableTile[j][i] = TileType.Ground;
                     }
+                    else
+                    {
+                        WalkableTile[j][i] = TileType.Wall;
+                    }
                 }
             }
+
+            //for (int i = 0; i < WalkableTile.Length; ++i)
+            //{
+            //    for (int j = 0; j < WalkableTile[i].Length; ++j)
+            //    {
+            //        if (WalkableTile[i][j] == TileType.Wall)
+            //        {
+            //            if (j + 1 < WalkableTile[i].Length && WalkableTile[i][j + 1] == TileType.Ground)
+            //            {
+            //                WalkableTile[i][j] = TileType.WallTop;
+            //            }
+            //            else if (j - 1 >= 0 && WalkableTile[i][j - 1] == TileType.Ground)
+            //            {
+            //                WalkableTile[i][j] = TileType.WallBottom;
+            //            }
+            //        }
+            //    }
+            //}
 
             pickUps = new List<PlayerPickUp>();
         }

@@ -10,5 +10,8 @@ namespace Purgatory.Game
         Ground,
         Wall,
         WallTop,
+        WallBottom,
+        WallLeft,
+        WallRight,
     }
 }

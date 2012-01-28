@@ -280,7 +280,7 @@ namespace Purgatory.Game
                     {
                         AudioManager.Instance.PlayCue(ref this.DamageSFX, false);
                     }
-                    else
+                    else if (Level is PurgatoryLevel)
                     {
                         AudioManager.Instance.PlayCue(ref this.DeathSFX, false);
                         Player.InputFrozen = true;

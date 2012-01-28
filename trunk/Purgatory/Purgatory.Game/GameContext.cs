@@ -19,6 +19,7 @@ namespace Purgatory.Game
         private WinScreen winScreen;
         private Level player1Level;
         private Level player2Level;
+        private PurgatoryLevel purgatory;
         private Random rng;
 
         public GameContext(WinScreen winScreen)
@@ -31,6 +32,7 @@ namespace Purgatory.Game
 
             this.player1Level = new Level("Life");
             this.player2Level = new Level("Death");
+            this.purgatory = new PurgatoryLevel("Death", this.player1Level.WalkableTile, this.player2Level.WalkableTile);
 
             player1.Level = player1Level;
             player2.Level = player2Level;
@@ -54,11 +56,11 @@ namespace Purgatory.Game
         {
             if (playerNumber == PlayerNumber.PlayerOne)
             {
-                return this.player1Level;
+                return this.player1.Level;
             }
             else if (playerNumber == PlayerNumber.PlayerTwo)
             {
-                return this.player2Level;
+                return this.player2.Level;
             }
             else
             {
@@ -101,21 +103,37 @@ namespace Purgatory.Game
 
             if (this.player1.Health < 1 && !this.player1.DeathSFX.IsPlaying)
             {
-                Player.InputFrozen = false;
-                winScreen.SetBackground(BigEvilStatic.CreateDeathWinBackground());
-                winScreen.WinMusic = AudioManager.Instance.LoadCue("Purgatory_DeathWins");
-                BigEvilStatic.ScreenManager.OpenScreen(winScreen);
-                AudioManager.Instance.PlayCue(ref winScreen.WinMusic, false);
+                if (this.player1.Level is PurgatoryLevel)
+                {
+                    Player.InputFrozen = false;
+                    winScreen.SetBackground(BigEvilStatic.CreateDeathWinBackground());
+                    winScreen.WinMusic = AudioManager.Instance.LoadCue("Purgatory_DeathWins");
+                    BigEvilStatic.ScreenManager.OpenScreen(winScreen);
+                    AudioManager.Instance.PlayCue(ref winScreen.WinMusic, false);
+                }
+                else
+                {
+                    this.player1.Level = purgatory;
+                    this.player1.Health = 10;
+                }
             }
             
             if (this.player2.Health < 1 && !this.player2.DeathSFX.IsPlaying)
             {
-                //player1 win code goes here
-                Player.InputFrozen = false;
-                winScreen.SetBackground(BigEvilStatic.CreateLifeWinBackground());
-                winScreen.WinMusic = AudioManager.Instance.LoadCue("Purgatory_LifeWins");
-                BigEvilStatic.ScreenManager.OpenScreen(winScreen);
-                AudioManager.Instance.PlayCue(ref winScreen.WinMusic, false);
+                if (this.player2.Level is PurgatoryLevel)
+                {
+                    //player1 win code goes here
+                    Player.InputFrozen = false;
+                    winScreen.SetBackground(BigEvilStatic.CreateLifeWinBackground());
+                    winScreen.WinMusic = AudioManager.Instance.LoadCue("Purgatory_LifeWins");
+                    BigEvilStatic.ScreenManager.OpenScreen(winScreen);
+                    AudioManager.Instance.PlayCue(ref winScreen.WinMusic, false);
+                }
+                else
+                {
+                    this.player2.Level = purgatory;
+                    this.player2.Health = 10;
+                }
             }
         }
 
