@@ -167,16 +167,17 @@ namespace Purgatory.Game
                 {
                     this.purgatory.PlayPurgatoryAnimation();
                     this.player1.Level = purgatory;
-                    purgatory.AddToPickups(new Portal(this.player1Level, this.purgatoryMusic, this.ds.BackgroundMusic), this.player1.Position, 40 * 32);
                     this.purgatoryTimer = 0f;
-                    //AudioManager.Instance.CrossFade(ds.BackgroundMusic, this.purgatoryMusic, 1.5f, false);
+                    Portal p = new Portal(this.player1Level);
+                    p.EscapedPurgatory += new EventHandler(this.CrossfadePurgatoryToGameplay);
+                    purgatory.AddToPickups(p, this.player1.Position, 50 * 32);
+                    this.purgatoryMusic = AudioManager.Instance.CrossFade(this.ds.BackgroundMusic, this.purgatoryMusic, 1.5f, false);
                     this.purgatoryVoice = AudioManager.Instance.LoadCue(this.purgatoryVoice.Name);
                     this.findPortalVoice = AudioManager.Instance.LoadCue(this.findPortalVoice.Name);
                     this.purgatoryVoice = AudioManager.Instance.EnqueueCue(this.purgatoryVoice);
                     this.findPortalVoice = AudioManager.Instance.EnqueueCue(this.findPortalVoice);
                     this.player1.EnterPurgatory(PlayerNumber.PlayerOne);
                     this.player2.EnterPurgatory(PlayerNumber.PlayerOne);
-                    
                 }
             }
 
@@ -214,9 +215,11 @@ namespace Purgatory.Game
                 {
                     this.purgatory.PlayPurgatoryAnimation();
                     this.player2.Level = purgatory;
-                    purgatory.AddToPickups(new Portal(this.player2Level, this.purgatoryMusic, this.ds.BackgroundMusic), this.player2.Position, 50 * 32);
                     this.purgatoryTimer = 0f;
-                    //AudioManager.Instance.CrossFade(ds.BackgroundMusic, this.purgatoryMusic, 1.5f, false);
+                    Portal p = new Portal(this.player2Level);
+                    p.EscapedPurgatory += new EventHandler(this.CrossfadePurgatoryToGameplay);
+                    purgatory.AddToPickups(p, this.player2.Position, 50 * 32);
+                    this.purgatoryMusic = AudioManager.Instance.CrossFade(this.ds.BackgroundMusic, this.purgatoryMusic, 1.5f, false);
                     this.purgatoryVoice = AudioManager.Instance.LoadCue(this.purgatoryVoice.Name);
                     this.findPortalVoice = AudioManager.Instance.LoadCue(this.findPortalVoice.Name);
                     this.purgatoryVoice = AudioManager.Instance.EnqueueCue(this.purgatoryVoice);
@@ -236,6 +239,11 @@ namespace Purgatory.Game
                     this.player2.Health = 0;
                 }
             }
+        }
+
+        public void CrossfadePurgatoryToGameplay(object sender, EventArgs e)
+        {
+            this.ds.BackgroundMusic = AudioManager.Instance.CrossFade(this.purgatoryMusic, this.ds.BackgroundMusic, 1.5f, true);
         }
 
         public bool InPurgatory

@@ -15,7 +15,7 @@ namespace Purgatory.Game
     {
         public static bool InputFrozen = false;
         private const int ShieldMaxHealth = 10;
-        public const int MaxHealth = 15;
+        public const int MaxHealth = 12;
         public const float MaxEnergy = 10;
         private const float EnergyRegenChargeTime = 3f;
         private const float MinEnergyPerSecond = 2f;
