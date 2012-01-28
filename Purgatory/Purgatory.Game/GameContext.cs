@@ -118,14 +118,15 @@ namespace Purgatory.Game
             
             if (timeSinceLastRandomDrop > 3)
             {
-                timeSinceLastRandomDrop -= 1;
+                timeSinceLastRandomDrop -= 3;
+
                 int num = rng.Next(100);
 
                 if (num < 15)
                 {
-                    if (player1Level.GetItemCount(typeof(BouncePowerUp)) < 4 && !(player1.Level is PurgatoryLevel))
+                    if (player1Level.GetItemCount(typeof(BouncePowerUp)) < 4 && player1.BulletBounce < Player.MaxBounce && !(player1.Level is PurgatoryLevel))
                         player1Level.AddToPickups(new BouncePowerUp());
-                    if (player2Level.GetItemCount(typeof(BouncePowerUp)) < 4 && !(player2.Level is PurgatoryLevel))
+                    if (player2Level.GetItemCount(typeof(BouncePowerUp)) < 4 && player2.BulletBounce < Player.MaxBounce && !(player2.Level is PurgatoryLevel))
                         player2Level.AddToPickups(new BouncePowerUp()); 
                 }
                 else if (num < 25)

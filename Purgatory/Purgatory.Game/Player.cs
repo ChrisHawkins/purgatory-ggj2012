@@ -14,13 +14,16 @@ namespace Purgatory.Game
     public class Player : IMoveable
     {
         public static bool InputFrozen = false;
-        private const int ShieldMaxHealth = 10;
+        private const int ShieldMaxHealth = 5;
         public const int MaxHealth = 12;
         public const float MaxEnergy = 10;
         private const float EnergyRegenChargeTime = 3f;
         private const float MinEnergyPerSecond = 2f;
         private const float MaxEnergyPerSecond = 10f;
         public const float MaxSpeed = 350;
+        public const float MaxBounce = 10;
+        public const float BulletSpeed = 600;
+
         private const float EnergyPerShot = 1f;
         public float Speed { get; set; }
 
@@ -74,7 +77,7 @@ namespace Purgatory.Game
             this.dyingBullets = new List<Bullet>();
 
             this.TimeSinceLastDash = 100;
-            this.Speed = 350;
+            this.Speed = Player.MaxSpeed;
             this.playerNumber = playerNumber;
             this.Health = Player.MaxHealth;
             this.Energy = Player.MaxEnergy;
@@ -177,7 +180,7 @@ namespace Purgatory.Game
         {
             this.Level.Update(gameTime);
 
-            this.BulletBounce = (int)MathHelper.Clamp(this.BulletBounce, 0, 5);
+            this.BulletBounce = (int)MathHelper.Clamp(this.BulletBounce, 0, Player.MaxBounce);
             this.Health = (int)MathHelper.Clamp(this.Health, 0, Player.MaxHealth);
 
             if (!InputFrozen)
