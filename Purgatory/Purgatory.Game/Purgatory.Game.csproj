@@ -98,8 +98,10 @@
     <Compile Include="PowerUps\BouncePowerUp.cs" />
     <Compile Include="Bounds.cs" />
     <Compile Include="Bullet.cs" />
+    <Compile Include="Controls\IInputController.cs" />
+    <Compile Include="Controls\KeyboardInputController.cs" />
     <Compile Include="Controls\KeyboardManager.cs" />
-    <Compile Include="Cu.cs" />
+    <Compile Include="Controls\XboxInputController.cs" />
     <Compile Include="DualScreen.cs" />
     <Compile Include="GameContext.cs" />
     <Compile Include="GameScreen.cs" />
