@@ -14,6 +14,7 @@ namespace Purgatory.Game.Graphics
         public TimeSpan Lifespan { get; set; }
         public Sprite EmbellishmentSprite { get; set; }
         public Vector2 Offset { get; set; }
+        public string Name { get; private set; }
         private bool destroyed;
 
         private TimeSpan lifeSoFar;
@@ -68,6 +69,7 @@ namespace Purgatory.Game.Graphics
                 Persists = true
             };
 
+            embellishment.Name = "Glow";
             embellishment.EmbellishmentSprite.Alpha = 0f;
 
             var pulsate = new PulsateEffect(500f, 0.1f, alpha);
