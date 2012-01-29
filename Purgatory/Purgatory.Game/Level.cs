@@ -15,7 +15,7 @@ namespace Purgatory.Game
         private static readonly Random rng = new Random();
         public TileType[][] WalkableTile;
 
-        private Sprite purgatoryOverlay;
+        protected Sprite purgatoryOverlay;
 
         protected int HalfTilesWideOnScreen;
         protected int HalfTilesLongOnScreen;
@@ -30,7 +30,7 @@ namespace Purgatory.Game
         protected Cue pickupSFX;
         private const int MaxPickups = 30;
 
-        private Sprite purgatoryText, findPortalText;
+        protected Sprite purgatoryText, findPortalText;
 
         protected Level()
         {
@@ -44,10 +44,13 @@ namespace Purgatory.Game
             Texture2D portalTextTex = BigEvilStatic.Content.Load<Texture2D>("findportal");
 
             purgatoryText = new Sprite(purgTextTex, purgTextTex.Width, purgTextTex.Height);
+            purgatoryText.Alpha = 0;
             findPortalText = new Sprite(portalTextTex, portalTextTex.Width, portalTextTex.Height);
+            findPortalText.Alpha = 0;
         }
 
-        public Level(string levelType) : this()
+        public Level(string levelType)
+            : this()
         {
             this.pickupSFX = AudioManager.Instance.LoadCue("Purgatory_PickupItem");
 
@@ -115,13 +118,15 @@ namespace Purgatory.Game
             pickUps = new List<PlayerPickUp>();
         }
 
-        internal void PlayPurgatoryAnimation()
+        internal virtual void PlayPurgatoryAnimation()
         {
             this.purgatoryOverlay.Effects.Add(new PurgatoryEffect());
         }
 
         public virtual void Update(GameTime gameTime)
         {
+            this.findPortalText.UpdateEffects(gameTime);
+            this.purgatoryText.UpdateEffects(gameTime);
             this.purgatoryOverlay.UpdateEffects(gameTime);
 
             foreach (var item in this.pickUps)
@@ -404,14 +409,14 @@ namespace Purgatory.Game
                 {
                     loc = FindSpawnPoint(safe4);
                 }
-                while(Vector2.DistanceSquared(loc, playerPosition) < minDistance * minDistance);
+                while (Vector2.DistanceSquared(loc, playerPosition) < minDistance * minDistance);
 
                 this.pickUps.Add(pickUp);
                 pickUp.SetPosition(loc);
                 this.AnimatePickUpIn(pickUp);
             }
         }
-        
+
         public virtual void Draw(SpriteBatch batch, Bounds bounds)
         {
             int numAcross = bounds.Rectangle.Width / backgroundGround.Width + 3;
@@ -434,7 +439,7 @@ namespace Purgatory.Game
 
             for (int i = xIndex - numberTilesAcross / 2; i <= xIndex + numberTilesAcross / 2; ++i)
             {
-                if(i >= 0 && i < WalkableTile.Length)
+                if (i >= 0 && i < WalkableTile.Length)
                 {
                     for (int j = yIndex - numberTilesUp / 2; j <= yIndex + numberTilesUp / 2; ++j)
                     {
@@ -498,11 +503,8 @@ namespace Purgatory.Game
             }
 
             this.purgatoryOverlay.Draw(batch, new Vector2(0f, 0f), false);
-            if (this.purgatoryOverlay.Alpha > 0)
-            {
-                findPortalText.Draw(batch, new Vector2(bounds.Rectangle.Width / 2, bounds.Rectangle.Height / 2 + 50));
-                purgatoryText.Draw(batch, new Vector2(bounds.Rectangle.Width / 2, bounds.Rectangle.Height / 2 - 50));
-            }
+            findPortalText.Draw(batch, new Vector2(bounds.Rectangle.X + bounds.Rectangle.Width / 2, bounds.Rectangle.Height / 2 + 50));
+            purgatoryText.Draw(batch, new Vector2(bounds.Rectangle.X + bounds.Rectangle.Width / 2, bounds.Rectangle.Height / 2 - 50));
         }
     }
 }
