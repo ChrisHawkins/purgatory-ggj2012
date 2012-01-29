@@ -9,6 +9,7 @@ namespace Purgatory.Game
     using Microsoft.Xna.Framework.Input;
     using Purgatory.Game.Graphics;
     using Purgatory.Game.UI;
+    using Purgatory.Game.Controls;
 
     public class DualScreen : Screen
     {
@@ -102,7 +103,8 @@ namespace Purgatory.Game
         {
             KeyboardState kb = Keyboard.GetState();
 
-            if (this.escapeWasPressed && !kb.IsKeyDown(Keys.Escape))
+            if (this.escapeWasPressed && !kb.IsKeyDown(Keys.Escape) ||
+                XboxUtility.StartPressed())
             {
                 if (this.menu.Visible)
                 {

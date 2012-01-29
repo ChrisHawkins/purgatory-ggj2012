@@ -6,6 +6,7 @@ namespace Purgatory.Game.Controls
     public static class XboxUtility
     {
         private static bool wasDownLastTime;
+        private static bool startWasDownLastTime;
 
         public static bool ButtonPressed(bool includeOtherPlayers = false)
         {
@@ -54,6 +55,28 @@ namespace Purgatory.Game.Controls
                 gs.IsButtonDown(Buttons.X) ||
                 gs.IsButtonDown(Buttons.Y) ||
                 gs.IsButtonDown(Buttons.BigButton);
+        }
+
+        public static bool StartPressed()
+        {
+            GamePadState gs = GamePad.GetState(Microsoft.Xna.Framework.PlayerIndex.One);
+            GamePadState gs2 = GamePad.GetState(Microsoft.Xna.Framework.PlayerIndex.Two);
+            GamePadState gs3 = GamePad.GetState(Microsoft.Xna.Framework.PlayerIndex.Three);
+            GamePadState gs4 = GamePad.GetState(Microsoft.Xna.Framework.PlayerIndex.Four);
+
+            bool isDown =
+                gs.IsButtonDown(Buttons.Start) ||
+                gs2.IsButtonDown(Buttons.Start) ||
+                gs3.IsButtonDown(Buttons.Start) ||
+                gs4.IsButtonDown(Buttons.Start);
+
+            if (!isDown && wasDownLastTime)
+            {
+                return true;
+            }
+
+            startWasDownLastTime = isDown;
+            return false;
         }
     }
 }
