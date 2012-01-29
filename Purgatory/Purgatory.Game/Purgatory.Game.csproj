@@ -105,6 +105,8 @@
     <Compile Include="AudioManager.cs" />
     <Compile Include="Controls\XboxUtility.cs" />
     <Compile Include="Graphics\Embellishment.cs" />
+    <Compile Include="Physics\CorrectionVector2.cs" />
+    <Compile Include="Physics\DirectionX.cs" />
     <Compile Include="PowerUps\AmmoPickUp.cs" />
     <Compile Include="BigEvilStatic.cs" />
     <Compile Include="PowerUps\BouncePowerUp.cs" />

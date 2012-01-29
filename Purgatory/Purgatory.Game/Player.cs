@@ -24,6 +24,7 @@ namespace Purgatory.Game
         public const float MaxSpeed = 350;
         public const int MaxBounce = 10;
         public const float BulletSpeed = 600;
+        private int deathNum;
 
         private const float EnergyPerShot = 1f;
         public float Speed { get; set; }
@@ -225,15 +226,16 @@ namespace Purgatory.Game
 
                 if (!(this.Level is PurgatoryLevel))
                 {
-                    if (this.TimeSinceSpiralBegan <= SpiralShotTime)
+                    if (this.TimeSinceSpiralBegan <= SpiralShotTime / 2)
                     {
                         this.Energy = 0;
                         if (this.ShootTimer > this.ShootCooldown)
                         {
-                            for (int i = 0; i < 5; ++i)
+                            int bulletNum = 4;
+                            for (int i = 0; i < bulletNum; ++i)
                             {
                                 Vector2 bulletPos = this.Position;
-                                Bullet b = new Bullet(bulletPos, Vector2.Normalize(new Vector2((float)Math.Cos(MathHelper.WrapAngle((MathHelper.TwoPi / 5) * (i + 1) + this.TimeSinceSpiralBegan * 2)), (float)Math.Sin(MathHelper.WrapAngle((MathHelper.TwoPi / 5) * (i + 1) + this.TimeSinceSpiralBegan * 2)))), this.BulletBounce, Player.BulletSpeed, new Sprite(this.BulletSprite), this.Level, this.NoClipTime < NoClipPowerUp.Duration);
+                                Bullet b = new Bullet(bulletPos, Vector2.Normalize(new Vector2((float)Math.Cos(MathHelper.WrapAngle((MathHelper.TwoPi / bulletNum) * (i + 1) + this.TimeSinceSpiralBegan * 2)), (float)Math.Sin(MathHelper.WrapAngle((MathHelper.TwoPi / bulletNum) * (i + 1) + this.TimeSinceSpiralBegan * 2)))), this.BulletBounce, Player.BulletSpeed, new Sprite(this.BulletSprite), this.Level, this.NoClipTime < NoClipPowerUp.Duration);
                                 this.BulletList.Add(b);
                                 this.ShootTimer = 0.0f;
                                 AudioManager.Instance.PlayCue(ref this.ShootSFX, true);
@@ -378,6 +380,7 @@ namespace Purgatory.Game
                 this.position += MovementDirection * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
+            this.deathNum = 0;
             this.CheckForCollisions();
 
             // Update dash path transparency.
@@ -414,6 +417,12 @@ namespace Purgatory.Game
 
         private void CheckForCollisions()
         {
+            this.deathNum++;
+            if (this.deathNum > 5)
+            {
+                return;
+            }
+
             if (this.Position != this.LastPosition)
             {
                 //Vector2 tempPosition = this.position;
@@ -446,11 +455,13 @@ namespace Purgatory.Game
                     {
                         this.xPenetrations.Sort();
                         this.position.X -= xPenetrations[0];
+                        CheckForCollisions();
                     }
-                    if (yPenetrations.Count >= xPenetrations.Count)
+                    else
                     {
                         this.yPenetrations.Sort();
                         this.position.Y -= yPenetrations[0];
+                        CheckForCollisions();
                     }
                 }
 

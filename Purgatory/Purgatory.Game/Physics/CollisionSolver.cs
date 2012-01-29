@@ -60,6 +60,56 @@ namespace Purgatory.Game.Physics
             return Vector2.Zero;
         }
 
+        public static CorrectionVector2 SolveCollisionOther(IMoveable moveableObject, Rectangle staticObject)
+        {
+            Rectangle rect1 = moveableObject.CollisionRectangle;
+
+            CorrectionVector2 penetration = new CorrectionVector2();
+            penetration.X = 0;
+            penetration.Y = 0;
+            penetration.DirectionX = DirectionX.None;
+            penetration.DirectionY = DirectionY.None;
+
+            if (rect1.Intersects(staticObject) || staticObject.Intersects(rect1))
+            {
+                Vector2 movement = moveableObject.Position - moveableObject.LastPosition;
+
+                float x1 = moveableObject.Position.X + rect1.Width / 2 - staticObject.Left;
+                float x2 = moveableObject.Position.X - rect1.Width / 2 - staticObject.Right;
+                float y1 = moveableObject.Position.Y - rect1.Height / 2 - staticObject.Bottom;
+                float y2 = moveableObject.Position.Y + rect1.Height / 2 - staticObject.Top;
+
+                penetration.Y = moveableObject.Position.Y - rect1.Height / 2 - staticObject.Bottom;
+
+                if (x1 < x2)
+                {
+                    penetration.X = x1;
+                    penetration.DirectionX = DirectionX.Left;
+                }
+                else if (x1 > x2)
+                {
+                    penetration.X = x2;
+                    penetration.DirectionX = DirectionX.Right;
+                }
+
+                // calculate displacement along Y-axis
+                if (y1 < y2)
+                {
+                    penetration.Y = y1;
+                    penetration.DirectionY = DirectionY.Up;
+                }
+                else if (y1 > y2)
+                {
+                    penetration.Y = y2;
+                    penetration.DirectionY = DirectionY.Down;
+                }
+
+                return penetration;
+            }
+
+            return penetration;
+        }
+
         public static Vector2 SolveCollision(IMoveable moveableObject, Rectangle staticObject)
         {
             Rectangle rect1 = moveableObject.CollisionRectangle;
