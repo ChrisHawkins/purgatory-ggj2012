@@ -41,7 +41,7 @@ namespace Purgatory.Game
         {
             timer += (float)time.ElapsedGameTime.TotalSeconds;
 
-            if (this.timer > 1.0f)
+            if (this.timer > 3.0f)
             {
                 kb = Keyboard.GetState();
                 if (kb.GetPressedKeys().Length > 0 || XboxUtility.ButtonPressed(true))
