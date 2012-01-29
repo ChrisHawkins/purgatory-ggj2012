@@ -57,14 +57,14 @@ namespace Purgatory.Game.Graphics
             this.destroyed = true;
         }
 
-        public static Embellishment MakeGlow(string sprite, float alpha)
+        public static Embellishment MakeGlow(string sprite, float alpha, bool fadeIn = true)
         {
             Texture2D texture = BigEvilStatic.Content.Load<Texture2D>(sprite + "Glow");
             
             Embellishment embellishment = new Embellishment()
             {
                 EmbellishmentSprite = new Sprite(texture, texture.Width, texture.Height),
-                Entrance = new FadeEffect(500f, false, alpha),
+                Entrance = fadeIn ? new FadeEffect(500f, false, alpha) : null,
                 Exit = new FadeEffect(500f, true, alpha),
                 Persists = true
             };
@@ -73,7 +73,7 @@ namespace Purgatory.Game.Graphics
             embellishment.EmbellishmentSprite.Alpha = 0f;
 
             var pulsate = new PulsateEffect(500f, 0.1f, alpha);
-            pulsate.DelayStart(500f);
+            if (fadeIn) pulsate.DelayStart(500f);
             embellishment.EmbellishmentSprite.Effects.Add(pulsate);
             return embellishment;
         }
