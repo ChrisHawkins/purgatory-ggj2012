@@ -21,6 +21,8 @@ namespace Purgatory.Game.Controls
 
         protected override Vector2 GetMovementDirection()
         {
+            this.controls.Update();
+
             Vector2 movementDirection = new Vector2();
 
             if (controls.UpControlPressed())
