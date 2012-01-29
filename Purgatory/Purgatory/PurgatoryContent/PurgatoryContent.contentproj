@@ -635,11 +635,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="deathLefGlowt.png">
-      <Name>deathLefGlowt</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="deathUpGlow.png">
       <Name>deathUpGlow</Name>
       <Importer>TextureImporter</Importer>
@@ -677,13 +672,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="deathRighGlowt.png">
-      <Name>deathRighGlowt</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="findportal.png">
       <Name>findportal</Name>
       <Importer>TextureImporter</Importer>
@@ -707,6 +695,18 @@
   <ItemGroup>
     <Compile Include="titleKeyboard.png">
       <Name>titleKeyboard</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="deathLeftGlow.png">
+      <Name>deathLeftGlow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="deathRightGlow.png">
+      <Name>deathRightGlow</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
