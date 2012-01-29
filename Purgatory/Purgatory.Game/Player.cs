@@ -276,7 +276,7 @@ namespace Purgatory.Game
 
             if (Microsoft.Xna.Framework.Input.Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.K))
             {
-                //this.Health -= 1;
+                this.Health -= 1;
                 //this.ShieldHealth = 10;
                 //this.sprite.AddEffect(new PopInEffect(1000f, 0.25f));
                 //this.sprite.AddEffect(new PurgatoryEffect());
