@@ -12,7 +12,6 @@ namespace Purgatory.Game
 
     public class GameContext
     {
-        private const int RandomChanceForEnergyDrop = 1000;
         private const float PurgatoryTime = 30f;
 
         private Player player1;
@@ -103,6 +102,7 @@ namespace Purgatory.Game
             }
         }
 
+
         public void InitializePlayer(InputController playerOneControlScheme, InputController playerTwoControlScheme, ContentManager Content)
         {
             Texture2D lifeBulletTexture = Content.Load<Texture2D>("halo");
@@ -132,8 +132,8 @@ namespace Purgatory.Game
             // Random item Drops
             this.timeSinceLastRandomDropPlayerOne += (float)gameTime.ElapsedGameTime.TotalSeconds;
             this.timeSinceLastRandomDropPlayerTwo += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            this.UpdateRandomDrops(PlayerNumber.PlayerOne, timeSinceLastRandomDropPlayerOne, 3.0f);
-            this.UpdateRandomDrops(PlayerNumber.PlayerTwo, timeSinceLastRandomDropPlayerTwo, 3.0f);
+            this.timeSinceLastRandomDropPlayerOne = this.UpdateRandomDrops(PlayerNumber.PlayerOne, this.timeSinceLastRandomDropPlayerOne, 2.0f);
+            this.timeSinceLastRandomDropPlayerTwo = this.UpdateRandomDrops(PlayerNumber.PlayerTwo, this.timeSinceLastRandomDropPlayerTwo, 2.0f);
                         
             if (this.player1.Health < 1)
             {
@@ -216,15 +216,15 @@ namespace Purgatory.Game
             }
         }
 
-        private void UpdateRandomDrops(PlayerNumber playerNumber, float timeSinceLastDrop, float timeBetweenDrops)
+        private float UpdateRandomDrops(PlayerNumber playerNumber, float timeSinceLastDrop, float timeBetweenDrops)
          {
             if (timeSinceLastDrop > timeBetweenDrops && !(player1.Level is PurgatoryLevel) && !(player2.Level is PurgatoryLevel))
             {
                 timeSinceLastDrop -= timeBetweenDrops;
 
-                int num = rng.Next(100);
+                int num = rng.Next(70);
                 int probability = 0;
-
+        
                 int chanceForHealthDrop = 10;
                 int maxHealthDrops = 3;
 
@@ -249,7 +249,7 @@ namespace Purgatory.Game
                 {
                     if (GetNormalLevel(playerNumber).GetItemCount(typeof(HealthPickUp)) < maxHealthDrops)
                         GetNormalLevel(playerNumber).AddToPickups(new HealthPickUp(), false);
-                    return;
+                    return timeSinceLastDrop - timeBetweenDrops;
                 }
 
                 probability += chanceForShieldDrop;
@@ -257,7 +257,7 @@ namespace Purgatory.Game
                 {
                     if (GetNormalLevel(playerNumber).GetItemCount(typeof(ShieldPowerUp)) < maxShieldDrops)
                         GetNormalLevel(playerNumber).AddToPickups(new ShieldPowerUp(), false);
-                    return;
+                    return timeSinceLastDrop - timeBetweenDrops;;
                 }
 
                 probability += chanceForSpiralDrop;
@@ -265,7 +265,7 @@ namespace Purgatory.Game
                 {
                     if (GetNormalLevel(playerNumber).GetItemCount(typeof(SpiralShot)) < maxSpiralDrops)
                         GetNormalLevel(playerNumber).AddToPickups(new SpiralShot(), false);
-                    return;
+                    return timeSinceLastDrop - timeBetweenDrops; ;
                 }
 
                 probability += chanceForNoClipDrop;
@@ -273,7 +273,7 @@ namespace Purgatory.Game
                 {
                     if (GetNormalLevel(playerNumber).GetItemCount(typeof(NoClipPowerUp)) < maxNoClipDrops)
                         GetNormalLevel(playerNumber).AddToPickups(new NoClipPowerUp(), false);
-                    return;
+                    return timeSinceLastDrop - timeBetweenDrops; ;
                 }
 
                 probability += chanceForBounceDrop;
@@ -281,9 +281,12 @@ namespace Purgatory.Game
                 {
                     if (GetNormalLevel(playerNumber).GetItemCount(typeof(BouncePowerUp)) < maxBounceDrops)
                         GetNormalLevel(playerNumber).AddToPickups(new BouncePowerUp(), false);
-                    return;
+                    return timeSinceLastDrop - timeBetweenDrops;
                 }
+
+                return timeSinceLastDrop - timeBetweenDrops;
             }
+            return timeSinceLastDrop;
         }
 
         public void CrossfadePurgatoryToGameplay(object sender, EventArgs e)
