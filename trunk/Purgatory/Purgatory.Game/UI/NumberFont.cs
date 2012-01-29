@@ -6,6 +6,8 @@ namespace Purgatory.Game.UI
 
     public static class NumberFont
     {
+        public const float Kerning = -9f;
+
         private static Texture2D[] font = new Texture2D[10];
 
         public static void LoadFont(string fontName)
@@ -18,18 +20,41 @@ namespace Purgatory.Game.UI
 
         public static void DrawNumber(SpriteBatch batch, Vector2 position, int number)
         {
+            if (number < 0f) return;
+
             int[] digits = ConvertToArrayOfDigits(number);
             Texture2D lastTexture = font[0];
 
             for (int i = 0; i < digits.Length; i++)
             {
-                var texture = font[digits[i]];
-                batch.Draw(texture, position + i * new Vector2(digits[i], 0f), Color.White);
+                int digit = digits[i];
+
+                var texture = font[digit];
+                batch.Draw(texture, position + i * new Vector2(lastTexture.Width + Kerning, 0f), Color.White);
                 lastTexture = texture;
             }
         }
 
-        public static int[] ConvertToArrayOfDigits(int number)
+        public static float CalculateWidth(int number)
+        {
+            if (number < 0f) return 0;
+
+            int[] digits = ConvertToArrayOfDigits(number);
+            Texture2D lastTexture = font[0];
+            float widthAccumulator = 0.0f;
+
+            for (int i = 0; i < digits.Length; i++)
+            {
+                int digit = digits[i];
+
+                var texture = font[digit];
+                widthAccumulator += texture.Width;
+            }
+
+            return widthAccumulator;
+        }
+
+        private static int[] ConvertToArrayOfDigits(int number)
         {
             int size = number.ToString().Length;
             int[] digits = new int[size];
