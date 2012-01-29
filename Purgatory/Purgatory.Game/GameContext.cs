@@ -226,10 +226,10 @@ namespace Purgatory.Game
                 int probability = 0;
         
                 int chanceForHealthDrop = 10;
-                int maxHealthDrops = 3;
+                int maxHealthDrops = 2;
 
                 int chanceForShieldDrop = 5;
-                int maxShieldDrops = 1;
+                int maxShieldDrops = 3;
 
                 int chanceForSpiralDrop = 5;
                 int maxSpiralDrops = 1;
