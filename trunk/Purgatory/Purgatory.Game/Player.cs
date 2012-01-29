@@ -22,7 +22,7 @@ namespace Purgatory.Game
         private const float MinEnergyPerSecond = 2f;
         private const float MaxEnergyPerSecond = 10f;
         public const float MaxSpeed = 350;
-        public const float MaxBounce = 10;
+        public const int MaxBounce = 10;
         public const float BulletSpeed = 600;
 
         private const float EnergyPerShot = 1f;
@@ -279,7 +279,7 @@ namespace Purgatory.Game
 
             if (Microsoft.Xna.Framework.Input.Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.K))
             {
-                this.Health -= 1;
+                //this.Health -= 1;
                 //this.ShieldHealth = 10;
                 //this.sprite.AddEffect(new PopInEffect(1000f, 0.25f));
                 //this.sprite.AddEffect(new PurgatoryEffect());

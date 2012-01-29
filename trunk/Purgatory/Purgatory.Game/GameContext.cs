@@ -15,9 +15,10 @@ namespace Purgatory.Game
         private const int RandomChanceForEnergyDrop = 1000;
         private const float PurgatoryTime = 30f;
 
-        private float timeSinceLastRandomDrop;
         private Player player1;
         private Player player2;
+        private float timeSinceLastRandomDropPlayerOne;
+        private float timeSinceLastRandomDropPlayerTwo;
         private WinScreen winScreen;
         private Level player1Level;
         private Level player2Level;
@@ -115,7 +116,7 @@ namespace Purgatory.Game
         {
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            this.timeSinceLastRandomDrop += elapsedTime;
+            
 
             this.player1.SetBulletDirection(player2.Position);
             this.player2.SetBulletDirection(player1.Position);
@@ -128,44 +129,12 @@ namespace Purgatory.Game
                 this.player2.CheckBulletCollisions(player1.BulletList);
             }
 
-            // Random Energy Drops
-            
-            if (timeSinceLastRandomDrop > 3 && !(player1.Level is PurgatoryLevel) && !(player2.Level is PurgatoryLevel))
-            {
-                timeSinceLastRandomDrop -= 3;
-
-                int num = rng.Next(100);
-
-                if (num < 15)
-                {
-                    if (player1Level.GetItemCount(typeof(BouncePowerUp)) < 4 && player1.BulletBounce < Player.MaxBounce)
-                        player1Level.AddToPickups(new BouncePowerUp(), false);
-                    if (player2Level.GetItemCount(typeof(BouncePowerUp)) < 4 && player2.BulletBounce < Player.MaxBounce)
-                        player2Level.AddToPickups(new BouncePowerUp(), false); 
-                }
-                else if (num < 25)
-                {
-                    if (player1Level.GetItemCount(typeof(HealthPickUp)) < 4 && player1.Health < Player.MaxHealth)
-                        player1Level.AddToPickups(new HealthPickUp(), false);
-                    if (player2Level.GetItemCount(typeof(HealthPickUp)) < 4 && player2.Health < Player.MaxHealth)
-                        player2Level.AddToPickups(new HealthPickUp(), false);
-                }
-                else if (num < 30)
-                {
-                    if (player1Level.GetItemCount(typeof(ShieldPowerUp)) < 1)
-                        this.player1Level.AddToPickups(new ShieldPowerUp(), false);
-                    if (player2Level.GetItemCount(typeof(ShieldPowerUp)) < 1)
-                        this.player2Level.AddToPickups(new ShieldPowerUp(), false);
-                }
-                else if (num < 35)
-                {
-                    if (player1Level.GetItemCount(typeof(SpiralShot)) < 1)
-                        this.player1Level.AddToPickups(new SpiralShot(),false);
-                    if (player2Level.GetItemCount(typeof(SpiralShot)) < 1)
-                        this.player2Level.AddToPickups(new SpiralShot(), false);
-                }
-            }
-
+            // Random item Drops
+            this.timeSinceLastRandomDropPlayerOne += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            this.timeSinceLastRandomDropPlayerTwo += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            this.UpdateRandomDrops(PlayerNumber.PlayerOne, timeSinceLastRandomDropPlayerOne, 3.0f);
+            this.UpdateRandomDrops(PlayerNumber.PlayerTwo, timeSinceLastRandomDropPlayerTwo, 3.0f);
+                        
             if (this.player1.Health < 1)
             {
                 if (this.player1.Level is PurgatoryLevel)
@@ -247,6 +216,76 @@ namespace Purgatory.Game
             }
         }
 
+        private void UpdateRandomDrops(PlayerNumber playerNumber, float timeSinceLastDrop, float timeBetweenDrops)
+         {
+            if (timeSinceLastDrop > timeBetweenDrops && !(player1.Level is PurgatoryLevel) && !(player2.Level is PurgatoryLevel))
+            {
+                timeSinceLastDrop -= timeBetweenDrops;
+
+                int num = rng.Next(100);
+                int probability = 0;
+
+                int chanceForHealthDrop = 10;
+                int maxHealthDrops = 3;
+
+                int chanceForShieldDrop = 5;
+                int maxShieldDrops = 1;
+
+                int chanceForSpiralDrop = 5;
+                int maxSpiralDrops = 1;
+
+                int chanceForNoClipDrop = 10;
+                int maxNoClipDrops = 3;
+
+                int chanceForBounceDrop;
+                if(playerNumber == PlayerNumber.PlayerOne)
+                    chanceForBounceDrop = Player.MaxBounce * 2 - (int)(player1.BulletBounce * 5.0f / 4.0f);
+                else
+                    chanceForBounceDrop = Player.MaxBounce * 2 - (int)(player2.BulletBounce * 5.0f / 4.0f);
+                int maxBounceDrops = 3;
+
+                probability += chanceForHealthDrop;
+                if (num < probability)
+                {
+                    if (GetNormalLevel(playerNumber).GetItemCount(typeof(HealthPickUp)) < maxHealthDrops)
+                        GetNormalLevel(playerNumber).AddToPickups(new HealthPickUp(), false);
+                    return;
+                }
+
+                probability += chanceForShieldDrop;
+                if (num < probability)
+                {
+                    if (GetNormalLevel(playerNumber).GetItemCount(typeof(ShieldPowerUp)) < maxShieldDrops)
+                        GetNormalLevel(playerNumber).AddToPickups(new ShieldPowerUp(), false);
+                    return;
+                }
+
+                probability += chanceForSpiralDrop;
+                if (num < probability)
+                {
+                    if (GetNormalLevel(playerNumber).GetItemCount(typeof(SpiralShot)) < maxSpiralDrops)
+                        GetNormalLevel(playerNumber).AddToPickups(new SpiralShot(), false);
+                    return;
+                }
+
+                probability += chanceForNoClipDrop;
+                if (num < probability)
+                {
+                    if (GetNormalLevel(playerNumber).GetItemCount(typeof(NoClipPowerUp)) < maxNoClipDrops)
+                        GetNormalLevel(playerNumber).AddToPickups(new NoClipPowerUp(), false);
+                    return;
+                }
+
+                probability += chanceForBounceDrop;
+                if (num < probability)
+                {
+                    if (GetNormalLevel(playerNumber).GetItemCount(typeof(BouncePowerUp)) < maxBounceDrops)
+                        GetNormalLevel(playerNumber).AddToPickups(new BouncePowerUp(), false);
+                    return;
+                }
+            }
+        }
+
         public void CrossfadePurgatoryToGameplay(object sender, EventArgs e)
         {
             this.ds.BackgroundMusic = AudioManager.Instance.CrossFade(this.purgatoryMusic, this.ds.BackgroundMusic, 1.5f, true);
@@ -274,5 +313,7 @@ namespace Purgatory.Game
             this.player1.EnterPurgatory(enteringPlayer, purgatory, p);
             this.player2.EnterPurgatory(enteringPlayer, purgatory, p);
         }
+
+      
     }
 }
