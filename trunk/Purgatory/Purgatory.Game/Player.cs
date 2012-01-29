@@ -499,17 +499,25 @@ namespace Purgatory.Game
                     if (this.ShieldHealth > 0)
                     {
                         this.ShieldHealth--;
-                        list[b].SwitchOwner(this);
 
-                        Vector2 displacement = this.position - list[b].Position;
-                        Vector2 normal = Vector2.Normalize(displacement);
-                        Vector2 projection = Vector2.Dot(list[b].Direction, normal) * normal;
-                        Vector2 rejection = direction - projection;
-                        list[b].Direction = Vector2.Normalize(rejection - projection);
+                        if (!(this.Level is PurgatoryLevel))
+                        {
+                            list[b].SwitchOwner(this);
 
-                        this.BulletList.Add(list[b]);
-                        list.RemoveAt(b);
-                        --b;
+                            Vector2 displacement = this.position - list[b].Position;
+                            Vector2 normal = Vector2.Normalize(displacement);
+                            Vector2 projection = Vector2.Dot(list[b].Direction, normal) * normal;
+                            Vector2 rejection = direction - projection;
+                            list[b].Direction = Vector2.Normalize(rejection - projection);
+
+                            this.BulletList.Add(list[b]);
+                            list.RemoveAt(b);
+                            --b;
+                        }
+                        else
+                        {
+                            list[b].RemoveFromList = true;
+                        }
                     }
                     else
                     {
