@@ -165,7 +165,7 @@ namespace Purgatory.Game
         {
             if (playerNumber == this.PlayerNumber)
             {
-                this.Speed = Player.MaxSpeed * 3 / 4;
+                this.Speed = Player.MaxSpeed * 1 / 2;
                 this.Health = Player.MaxHealth;
                 this.Energy = 0;
                 this.BulletBounce = 0;
