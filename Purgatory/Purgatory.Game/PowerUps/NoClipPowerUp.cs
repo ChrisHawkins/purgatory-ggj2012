@@ -7,7 +7,7 @@ namespace Purgatory.Game.PowerUps
     {
         public static readonly TimeSpan Duration = TimeSpan.FromSeconds(10);
 
-        public NoClipPowerUp() : base("NoClipPowerUp")
+        public NoClipPowerUp() : base("NoClipPickUp")
         {
         }
 

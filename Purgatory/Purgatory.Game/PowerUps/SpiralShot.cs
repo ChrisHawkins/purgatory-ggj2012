@@ -8,7 +8,7 @@ namespace Purgatory.Game.PowerUps
     public class SpiralShot : PlayerPickUp
     {
         public SpiralShot()
-            : base("EnergyPickUp")
+            : base("SpiralPickUp")
         {
         }
 
