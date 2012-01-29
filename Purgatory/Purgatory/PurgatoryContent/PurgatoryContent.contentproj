@@ -630,6 +630,60 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="deathDownGlow.png">
+      <Name>deathDownGlow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="deathLefGlowt.png">
+      <Name>deathLefGlowt</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="deathUpGlow.png">
+      <Name>deathUpGlow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="haloGlow.png">
+      <Name>haloGlow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="lifeDownGlow.png">
+      <Name>lifeDownGlow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="lifeLeftGlow.png">
+      <Name>lifeLeftGlow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="lifeRightGlow.png">
+      <Name>lifeRightGlow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="lifeUpGlow.png">
+      <Name>lifeUpGlow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="scytheGlow.png">
+      <Name>scytheGlow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="deathRighGlowt.png">
+      <Name>deathRighGlowt</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="findportal.png">
       <Name>findportal</Name>
       <Importer>TextureImporter</Importer>
