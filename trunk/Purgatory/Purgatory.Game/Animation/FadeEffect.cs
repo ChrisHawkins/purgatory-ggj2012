@@ -9,7 +9,7 @@ namespace Purgatory.Game.Animation
         private bool fadeOut;
         private float alpha;
 
-        public FadeEffect(float milliseconds, bool fadeOut, float targetAlpha)
+        public FadeEffect(float milliseconds, bool fadeOut, float targetAlpha = 1.0f)
         {
             this.Duration = TimeSpan.FromMilliseconds(milliseconds);
             this.fadeOut = fadeOut;
