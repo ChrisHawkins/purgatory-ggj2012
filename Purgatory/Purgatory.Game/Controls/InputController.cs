@@ -42,7 +42,7 @@ namespace Purgatory.Game.Controls
 
                 Bullet b = new Bullet(bulletPos, Vector2.Normalize(player.BulletDirection), player.BulletBounce, 500.0f, new Sprite(player.BulletSprite), player.Level, player.NoClipTime < NoClipPowerUp.Duration);
                 b.Sprite.Effects.Add(new SpinEffect(200));
-                b.Sprite.Embellishments.Add(Embellishment.MakeGlow(player.BulletSpriteName, (float)player.BulletBounce / (Player.MaxBounce / 2.0f)));
+                b.Sprite.Embellishments.Add(Embellishment.MakeGlow(player.BulletSpriteName, (float)player.BulletBounce / (Player.MaxBounce / 2.0f), false));
                 player.BulletList.Add(b);
                 --player.Energy;
                 player.ShootTimer = 0.0f;
