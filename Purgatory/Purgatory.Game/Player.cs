@@ -176,7 +176,7 @@ namespace Purgatory.Game
                 this.BulletBounce = 0;
                 this.Level = purgatory;
                 this.Level.ClearPickups();
-
+                this.ShieldHealth = 3;
                 this.Level.AddToPickups(portal, this.position, 50 * 32, true);
             }
             
