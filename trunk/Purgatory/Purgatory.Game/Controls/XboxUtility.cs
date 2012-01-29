@@ -70,7 +70,7 @@ namespace Purgatory.Game.Controls
                 gs3.IsButtonDown(Buttons.Start) ||
                 gs4.IsButtonDown(Buttons.Start);
 
-            if (isDown && !wasDownLastTime)
+            if (!isDown && startWasDownLastTime)
             {
                 return true;
             }
