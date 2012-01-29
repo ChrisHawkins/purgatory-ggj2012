@@ -264,6 +264,10 @@ namespace Purgatory.Game
                     }
                 }
             }
+            else
+            {
+                this.sprite.RemoveEffect(this.effect);
+            }
 
             if (this.ShieldHealth > 0)
             {
