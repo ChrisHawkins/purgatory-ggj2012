@@ -4,11 +4,11 @@ namespace Purgatory.Game
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Audio;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
+    using Purgatory.Game.Graphics;
     using Purgatory.Game.UI;
-    using Microsoft.Xna.Framework.Audio;
-using Purgatory.Game.Graphics;
 
     public class DualScreen : Screen
     {

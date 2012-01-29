@@ -2,6 +2,7 @@
 namespace Purgatory.Game.Graphics
 {
     using System;
+    using System.Linq;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Purgatory.Game.Animation;
@@ -40,17 +41,25 @@ namespace Purgatory.Game.Graphics
         {
             if (alpha == 0.0f)
             {
-                if (upSprite.Embellishments.Count > 0) upSprite.Embellishments[0].Destroy();
-                if (downSprite.Embellishments.Count > 0) downSprite.Embellishments[0].Destroy();
-                if (leftSprite.Embellishments.Count > 0) leftSprite.Embellishments[0].Destroy();
-                if (rightSprite.Embellishments.Count > 0) rightSprite.Embellishments[0].Destroy();
+                var upEmbellishments = upSprite.Embellishments.Where(x => x.Name == "Glow");
+                upEmbellishments.First().Destroy();
+
+                var downEmbellishments = downSprite.Embellishments.Where(x => x.Name == "Glow");
+                downEmbellishments.First().Destroy();
+
+                var leftEmbellishments = leftSprite.Embellishments.Where(x => x.Name == "Glow");
+                leftEmbellishments.First().Destroy();
+
+                var rightEmbellishments = rightSprite.Embellishments.Where(x => x.Name == "Glow");
+                rightEmbellishments.First().Destroy();
+
                 return;
             }
 
-            upSprite.Embellishments.Clear();
-            downSprite.Embellishments.Clear();
-            leftSprite.Embellishments.Clear();
-            rightSprite.Embellishments.Clear();
+            upSprite.Embellishments.RemoveAll(x => x.Name == "Glow");
+            downSprite.Embellishments.RemoveAll(x => x.Name == "Glow");
+            leftSprite.Embellishments.RemoveAll(x => x.Name == "Glow");
+            rightSprite.Embellishments.RemoveAll(x => x.Name == "Glow");
 
             upSprite.Embellishments.Add(Embellishment.MakeGlow(spriteName + "Up", alpha));
             downSprite.Embellishments.Add(Embellishment.MakeGlow(spriteName + "Down", alpha));
