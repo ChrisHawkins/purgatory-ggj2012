@@ -63,8 +63,8 @@ namespace Purgatory.Game.Graphics
             Embellishment embellishment = new Embellishment()
             {
                 EmbellishmentSprite = new Sprite(texture, texture.Width, texture.Height),
-                Entrance = new FadeEffect(500f, false),
-                Exit = new FadeEffect(500f, true),
+                Entrance = new FadeEffect(500f, false, alpha),
+                Exit = new FadeEffect(500f, true, alpha),
                 Persists = true
             };
 

@@ -51,6 +51,7 @@ namespace Purgatory.Game
         private Vector2 lastDashSprite;
 
         public Sprite BulletSprite { get; set; }
+        public string BulletSpriteName { get; private set; }
         private InputController inputController;
 
         public int Health { get; set; }
@@ -131,11 +132,15 @@ namespace Purgatory.Game
             this.sprite.AddEmbellishment(this.shield);
         }
 
-        public void Initialize(InputController controller, DirectionalSprite sprite, Sprite bulletSprite)
+        public void Initialize(InputController controller, DirectionalSprite sprite, string bulletSpriteName)
         {
             this.inputController = controller;
             this.sprite = sprite;
-            this.BulletSprite = bulletSprite;
+
+            Texture2D bulletTexture = BigEvilStatic.Content.Load<Texture2D>(bulletSpriteName);
+            this.BulletSprite = new Sprite(bulletTexture, bulletTexture.Width, bulletTexture.Height);
+            this.BulletSpriteName = bulletSpriteName;
+
             this.collisionRectangle = new Rectangle(0, 0, sprite.Width, sprite.Height);
             this.Spawn();
             
@@ -530,6 +535,11 @@ namespace Purgatory.Game
         {
             this.BulletDirection = targetPosition - this.Position;
             this.BulletDirection.Normalize();
+        }
+
+        internal void SetBounceGlow()
+        {
+            this.sprite.SetGlow(1.0f - (float)this.BulletBounce / (Player.MaxBounce / 2.0f));
         }
     }
 }
