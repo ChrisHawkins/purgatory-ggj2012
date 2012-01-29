@@ -85,6 +85,15 @@ namespace Purgatory.Game
             pickUps = new List<PlayerPickUp>();
         }
 
+        internal override void PlayPurgatoryAnimation()
+        {
+            base.PlayPurgatoryAnimation();
+            this.purgatoryText.Alpha = 1;
+            this.findPortalText.Alpha = 1;
+            this.purgatoryText.Effects.Add(new FadeEffect(5000, true, 1));
+            this.findPortalText.Effects.Add(new FadeEffect(5000, true, 1));
+        }
+
         public override void AddToPickups(PlayerPickUp pickUp, Vector2 playerPosition, int minDistance, bool safe4)
         {
             base.AddToPickups(pickUp, playerPosition, minDistance, safe4);
