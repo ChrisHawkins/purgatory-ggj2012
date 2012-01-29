@@ -72,6 +72,7 @@ namespace Purgatory.Game.Controls
 
             if (!isDown && startWasDownLastTime)
             {
+                startWasDownLastTime = isDown;
                 return true;
             }
 
