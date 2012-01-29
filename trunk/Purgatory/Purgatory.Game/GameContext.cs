@@ -237,11 +237,8 @@ namespace Purgatory.Game
                 int chanceForNoClipDrop = 10;
                 int maxNoClipDrops = 3;
 
-                int chanceForBounceDrop;
-                if(playerNumber == PlayerNumber.PlayerOne)
-                    chanceForBounceDrop = Player.MaxBounce * 2 - (int)(player1.BulletBounce * 5.0f / 4.0f);
-                else
-                    chanceForBounceDrop = Player.MaxBounce * 2 - (int)(player2.BulletBounce * 5.0f / 4.0f);
+                int chanceForBounceDrop = GetPlayer(playerNumber).BulletBounce < Player.MaxBounce ? Player.MaxBounce * 2 - (int)(GetPlayer(playerNumber).BulletBounce * 5.0f / 4.0f) : 0;
+                
                 int maxBounceDrops = 3;
 
                 probability += chanceForHealthDrop;
