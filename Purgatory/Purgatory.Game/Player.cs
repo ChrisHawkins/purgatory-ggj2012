@@ -399,6 +399,7 @@ namespace Purgatory.Game
             if(this.DashVelocity != Vector2.Zero)
             {   
                 float distanceCheck = 20;
+
                 if(Vector2.DistanceSquared(lastDashSprite, this.position) > distanceCheck * distanceCheck)
                 {
                     if (float.IsInfinity(this.lastDashSprite.X))
