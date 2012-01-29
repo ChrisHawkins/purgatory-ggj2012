@@ -38,9 +38,10 @@ namespace Purgatory.Game.Graphics
             }
         }
 
-        public void Draw(SpriteBatch batch, Vector2 parentPosition, float parentZoom)
+        public void Draw(SpriteBatch batch, Vector2 parentPosition, float parentZoom, float parentRotation)
         {
             this.EmbellishmentSprite.Zoom = parentZoom;
+            this.EmbellishmentSprite.Rotation = parentRotation;
             this.EmbellishmentSprite.Draw(batch, parentPosition + Offset);
         }
 

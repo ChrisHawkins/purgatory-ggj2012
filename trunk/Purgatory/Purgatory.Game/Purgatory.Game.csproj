@@ -92,6 +92,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Animation\Delay.cs" />
     <Compile Include="Animation\ExpandDeathEffect.cs" />
     <Compile Include="Animation\FadeEffect.cs" />
     <Compile Include="Animation\GrowShrinkEffect.cs" />

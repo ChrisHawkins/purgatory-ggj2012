@@ -8,13 +8,20 @@ namespace Purgatory.Game.Animation
     public class PulsateEffect : SpriteEffect
     {
         private float rangeFromMainOpacity;
+        private float mainAlpha;
 
-        public PulsateEffect(float milliseconds, float rangeFromMainOpacity)
+        public PulsateEffect(float milliseconds, float rangeFromMainOpacity, float mainAlpha = 1.0f)
         {
             this.Duration = TimeSpan.FromMilliseconds(milliseconds);
             this.Permanent = true;
 
             this.rangeFromMainOpacity = rangeFromMainOpacity;
+            this.mainAlpha = mainAlpha;
+        }
+
+        public void DelayStart(float milliseconds)
+        {
+            
         }
 
         protected override void Update(Sprite sprite, float time)
@@ -25,7 +32,7 @@ namespace Purgatory.Game.Animation
             time -= 0.5f;
             time *= 2.0f;
 
-            sprite.Alpha = MathHelper.Clamp(sprite.Alpha + rangeFromMainOpacity * time, 0f, 1f);
+            sprite.Alpha = MathHelper.Clamp(mainAlpha + rangeFromMainOpacity * time, 0f, 1f);
         }
     }
 }
