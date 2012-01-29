@@ -602,15 +602,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeathMazeTest.png">
-      <Name>DeathMazeTest</Name>
+    <Compile Include="Maze13.png">
+      <Name>Maze13</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LifeMazeTest.png">
-      <Name>LifeMazeTest</Name>
+    <Compile Include="Maze03.png">
+      <Name>Maze03</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
