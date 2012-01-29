@@ -242,7 +242,7 @@ namespace Purgatory.Game
                                 Vector2 bulletPos = this.Position;
                                 Bullet b = new Bullet(bulletPos, Vector2.Normalize(new Vector2((float)Math.Cos(MathHelper.WrapAngle((MathHelper.TwoPi / bulletNum) * (i + 1) + this.TimeSinceSpiralBegan * 2)), (float)Math.Sin(MathHelper.WrapAngle((MathHelper.TwoPi / bulletNum) * (i + 1) + this.TimeSinceSpiralBegan * 2)))), this.BulletBounce, Player.BulletSpeed, new Sprite(this.BulletSprite), this.Level, this.NoClipTime < NoClipPowerUp.Duration);
                                 b.Sprite.Effects.Add(new SpinEffect(200));
-                                b.Sprite.Embellishments.Add(Embellishment.MakeGlow(this.BulletSpriteName, (float)this.BulletBounce / (Player.MaxBounce / 2.0f)));
+                                b.Sprite.Embellishments.Add(Embellishment.MakeGlow(this.BulletSpriteName, (float)this.BulletBounce / (Player.MaxBounce / 2.0f), false));
                                 this.BulletList.Add(b);
                                 this.ShootTimer = 0.0f;
                                 AudioManager.Instance.PlayCue(ref this.ShootSFX, true);
