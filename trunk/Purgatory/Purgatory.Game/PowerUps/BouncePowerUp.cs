@@ -15,6 +15,7 @@ namespace Purgatory.Game.PowerUps
         public override void PlayerEffect(Player player)
         {
             player.BulletBounce++;
+            player.SetBounceGlow();
         }
     }
 }

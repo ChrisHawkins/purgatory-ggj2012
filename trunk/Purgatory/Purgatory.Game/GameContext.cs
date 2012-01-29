@@ -105,18 +105,13 @@ namespace Purgatory.Game
 
         public void InitializePlayer(InputController playerOneControlScheme, InputController playerTwoControlScheme, ContentManager Content)
         {
-            Texture2D lifeBulletTexture = Content.Load<Texture2D>("halo");
-            Texture2D deathBulletTexture = Content.Load<Texture2D>("scythe");
-
-            this.player1.Initialize(playerOneControlScheme, new DirectionalSprite("life"), new Graphics.Sprite(lifeBulletTexture, lifeBulletTexture.Height, lifeBulletTexture.Height));
-            this.player2.Initialize(playerTwoControlScheme, new DirectionalSprite("death"), new Graphics.Sprite(deathBulletTexture, deathBulletTexture.Height, deathBulletTexture.Height));
+            this.player1.Initialize(playerOneControlScheme, new DirectionalSprite("life"), "halo");
+            this.player2.Initialize(playerTwoControlScheme, new DirectionalSprite("death"), "scythe");
         }
 
         public void UpdateGameLogic(GameTime gameTime)
         {
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            
 
             this.player1.SetBulletDirection(player2.Position);
             this.player2.SetBulletDirection(player1.Position);
