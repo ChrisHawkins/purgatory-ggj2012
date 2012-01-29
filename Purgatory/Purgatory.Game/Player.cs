@@ -91,7 +91,7 @@ namespace Purgatory.Game
             this.Energy = Player.MaxEnergy;
             this.BulletList = new List<Bullet>();
             this.direction = new Vector2(0, 1);
-            this.effect = new GrowShrinkEffect(1000f, 0.02f);
+            this.effect = new GrowShrinkEffect(750f, 0.02f);
 
             this.xPenetrations = new List<float>();
             this.yPenetrations = new List<float>();
@@ -281,6 +281,9 @@ namespace Purgatory.Game
 
             if (Microsoft.Xna.Framework.Input.Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.K))
             {
+                this.sprite.SetGlow(1.0f);
+
+                //this.NoClipTime = TimeSpan.Zero;
                 //this.Health -= 1;
                 //this.ShieldHealth = 10;
                 //this.sprite.AddEffect(new PopInEffect(1000f, 0.25f));

@@ -1,0 +1,24 @@
+﻿
+namespace Purgatory.Game.Animation
+{
+    public class Delay
+    {
+        public float CurrentTime { get; private set; }
+        public float Duration { get; private set; }
+
+        public Delay(float delayInMilliseconds)
+        {
+            this.Duration = delayInMilliseconds;
+        }
+
+        public void Update(float millisecondsElapsed)
+        {
+            CurrentTime += millisecondsElapsed;
+        }
+
+        public bool Over()
+        {
+            return CurrentTime > Duration;
+        }
+    }
+}

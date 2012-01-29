@@ -127,7 +127,7 @@ namespace Purgatory.Game
             //this.timeBar.Visible = this.context.InPurgatory;
 
             this.clock.Value = (int)this.context.PurgatoryCountdown;
-            this.clock.Visible = this.context.InPurgatory;
+            this.clock.Visible = this.context.GetPlayer(this.playerNumber).Level is PurgatoryLevel;
 
             this.Hud.Update(time);
         }

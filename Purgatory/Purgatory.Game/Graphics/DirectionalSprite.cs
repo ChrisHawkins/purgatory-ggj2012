@@ -13,6 +13,8 @@ namespace Purgatory.Game.Graphics
         private Sprite leftSprite;
         private Sprite rightSprite;
 
+        private string spriteName;
+
         public bool PlayAnimation { get; set; }
 
         public int Width { get { return upSprite.Width; } }
@@ -34,6 +36,35 @@ namespace Purgatory.Game.Graphics
             rightSprite.Embellishments.Add(embellishment);
         }
 
+        public void SetGlow(float alpha)
+        {
+            upSprite.Embellishments.Clear();
+            downSprite.Embellishments.Clear();
+            leftSprite.Embellishments.Clear();
+            rightSprite.Embellishments.Clear();
+
+            upSprite.Embellishments.Add(this.GetGlow(spriteName + "Up", alpha));
+            downSprite.Embellishments.Add(this.GetGlow(spriteName + "Down", alpha));
+            leftSprite.Embellishments.Add(this.GetGlow(spriteName + "Left", alpha));
+            rightSprite.Embellishments.Add(this.GetGlow(spriteName + "Right", alpha));
+        }
+
+        private Embellishment GetGlow(string sprite, float alpha)
+        {
+            Texture2D texture = BigEvilStatic.Content.Load<Texture2D>(sprite + "Glow");
+            
+            Embellishment embellishment = new Embellishment()
+            {
+                EmbellishmentSprite = new Sprite(texture, texture.Width, texture.Height),
+                Entrance = new FadeEffect(500f, false),
+                Exit = new FadeEffect(500f, true),
+                Persists = true
+            };
+            
+            embellishment.EmbellishmentSprite.Effects.Add(new PulsateEffect(500f, 0.1f, alpha));
+            return embellishment;
+        }
+
         public void UpdateAnimation(GameTime time)
         {
             upSprite.UpdateEffects(time);
@@ -49,8 +80,10 @@ namespace Purgatory.Game.Graphics
                 rightSprite.UpdateAnimation(time);
             }
         }
-        public DirectionalSprite(String spriteName)
+
+        public DirectionalSprite(string spriteName)
         {
+            this.spriteName = spriteName;
             Texture2D upTexture = BigEvilStatic.Content.Load<Texture2D>(spriteName + "Up");
             Texture2D downTexture = BigEvilStatic.Content.Load<Texture2D>(spriteName + "Down");
             Texture2D leftTexture = BigEvilStatic.Content.Load<Texture2D>(spriteName + "Left");
