@@ -16,6 +16,7 @@ namespace Purgatory.Game.Controls
             {
                 if (wasDownLastTime)
                 {
+                    wasDownLastTime = ButtonDownInState(gs);
                     return !ButtonDownInState(gs);
                 }
 
@@ -29,6 +30,12 @@ namespace Purgatory.Game.Controls
 
                 if (wasDownLastTime)
                 {
+                    wasDownLastTime =
+                    ButtonDownInState(gs) ||
+                    ButtonDownInState(gs2) ||
+                    ButtonDownInState(gs3) ||
+                    ButtonDownInState(gs4);
+
                     return
                         !ButtonDownInState(gs) ||
                         !ButtonDownInState(gs2) ||
