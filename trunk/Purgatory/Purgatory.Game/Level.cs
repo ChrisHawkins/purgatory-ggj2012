@@ -30,6 +30,8 @@ namespace Purgatory.Game
         protected Cue pickupSFX;
         private const int MaxPickups = 30;
 
+        private Sprite purgatoryText, findPortalText;
+
         protected Level()
         {
             this.purgatoryOverlay = new Sprite(BigEvilStatic.Content.Load<Texture2D>("WhiteOut"), 48, 48);
@@ -37,6 +39,12 @@ namespace Purgatory.Game
             this.purgatoryOverlay.Alpha = 0f;
 
             this.removedPickUps = new List<PlayerPickUp>();
+
+            Texture2D purgTextTex = BigEvilStatic.Content.Load<Texture2D>("purgatory");
+            Texture2D portalTextTex = BigEvilStatic.Content.Load<Texture2D>("findportal");
+
+            purgatoryText = new Sprite(purgTextTex, purgTextTex.Width, purgTextTex.Height);
+            findPortalText = new Sprite(portalTextTex, portalTextTex.Width, portalTextTex.Height);
         }
 
         public Level(string levelType) : this()
@@ -490,6 +498,11 @@ namespace Purgatory.Game
             }
 
             this.purgatoryOverlay.Draw(batch, new Vector2(0f, 0f), false);
+            if (this.purgatoryOverlay.Alpha > 0)
+            {
+                findPortalText.Draw(batch, new Vector2(bounds.Rectangle.Width / 2, bounds.Rectangle.Height / 2 + 50));
+                purgatoryText.Draw(batch, new Vector2(bounds.Rectangle.Width / 2, bounds.Rectangle.Height / 2 - 50));
+            }
         }
     }
 }
