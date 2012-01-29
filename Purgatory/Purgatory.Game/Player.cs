@@ -539,7 +539,7 @@ namespace Purgatory.Game
 
         internal void SetBounceGlow()
         {
-            this.sprite.SetGlow(1.0f - (float)this.BulletBounce / (Player.MaxBounce / 2.0f));
+            this.sprite.SetGlow((float)this.BulletBounce / (Player.MaxBounce / 2.0f));
         }
     }
 }
