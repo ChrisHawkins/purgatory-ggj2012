@@ -14,7 +14,8 @@ namespace Purgatory.Game
 
         private StatusBar healthBar;
         private StatusBar energyBar;
-        private StatusBar timeBar;
+        //private StatusBar timeBar;
+        private Clock clock;
         private LocatorArrow arrow;
 
         public GameScreen(GraphicsDevice device, GameContext context, PlayerNumber playerNumber)
@@ -44,20 +45,23 @@ namespace Purgatory.Game
                 this.context.GetPlayer(this.playerNumber).Energy,
                 BigEvilStatic.Content.Load<Texture2D>("EnergyBar"));
 
-            this.timeBar = new StatusBar(
-                new Vector2(0f, 10f),
-                this.context.PurgatoryCountdown,
-                BigEvilStatic.Content.Load<Texture2D>("EnergyBar"));
+            //this.timeBar = new StatusBar(
+            //    new Vector2(0f, 10f),
+            //    this.context.PurgatoryCountdown,
+            //    BigEvilStatic.Content.Load<Texture2D>("EnergyBar"));
+            this.clock = new Clock();
 
-            this.timeBar.Visible = false;
+            //this.timeBar.Visible = false;
+            this.clock.Visible = false;
 
-            if (this.playerNumber == PlayerNumber.PlayerOne) this.timeBar.RightToLeft = true;
+            //if (this.playerNumber == PlayerNumber.PlayerOne) this.timeBar.RightToLeft = true;
 
             this.arrow = new LocatorArrow(BigEvilStatic.Content.Load<Texture2D>("ArrowRed"), BigEvilStatic.Content.Load<Texture2D>("ArrowGreen"));
 
             this.Hud.Controls.Add(this.healthBar);
             this.Hud.Controls.Add(this.energyBar);
-            this.Hud.Controls.Add(this.timeBar);
+            //this.Hud.Controls.Add(this.timeBar);
+            this.Hud.Controls.Add(this.clock);
         }
 
         public override void Draw(Bounds bounds)
@@ -86,8 +90,9 @@ namespace Purgatory.Game
             this.healthBar.Left = bounds.Rectangle.Left;
             this.energyBar.Left = bounds.Rectangle.Left;
 
-            this.timeBar.Left = bounds.Rectangle.Left;
-            this.timeBar.Right = bounds.Rectangle.Right;
+            this.clock.Position = new Vector2(bounds.Rectangle.Left + bounds.Rectangle.Width / 2f, 4f);
+            //this.timeBar.Left = bounds.Rectangle.Left;
+            //this.timeBar.Right = bounds.Rectangle.Right;
 
             this.Hud.Draw();
         }
@@ -118,8 +123,11 @@ namespace Purgatory.Game
             this.healthBar.Value = this.context.GetPlayer(this.playerNumber).Health;
             this.energyBar.Value = this.context.GetPlayer(this.playerNumber).Energy;
 
-            this.timeBar.Value = this.context.PurgatoryCountdown;
-            this.timeBar.Visible = this.context.InPurgatory;
+            //this.timeBar.Value = this.context.PurgatoryCountdown;
+            //this.timeBar.Visible = this.context.InPurgatory;
+
+            this.clock.Value = (int)this.context.PurgatoryCountdown;
+            this.clock.Visible = this.context.InPurgatory;
 
             this.Hud.Update(time);
         }
