@@ -132,8 +132,8 @@ namespace Purgatory.Game
             // Random item Drops
             this.timeSinceLastRandomDropPlayerOne += (float)gameTime.ElapsedGameTime.TotalSeconds;
             this.timeSinceLastRandomDropPlayerTwo += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            this.timeSinceLastRandomDropPlayerOne = this.UpdateRandomDrops(PlayerNumber.PlayerOne, this.timeSinceLastRandomDropPlayerOne, 2.0f);
-            this.timeSinceLastRandomDropPlayerTwo = this.UpdateRandomDrops(PlayerNumber.PlayerTwo, this.timeSinceLastRandomDropPlayerTwo, 2.0f);
+            this.timeSinceLastRandomDropPlayerOne = this.UpdateRandomDrops(PlayerNumber.PlayerOne, this.timeSinceLastRandomDropPlayerOne, 1.5f);
+            this.timeSinceLastRandomDropPlayerTwo = this.UpdateRandomDrops(PlayerNumber.PlayerTwo, this.timeSinceLastRandomDropPlayerTwo, 1.5f);
                         
             if (this.player1.Health < 1)
             {
