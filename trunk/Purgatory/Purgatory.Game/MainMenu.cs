@@ -12,7 +12,8 @@ namespace Purgatory.Game
     {
         private float timer;
         SpriteBatch batch;
-        Sprite background;
+        Sprite backgroundPC;
+        Sprite backgroundXBOX;
         bool MusicPlaying = false;
         private Cue menuMusic;
         private Cue buttonPress;
@@ -22,7 +23,8 @@ namespace Purgatory.Game
         public MainMenu(GraphicsDevice device)
             : base(device)
         {
-            background = new Sprite(BigEvilStatic.Content.Load<Texture2D>("title"), 1024, 768);
+            backgroundPC = new Sprite(BigEvilStatic.Content.Load<Texture2D>("titleKeyboard"), 1024, 768);
+            backgroundXBOX = new Sprite(BigEvilStatic.Content.Load<Texture2D>("titleXbox"), 1024, 768);
             batch = new SpriteBatch(device);
             this.winscreen = new WinScreen(device);
             menuMusic = AudioManager.Instance.LoadCue("Purgatory_MainMenu");
@@ -34,7 +36,14 @@ namespace Purgatory.Game
         {
             batch.Begin();
             this.Device.Clear(Color.Fuchsia);
-            background.Draw(batch, new Vector2(background.Width, background.Height) / 2.0f);
+            if (GamePad.GetState(PlayerIndex.One).IsConnected)
+            {
+                backgroundXBOX.Draw(batch, new Vector2(backgroundXBOX.Width, backgroundXBOX.Height) / 2.0f);
+            }
+            else
+            {
+                backgroundPC.Draw(batch, new Vector2(backgroundPC.Width, backgroundPC.Height) / 2.0f);
+            }
             batch.End();
         }
 
