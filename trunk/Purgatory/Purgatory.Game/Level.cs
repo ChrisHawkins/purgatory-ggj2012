@@ -152,7 +152,6 @@ namespace Purgatory.Game
             return false;
         }
 
-
         public int GetItemCount(Type item)
         {
             int count = 0;
@@ -373,8 +372,14 @@ namespace Purgatory.Game
                 Vector2 loc = FindSpawnPoint(safe4);
                 this.pickUps.Add(pickUp);
                 pickUp.SetPosition(loc);
-                pickUp.Sprite.Effects.Add(new PopInEffect(400f, 0.2f));
+                AnimatePickUpIn(pickUp);
             }
+        }
+
+        private void AnimatePickUpIn(PlayerPickUp pickUp)
+        {
+            pickUp.Sprite.Zoom = 0.0f;
+            pickUp.Sprite.Effects.Add(new PopInEffect(400f, 0.2f));
         }
 
         public void ClearPickups()
@@ -395,6 +400,7 @@ namespace Purgatory.Game
 
                 this.pickUps.Add(pickUp);
                 pickUp.SetPosition(loc);
+                this.AnimatePickUpIn(pickUp);
             }
         }
         
