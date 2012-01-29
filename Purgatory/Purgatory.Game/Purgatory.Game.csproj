@@ -100,6 +100,7 @@
     <Compile Include="Animation\PurgatoryEffect.cs" />
     <Compile Include="Animation\SpinEffect.cs" />
     <Compile Include="Animation\SpriteEffect.cs" />
+    <Compile Include="Animation\TemporarySpinEffect.cs" />
     <Compile Include="AudioManager.cs" />
     <Compile Include="Controls\XboxUtility.cs" />
     <Compile Include="Graphics\Embellishment.cs" />
