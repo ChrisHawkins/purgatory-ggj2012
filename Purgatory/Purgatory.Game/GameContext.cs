@@ -96,7 +96,7 @@ namespace Purgatory.Game
             {
                 return this.player1Level;
             }
-            else 
+            else
             {
                 return this.player2Level;
             }
@@ -125,11 +125,14 @@ namespace Purgatory.Game
             }
 
             // Random item Drops
-            this.timeSinceLastRandomDropPlayerOne += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            this.timeSinceLastRandomDropPlayerTwo += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            this.timeSinceLastRandomDropPlayerOne = this.UpdateRandomDrops(PlayerNumber.PlayerOne, this.timeSinceLastRandomDropPlayerOne, 1.5f);
-            this.timeSinceLastRandomDropPlayerTwo = this.UpdateRandomDrops(PlayerNumber.PlayerTwo, this.timeSinceLastRandomDropPlayerTwo, 1.5f);
-                        
+            if (!(player1.Level is PurgatoryLevel) && !(player2.Level is PurgatoryLevel))
+            {
+                this.timeSinceLastRandomDropPlayerOne += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                this.timeSinceLastRandomDropPlayerTwo += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                this.timeSinceLastRandomDropPlayerOne = this.UpdateRandomDrops(PlayerNumber.PlayerOne, this.timeSinceLastRandomDropPlayerOne, 1.5f);
+                this.timeSinceLastRandomDropPlayerTwo = this.UpdateRandomDrops(PlayerNumber.PlayerTwo, this.timeSinceLastRandomDropPlayerTwo, 1.5f);
+            }
+
             if (this.player1.Health < 1)
             {
                 if (this.player1.Level is PurgatoryLevel)
@@ -169,7 +172,7 @@ namespace Purgatory.Game
                     AudioManager.Instance.PlayCue(ref this.player1.DeathSFX, false);
                 }
             }
-            
+
             if (this.player2.Health < 1)
             {
                 if (this.player2.Level is PurgatoryLevel)
@@ -213,7 +216,7 @@ namespace Purgatory.Game
 
         private float UpdateRandomDrops(PlayerNumber playerNumber, float timeSinceLastDrop, float timeBetweenDrops)
          {
-            if (timeSinceLastDrop > timeBetweenDrops && !(player1.Level is PurgatoryLevel) && !(player2.Level is PurgatoryLevel))
+            if (timeSinceLastDrop > timeBetweenDrops)
             {
                 timeSinceLastDrop -= timeBetweenDrops;
 
@@ -309,6 +312,6 @@ namespace Purgatory.Game
             this.player2.EnterPurgatory(enteringPlayer, purgatory, p);
         }
 
-      
+
     }
 }
