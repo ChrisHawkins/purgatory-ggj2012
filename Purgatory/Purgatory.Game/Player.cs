@@ -31,7 +31,7 @@ namespace Purgatory.Game
         private Vector2 direction;
         public Vector2 MovementDirection { get; set; }
         private DirectionalSprite sprite;
-        private PlayerNumber playerNumber;
+        public PlayerNumber PlayerNumber { get; private set; }
         public Vector2 BulletDirection { get; set; }
         private List<float> xPenetrations;
         private List<float> yPenetrations;
@@ -85,7 +85,7 @@ namespace Purgatory.Game
 
             this.TimeSinceLastDash = 100;
             this.Speed = Player.MaxSpeed;
-            this.playerNumber = playerNumber;
+            this.PlayerNumber = playerNumber;
             this.Health = Player.MaxHealth;
             this.Energy = Player.MaxEnergy;
             this.BulletList = new List<Bullet>();
@@ -98,7 +98,7 @@ namespace Purgatory.Game
             this.ShootCooldown = 0.2f;
             this.NoClipTime = NoClipPowerUp.Duration;
              
-            if (this.playerNumber == PlayerNumber.PlayerOne)
+            if (this.PlayerNumber == PlayerNumber.PlayerOne)
             {
                 this.ShootSFX = AudioManager.Instance.LoadCue("Purgatory_HaloThrow");
                 this.DamageSFX = AudioManager.Instance.LoadCue("Purgatory_LifeDamageScream");
@@ -116,7 +116,7 @@ namespace Purgatory.Game
 
         private void MakeShield()
         {
-            string asset = this.playerNumber == PlayerNumber.PlayerOne ? "LifeShield" : "DeathShield";
+            string asset = this.PlayerNumber == PlayerNumber.PlayerOne ? "LifeShield" : "DeathShield";
 
             this.shield = new Embellishment()
             {
@@ -160,14 +160,18 @@ namespace Purgatory.Game
 
         private Vector2 position;
 
-        public void EnterPurgatory(PlayerNumber playerNumber)
+        public void EnterPurgatory(PlayerNumber playerNumber, Level purgatory, Portal portal)
         {
-            if (playerNumber == this.playerNumber)
+            if (playerNumber == this.PlayerNumber)
             {
                 this.Speed = Player.MaxSpeed * 3 / 4;
                 this.Health = Player.MaxHealth;
                 this.Energy = 0;
                 this.BulletBounce = 0;
+                this.Level = purgatory;
+                this.Level.ClearPickups();
+
+                this.Level.AddToPickups(portal, this.position, 50 * 32, true);
             }
             
             this.BulletList.Clear();
@@ -180,7 +184,6 @@ namespace Purgatory.Game
             this.Health = Player.MaxHealth;
             this.Energy = Player.MaxEnergy;
             this.Speed = Player.MaxSpeed;
-            this.Level.ClearPickups();
         }
 
         public void Update(GameTime gameTime)
