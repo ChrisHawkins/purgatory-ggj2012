@@ -38,35 +38,24 @@ namespace Purgatory.Game.Graphics
 
         public void SetGlow(float alpha)
         {
+            if (alpha == 0.0f)
+            {
+                if (upSprite.Embellishments.Count > 0) upSprite.Embellishments[0].Destroy();
+                if (downSprite.Embellishments.Count > 0) downSprite.Embellishments[0].Destroy();
+                if (leftSprite.Embellishments.Count > 0) leftSprite.Embellishments[0].Destroy();
+                if (rightSprite.Embellishments.Count > 0) rightSprite.Embellishments[0].Destroy();
+                return;
+            }
+
             upSprite.Embellishments.Clear();
             downSprite.Embellishments.Clear();
             leftSprite.Embellishments.Clear();
             rightSprite.Embellishments.Clear();
 
-            upSprite.Embellishments.Add(this.GetGlow(spriteName + "Up", alpha));
-            downSprite.Embellishments.Add(this.GetGlow(spriteName + "Down", alpha));
-            leftSprite.Embellishments.Add(this.GetGlow(spriteName + "Left", alpha));
-            rightSprite.Embellishments.Add(this.GetGlow(spriteName + "Right", alpha));
-        }
-
-        private Embellishment GetGlow(string sprite, float alpha)
-        {
-            Texture2D texture = BigEvilStatic.Content.Load<Texture2D>(sprite + "Glow");
-            
-            Embellishment embellishment = new Embellishment()
-            {
-                EmbellishmentSprite = new Sprite(texture, texture.Width, texture.Height),
-                Entrance = new FadeEffect(500f, false),
-                Exit = new FadeEffect(500f, true),
-                Persists = true
-            };
-
-            embellishment.EmbellishmentSprite.Alpha = 0f;
-
-            var pulsate = new PulsateEffect(500f, 0.1f, alpha);
-            pulsate.DelayStart(500f);
-            embellishment.EmbellishmentSprite.Effects.Add(pulsate);
-            return embellishment;
+            upSprite.Embellishments.Add(Embellishment.MakeGlow(spriteName + "Up", alpha));
+            downSprite.Embellishments.Add(Embellishment.MakeGlow(spriteName + "Down", alpha));
+            leftSprite.Embellishments.Add(Embellishment.MakeGlow(spriteName + "Left", alpha));
+            rightSprite.Embellishments.Add(Embellishment.MakeGlow(spriteName + "Right", alpha));
         }
 
         public void UpdateAnimation(GameTime time)
