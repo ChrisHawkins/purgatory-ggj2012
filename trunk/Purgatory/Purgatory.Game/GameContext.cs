@@ -223,10 +223,10 @@ namespace Purgatory.Game
                 int num = rng.Next(70);
                 int probability = 0;
         
-                int chanceForHealthDrop = 10;
+                int chanceForHealthDrop = 8;
                 int maxHealthDrops = 2;
 
-                int chanceForShieldDrop = 5;
+                int chanceForShieldDrop = 8;
                 int maxShieldDrops = 3;
 
                 int chanceForSpiralDrop = 5;
