@@ -7,14 +7,17 @@ namespace Purgatory.Game.Animation
 
     public class TemporarySpinEffect : SpriteEffect
     {
-        public TemporarySpinEffect(float milliseconds)
+        private float startRotation;
+
+        public TemporarySpinEffect(float milliseconds, float startRotation)
         {
             this.Duration = TimeSpan.FromMilliseconds(milliseconds);
+            this.startRotation = startRotation;
         }
 
         protected override void Update(Sprite sprite, float time)
         {
-            sprite.Rotation = MathHelper.WrapAngle(time * MathHelper.TwoPi);
+            sprite.Rotation = MathHelper.WrapAngle(startRotation + time * MathHelper.TwoPi);
         }
     }
 }
