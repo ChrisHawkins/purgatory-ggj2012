@@ -26,16 +26,22 @@ namespace Purgatory.Game.Graphics
 
             lifeSoFar += gameTime.ElapsedGameTime;
 
-            if (lifeSoFar < Entrance.Duration)
+            if (Entrance != null)
             {
-                this.Entrance.Update(EmbellishmentSprite, gameTime);
+                if (lifeSoFar < Entrance.Duration)
+                {
+                    this.Entrance.Update(EmbellishmentSprite, gameTime);
+                }
             }
 
             if (Persists & !destroyed) return;
 
-            if (destroyed || (lifeSoFar > Lifespan - Exit.Duration))
+            if (Exit != null)
             {
-                this.Exit.Update(EmbellishmentSprite, gameTime);
+                if (destroyed || (lifeSoFar > Lifespan - Exit.Duration))
+                {
+                    this.Exit.Update(EmbellishmentSprite, gameTime);
+                }
             }
         }
 
