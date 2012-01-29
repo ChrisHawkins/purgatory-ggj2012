@@ -9,23 +9,26 @@ namespace Purgatory.Game.PowerUps
 {
     public class Portal : PlayerPickUp
     {
-        public Level PlayerLevel;
+        public GameContext gameContext;
         public event EventHandler EscapedPurgatory;
 
-        public Portal(Level playerLevel)
+        public Portal(GameContext gameContext)
             : base("Portal")
         {
-            this.PlayerLevel = playerLevel;
+            this.gameContext = gameContext;
             this.Sprite.Effects.Add(new SpinEffect(1000f));
             this.Sprite.Effects.Add(new GrowShrinkEffect(1000f, 0.2f));
         }
 
         public override void PlayerEffect(Player player)
         {
-            player.Level = this.PlayerLevel;
-            PlayerLevel.PlayPurgatoryAnimation();
+            player.Level = this.gameContext.GetNormalLevel(player.PlayerNumber);
+            player.Level.PlayPurgatoryAnimation();
             player.Spawn();
             this.EscapedPurgatory(this, EventArgs.Empty);
+            this.Sprite.Effects.Clear();
+            this.Sprite.Effects.Add(new TemporarySpinEffect(1000f, this.Sprite.Rotation, 5));
+            this.Sprite.Effects.Add(new PopInEffect(500, 0.5f, true));
         }
     }
 }
