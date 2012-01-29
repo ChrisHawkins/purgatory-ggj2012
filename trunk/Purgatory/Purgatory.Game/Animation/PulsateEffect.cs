@@ -19,11 +19,6 @@ namespace Purgatory.Game.Animation
             this.mainAlpha = mainAlpha;
         }
 
-        public void DelayStart(float milliseconds)
-        {
-            
-        }
-
         protected override void Update(Sprite sprite, float time)
         {
             if (time > 2.0f) this.ResetTime();

@@ -60,8 +60,12 @@ namespace Purgatory.Game.Graphics
                 Exit = new FadeEffect(500f, true),
                 Persists = true
             };
-            
-            embellishment.EmbellishmentSprite.Effects.Add(new PulsateEffect(500f, 0.1f, alpha));
+
+            embellishment.EmbellishmentSprite.Alpha = 0f;
+
+            var pulsate = new PulsateEffect(500f, 0.1f, alpha);
+            pulsate.DelayStart(500f);
+            embellishment.EmbellishmentSprite.Effects.Add(pulsate);
             return embellishment;
         }
 

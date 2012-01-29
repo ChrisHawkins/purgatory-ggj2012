@@ -13,7 +13,7 @@ namespace Purgatory.Game.Animation
 
         public void Update(float millisecondsElapsed)
         {
-            CurrentTime += millisecondsElapsed;
+            this.CurrentTime += millisecondsElapsed;
         }
 
         public bool Over()
