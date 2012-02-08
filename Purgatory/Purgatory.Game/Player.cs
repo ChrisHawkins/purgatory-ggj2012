@@ -22,11 +22,11 @@ namespace Purgatory.Game
         private const float MinEnergyPerSecond = 2f;
         private const float MaxEnergyPerSecond = 10f;
         public const float MaxSpeed = 350;
-        public const int MaxBounce = 10;
-        public const float BulletSpeed = 600;
+        public const int MaxBounce = 20;
+        public const float BulletSpeed = 500f;
         private int deathNum;
 
-        private const float EnergyPerShot = 1f;
+        public const float EnergyPerShot = 1f;
         public float Speed { get; set; }
 
         private Vector2 direction;
@@ -231,16 +231,17 @@ namespace Purgatory.Game
 
                 if (!(this.Level is PurgatoryLevel))
                 {
-                    if (this.TimeSinceSpiralBegan <= SpiralShotTime / 2)
+                    if (this.TimeSinceSpiralBegan <= SpiralShotTime)
                     {
                         this.Energy = 0;
-                        if (this.ShootTimer > this.ShootCooldown)
+
+                        if (this.ShootTimer > this.ShootCooldown / 2)
                         {
                             int bulletNum = 4;
                             for (int i = 0; i < bulletNum; ++i)
                             {
                                 Vector2 bulletPos = this.Position;
-                                Bullet b = new Bullet(bulletPos, Vector2.Normalize(new Vector2((float)Math.Cos(MathHelper.WrapAngle((MathHelper.TwoPi / bulletNum) * (i + 1) + this.TimeSinceSpiralBegan * 2)), (float)Math.Sin(MathHelper.WrapAngle((MathHelper.TwoPi / bulletNum) * (i + 1) + this.TimeSinceSpiralBegan * 2)))), this.BulletBounce, Player.BulletSpeed, new Sprite(this.BulletSprite), this.Level, this.NoClipTime < NoClipPowerUp.Duration);
+                                Bullet b = new Bullet(bulletPos, Vector2.Normalize(new Vector2((float)Math.Cos(MathHelper.WrapAngle((MathHelper.TwoPi / bulletNum) * (i + 1) + this.TimeSinceSpiralBegan * 2)), (float)Math.Sin(MathHelper.WrapAngle((MathHelper.TwoPi / bulletNum) * (i + 1) + this.TimeSinceSpiralBegan * 2)))), this.BulletBounce, Player.BulletSpeed, new Sprite(this.BulletSprite), this.Level, this.NoClipTime < NoClipPowerUp.Duration, (float)this.NoClipTime.TotalSeconds);
                                 b.Sprite.Effects.Add(new SpinEffect(200));
                                 b.Sprite.Embellishments.Add(Embellishment.MakeGlow(this.BulletSpriteName, (float)this.BulletBounce / (Player.MaxBounce / 2.0f), false));
                                 this.BulletList.Add(b);

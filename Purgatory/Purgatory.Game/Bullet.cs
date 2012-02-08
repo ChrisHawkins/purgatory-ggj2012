@@ -6,6 +6,7 @@ namespace Purgatory.Game
     using Microsoft.Xna.Framework.Graphics;
     using Purgatory.Game.Graphics;
     using Purgatory.Game.Physics;
+    using Purgatory.Game.Animation;
 
     public class Bullet : IMoveable
     {
@@ -17,13 +18,14 @@ namespace Purgatory.Game
         private List<float> xPenetrations;
         private List<float> yPenetrations;
         private bool ignoreWalls;
+        private float ghostTimer = 0;
 
         public Sprite Sprite
         {
             get { return this.sprite; }
         }
 
-        public Bullet(Vector2 position, Vector2 direction, int bounce, float speed, Sprite sprite, Level level, bool ignoreWalls)
+        public Bullet(Vector2 position, Vector2 direction, int bounce, float speed, Sprite sprite, Level level, bool ignoreWalls, float ghostTimer)
         {
             this.Position = position;
             this.Direction = direction;
@@ -32,6 +34,7 @@ namespace Purgatory.Game
             this.sprite = sprite;
             this.level = level;
             this.ignoreWalls = ignoreWalls;
+            this.ghostTimer = ghostTimer;
             this.xPenetrations = new List<float>();
             this.yPenetrations = new List<float>();
 
@@ -44,19 +47,32 @@ namespace Purgatory.Game
         public void SwitchOwner(Player player)
         {
             this.sprite = new Sprite(player.BulletSprite);
-            //this.level = player.Level;
+            this.sprite.Effects.Add(new SpinEffect(200));
+            this.sprite.Embellishments.Add(Embellishment.MakeGlow(player.BulletSpriteName, (float)player.BulletBounce / (Player.MaxBounce / 2.0f), false));
         }
 
 
-        public void Update(GameTime time)
+        public void Update(GameTime gameTime)
         {
-            sprite.UpdateAnimation(time);
-            this.LastPosition = this.Position;
-            this.Position += Direction * speed * (float)time.ElapsedGameTime.TotalSeconds;
-            this.sprite.UpdateEffects(time);
-            this.sprite.UpdateAnimation(time);
-            this.CheckForWallCollisions();
+            float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+            if (this.ignoreWalls)
+            {
+                this.ghostTimer -= elapsedTime;
+                
+                if (ghostTimer < 0)
+                {
+                    this.ignoreWalls = false;
+                    this.sprite.Alpha = 1.0f;
+                }
+            }
+
+            sprite.UpdateAnimation(gameTime);
+            this.LastPosition = this.Position;
+            this.Position += Direction * speed * elapsedTime;
+            this.sprite.UpdateEffects(gameTime);
+            this.sprite.UpdateAnimation(gameTime);
+            this.CheckForWallCollisions();
         }
 
         private void CheckForWallCollisions()

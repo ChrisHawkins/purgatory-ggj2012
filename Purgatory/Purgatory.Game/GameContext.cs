@@ -47,8 +47,8 @@ namespace Purgatory.Game
             int mapNo = rand.Next(3);
             int pairNo = rand.Next(2);
 
-            this.player1Level = LevelGenerator.GenerateLevelFromTexture("Life", 3, pairNo);
-            this.player2Level = LevelGenerator.GenerateLevelFromTexture("Death", 3, 1 - pairNo);
+            this.player1Level = LevelGenerator.GenerateLevelFromTexture("Life", mapNo, pairNo);
+            this.player2Level = LevelGenerator.GenerateLevelFromTexture("Death", mapNo, 1 - pairNo);
             this.purgatory = new PurgatoryLevel("Purgatory", this.player1Level.WalkableTile, this.player2Level.WalkableTile);
 
             player1.Level = player1Level;
@@ -158,11 +158,14 @@ namespace Purgatory.Game
                 }
             }
 
+            if (this.player1.Level is PurgatoryLevel || this.player2.Level is PurgatoryLevel)
+            {
+                this.purgatoryTimer += elapsedTime;
+            }
+
             // Check for purgatory and update the timer. Kill player if timer is up
             if (this.player1.Level is PurgatoryLevel)
             {
-                this.purgatoryTimer += elapsedTime;
-
                 if (purgatoryTimer >= GameContext.PurgatoryTime && !Player.InputFrozen)
                 {
                     this.player1.Health = 0;
@@ -201,8 +204,6 @@ namespace Purgatory.Game
             // Check for purgatory and update the timer. Kill player if timer is up
             if (this.player2.Level is PurgatoryLevel)
             {
-                this.purgatoryTimer += elapsedTime;
-
                 if (purgatoryTimer >= GameContext.PurgatoryTime && !Player.InputFrozen)
                 {
                     this.player2.Health = 0;
@@ -223,20 +224,19 @@ namespace Purgatory.Game
                 int num = rng.Next(70);
                 int probability = 0;
         
-                int chanceForHealthDrop = 8;
+                int chanceForHealthDrop = 5;
                 int maxHealthDrops = 3;
 
                 int chanceForShieldDrop = 8;
                 int maxShieldDrops = 3;
 
                 int chanceForSpiralDrop = 5;
-                int maxSpiralDrops = 1;
+                int maxSpiralDrops = 3;
 
                 int chanceForNoClipDrop = 10;
                 int maxNoClipDrops = 3;
 
-                int chanceForBounceDrop = GetPlayer(playerNumber).BulletBounce < Player.MaxBounce ? Player.MaxBounce * 2 - (int)(GetPlayer(playerNumber).BulletBounce * 5.0f / 4.0f) : 0;
-                
+                int chanceForBounceDrop = GetPlayer(playerNumber).BulletBounce / 2 < Player.MaxBounce ? Player.MaxBounce * 2 - (int)(GetPlayer(playerNumber).BulletBounce * 5.0f / 4.0f) : 0;
                 int maxBounceDrops = 3;
 
                 probability += chanceForHealthDrop;
