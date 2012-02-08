@@ -316,7 +316,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = Sound::4f8b208a-a613-4f52-8377-605943ea00d3;
+            Name = Sound::d6555a56-c221-4359-aca3-5d8351d06f3a;
             Property = 0;
             Sound = 1;
             Line Color = 4286287161;
@@ -353,6 +353,12 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
+    Xbox Bank Last Modified Low = 0;
+    Xbox Bank Last Modified High = 0;
+    PC Bank Last Modified Low = 0;
+    PC Bank Last Modified High = 0;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
     Bank Last Revised Low = 2901328468;
     Bank Last Revised High = 30203328;
 
@@ -801,6 +807,8 @@ Sound Bank
     Windows File = Win\Sound Bank.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
+    Header Last Modified High = 0;
+    Header Last Modified Low = 0;
 
     Sound
     {
@@ -2099,14 +2107,6 @@ Sound Bank
             Index = 16;
             Weight Min = 0;
             Weight Max = 255;
-        }
-
-        Sound Entry
-        {
-            Name = Purgatory_Panic;
-            Index = 17;
-            Weight Min = 0;
-            Weight Max = 7;
         }
     }
 
