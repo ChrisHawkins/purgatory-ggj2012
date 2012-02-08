@@ -39,12 +39,17 @@ namespace Purgatory.Game.Controls
             if (this.FirePressed() && player.ShootTimer > player.ShootCooldown && player.Energy > 0)
             {
                 Vector2 bulletPos = player.Position;
+                Vector2 playerVelocity = 
+                    player.Position == player.LastPosition ? 
+                    Vector2.Zero : Vector2.Normalize(player.Position - player.LastPosition) * Player.MaxSpeed;
+                Vector2 bulletVelocity = Vector2.Normalize(player.BulletDirection) * Player.BulletSpeed;
+                Vector2 finalVelocity = playerVelocity + bulletVelocity;
 
-                Bullet b = new Bullet(bulletPos, Vector2.Normalize(player.BulletDirection), player.BulletBounce, 500.0f, new Sprite(player.BulletSprite), player.Level, player.NoClipTime < NoClipPowerUp.Duration);
+                Bullet b = new Bullet(bulletPos, Vector2.Normalize(finalVelocity), player.BulletBounce, finalVelocity.Length(), new Sprite(player.BulletSprite), player.Level, player.NoClipTime < NoClipPowerUp.Duration, (float)player.NoClipTime.TotalSeconds);
                 b.Sprite.Effects.Add(new SpinEffect(200));
                 b.Sprite.Embellishments.Add(Embellishment.MakeGlow(player.BulletSpriteName, (float)player.BulletBounce / (Player.MaxBounce / 2.0f), false));
                 player.BulletList.Add(b);
-                --player.Energy;
+                player.Energy -= Player.EnergyPerShot;
                 player.ShootTimer = 0.0f;
                 AudioManager.Instance.PlayCue(ref player.ShootSFX, true);
             }
