@@ -8,19 +8,19 @@ namespace Purgatory.Game
 
     public class ScreenManager
     {
-        private Stack<Screen> screenStack = new Stack<Screen>();
+        private List<Screen> screenStack = new List<Screen>();
 
         public void OpenScreen(Screen screen)
         {
             if (this.screenStack.Count > 0)
             {
-                this.screenStack.First().OnControlLost();
+                this.screenStack[this.screenStack.Count - 1].OnControlLost();
             }
 
             screen.ClosingScreen += new EventHandler(ScreenClosing);
             screen.LoadingScreen += new EventHandler<ScreenEventArgs>(LoadingScreen);
             screen.ClosingAllScreensUntil += new EventHandler<ScreenTypeEventArgs>(CloseScreensUntil);
-            this.screenStack.Push(screen);
+            this.screenStack.Add(screen);
         }
 
         void LoadingScreen(object sender, ScreenEventArgs e)
@@ -30,7 +30,7 @@ namespace Purgatory.Game
 
         void ScreenClosing(object sender, EventArgs e)
         {
-            this.screenStack.Pop();
+            this.screenStack.RemoveAt(this.screenStack.Count - 1);
 
             if (this.screenStack.Count == 0)
             {
@@ -38,13 +38,13 @@ namespace Purgatory.Game
             }
             else
             {
-                this.screenStack.First().OnControlReturned();
+                this.screenStack[this.screenStack.Count - 1].OnControlReturned();
             }
         }
 
         void CloseScreensUntil(object sender, ScreenTypeEventArgs e)
         {
-            while (this.screenStack.First().GetType() != e.ScreenType)
+            while (this.screenStack[this.screenStack.Count - 1].GetType() != e.ScreenType)
             {
                 this.ScreenClosing(sender, e);
             }
@@ -52,12 +52,12 @@ namespace Purgatory.Game
 
         public void Draw()
         {
-            this.screenStack.First().Draw(Bounds.Screen);
+            this.screenStack[this.screenStack.Count - 1].Draw(Bounds.Screen);
         }
 
         public void Update(GameTime gameTime)
         {
-            this.screenStack.First().Update(gameTime);
+            this.screenStack[this.screenStack.Count - 1].Update(gameTime);
             AudioManager.Instance.Update(gameTime);
         }
 
