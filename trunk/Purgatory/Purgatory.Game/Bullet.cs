@@ -15,8 +15,8 @@ namespace Purgatory.Game
         private float speed;
         private Sprite sprite;
         private Level level;
-        private List<float> xPenetrations;
-        private List<float> yPenetrations;
+        private static List<float> xPenetrations = new List<float>();
+        private static List<float> yPenetrations = new List<float>();
         private bool ignoreWalls;
         private float ghostTimer = 0;
 
@@ -35,8 +35,6 @@ namespace Purgatory.Game
             this.level = level;
             this.ignoreWalls = ignoreWalls;
             this.ghostTimer = ghostTimer;
-            this.xPenetrations = new List<float>();
-            this.yPenetrations = new List<float>();
 
             if (this.ignoreWalls)
             {
@@ -79,8 +77,8 @@ namespace Purgatory.Game
         {
             if (this.ignoreWalls) return;
 
-            this.xPenetrations.Clear();
-            this.yPenetrations.Clear();
+            xPenetrations.Clear();
+            yPenetrations.Clear();
             List<Rectangle> possibleRectangles = level.GetPossibleRectangles(Position, LastPosition);
 
             foreach (Rectangle r in possibleRectangles)
@@ -88,11 +86,11 @@ namespace Purgatory.Game
                 Vector2 penetration = CollisionSolver.SolveCollision(this, r);
                 if (penetration.X != 0)
                 {
-                    this.xPenetrations.Add(penetration.X);
+                    xPenetrations.Add(penetration.X);
                 }
                 if (penetration.Y != 0)
                 {
-                    this.yPenetrations.Add(penetration.Y);
+                    yPenetrations.Add(penetration.Y);
                 }
             }
 
