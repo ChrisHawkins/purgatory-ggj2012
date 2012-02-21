@@ -5,6 +5,7 @@ namespace Purgatory.Game.Graphics
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Purgatory.Game.Animation;
+    using System.Collections.Generic;
 
     public class Embellishment
     {
@@ -15,7 +16,9 @@ namespace Purgatory.Game.Graphics
         public Sprite EmbellishmentSprite { get; set; }
         public Vector2 Offset { get; set; }
         public string Name { get; private set; }
-        private bool destroyed;
+        public bool Destroyed;
+
+        private static Dictionary<string, Texture2D> textureMap = new Dictionary<string, Texture2D>();
 
         private TimeSpan lifeSoFar;
 
@@ -34,11 +37,11 @@ namespace Purgatory.Game.Graphics
                 }
             }
 
-            if (Persists & !destroyed) return;
+            if (Persists & !Destroyed) return;
 
             if (Exit != null)
             {
-                if (destroyed || (lifeSoFar > Lifespan - Exit.Duration))
+                if (Destroyed || (lifeSoFar > Lifespan - Exit.Duration))
                 {
                     this.Exit.Update(EmbellishmentSprite, gameTime);
                 }
@@ -47,26 +50,43 @@ namespace Purgatory.Game.Graphics
 
         public void Draw(SpriteBatch batch, Vector2 parentPosition, float parentZoom, float parentRotation)
         {
-            this.EmbellishmentSprite.Zoom = parentZoom;
-            this.EmbellishmentSprite.Rotation = parentRotation;
-            this.EmbellishmentSprite.Draw(batch, parentPosition + Offset);
+            if (!Destroyed)
+            {
+                this.EmbellishmentSprite.Zoom = parentZoom;
+                this.EmbellishmentSprite.Rotation = parentRotation;
+                this.EmbellishmentSprite.Draw(batch, parentPosition + Offset);
+            }
+            else
+            {
+                int x = 3;
+            }
         }
 
         public bool HasFinished()
         {
-            if (Persists) return destroyed;
+            if (Persists) return Destroyed;
             return this.lifeSoFar > this.Lifespan;
         }
 
         public void Destroy()
         {
-            this.destroyed = true;
+            this.Destroyed = true;
         }
 
         public static Embellishment MakeGlow(string sprite, float alpha, bool fadeIn = true)
         {
-            Texture2D texture = BigEvilStatic.Content.Load<Texture2D>(sprite + "Glow");
-            
+            string textureName = sprite + "Glow";
+            Texture2D texture = null;
+            if (textureMap.ContainsKey(textureName))
+            {
+                texture = textureMap[textureName];
+            }
+            else
+            {
+                texture = BigEvilStatic.Content.Load<Texture2D>(textureName);
+                textureMap.Add(textureName, texture);
+            }
+
             Embellishment embellishment = new Embellishment()
             {
                 EmbellishmentSprite = new Sprite(texture, texture.Width, texture.Height),
