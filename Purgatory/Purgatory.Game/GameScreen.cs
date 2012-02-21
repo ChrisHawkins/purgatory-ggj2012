@@ -18,6 +18,12 @@ namespace Purgatory.Game
         private Clock clock;
         private LocatorArrow arrow;
 
+        private RasterizerState state = new RasterizerState()
+        {
+            ScissorTestEnable = true
+        };
+
+
         public GameScreen(GraphicsDevice device, GameContext context, PlayerNumber playerNumber)
             : base(device)
         {
@@ -65,12 +71,7 @@ namespace Purgatory.Game
         }
 
         public override void Draw(Bounds bounds)
-        {
-            RasterizerState state = new RasterizerState()
-            {
-                ScissorTestEnable = true
-            };
-
+        {       
             this.Device.ScissorRectangle = bounds.ToRectangle(this.Device);
             bounds.Camera = -this.context.GetPlayer(this.playerNumber).Position;
 

@@ -32,6 +32,8 @@ namespace Purgatory.Game
 
         protected Sprite purgatoryText, findPortalText;
 
+        private List<PlayerPickUp> toRemove = new List<PlayerPickUp>();
+
         protected Level()
         {
             this.purgatoryOverlay = new Sprite(BigEvilStatic.Content.Load<Texture2D>("WhiteOut"), 48, 48);
@@ -134,7 +136,7 @@ namespace Purgatory.Game
                 item.Sprite.UpdateEffects(gameTime);
             }
 
-            List<PlayerPickUp> toRemove = new List<PlayerPickUp>();
+            toRemove.Clear();
 
             foreach (var item in this.removedPickUps)
             {
