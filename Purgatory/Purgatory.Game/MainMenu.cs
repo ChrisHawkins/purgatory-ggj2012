@@ -7,6 +7,7 @@ namespace Purgatory.Game
     using Microsoft.Xna.Framework.Input;
     using Purgatory.Game.Graphics;
     using Purgatory.Game.Controls;
+    using System;
 
     public class MainMenu : Screen
     {
@@ -96,6 +97,12 @@ namespace Purgatory.Game
             // crossfade into game music
             ds.BackgroundMusic = AudioManager.Instance.CrossFade(this.menuMusic, ds.BackgroundMusic, 2f, true);
             this.MusicPlaying = false;
+        }
+
+        public override void OnControlReturned()
+        {
+            base.OnControlReturned();
+            GC.Collect();
         }
     }
 }
