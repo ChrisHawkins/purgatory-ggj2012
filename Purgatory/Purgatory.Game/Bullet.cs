@@ -10,7 +10,7 @@ namespace Purgatory.Game
 
     public class Bullet : IMoveable
     {
-        public Vector2 Direction { get; set; }
+        public Vector2 Direction;
         private int bounce;
         private float speed;
         private Sprite sprite;

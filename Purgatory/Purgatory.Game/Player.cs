@@ -112,6 +112,8 @@ namespace Purgatory.Game
                 this.DamageSFX = AudioManager.Instance.LoadCue("Purgatory_DeathDamageScream");
                 this.DeathSFX = AudioManager.Instance.LoadCue("Purgatory_DeathDyingScream");
             }
+
+            this.shield = new Embellishment() { Destroyed = true };
             
             this.DashSFX = AudioManager.Instance.LoadCue("Purgatory_PlayerDash");
         }
@@ -257,7 +259,7 @@ namespace Purgatory.Game
                     {
                         this.BulletList[i].Update(gameTime);
 
-                        if (this.BulletList[i].RemoveFromList)
+                        if (this.BulletList[i].RemoveFromList || this.BulletList[i].Position.LengthSquared() > 10000f * 10000f)
                         {
                             AddDyingBullet(this.BulletList[i]);
                             this.BulletList.RemoveAt(i);
@@ -272,7 +274,7 @@ namespace Purgatory.Game
 
             if (this.ShieldHealth > 0)
             {
-                if (this.shield == null)
+                if (this.shield.Destroyed)
                 {
                     this.MakeShield();
                 }
@@ -281,10 +283,9 @@ namespace Purgatory.Game
             }
             else
             {
-                if (this.shield != null)
+                if (!this.shield.Destroyed)
                 {
                     this.shield.Destroy();
-                    this.shield = null;
                 }
             }
 
